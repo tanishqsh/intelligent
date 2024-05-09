@@ -11,6 +11,9 @@ const config: Config = {
 			colors: {
 				'intelligent-yellow': '#FFAF34',
 			},
+			fontFamily: {
+				'general-sans': 'var(--font-generalSans)',
+			},
 		},
 	},
 	plugins: [],
