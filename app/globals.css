@@ -7,3 +7,7 @@
 		text-wrap: balance;
 	}
 }
+
+::selection {
+	background-color: #e5e2fc;
+}

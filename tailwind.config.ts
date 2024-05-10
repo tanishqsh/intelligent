@@ -10,6 +10,7 @@ const config: Config = {
 			},
 			colors: {
 				'intelligent-yellow': '#FFAF34',
+				'primary-white': '#F5F4FD',
 			},
 			fontFamily: {
 				'general-sans': 'var(--font-generalSans)',

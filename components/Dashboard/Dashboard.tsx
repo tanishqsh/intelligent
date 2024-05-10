@@ -7,7 +7,7 @@ export default function Dashboard() {
 	const { ready, authenticated, login, logout, user } = usePrivy();
 
 	return (
-		<div className="max-w-[1440px] m-auto">
+		<div>
 			<h1>Dashboard</h1>
 		</div>
 	);

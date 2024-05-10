@@ -1,6 +1,7 @@
 'use client';
 
 import { PrivyProvider } from '@privy-io/react-auth';
+import { base, baseGoerli, mainnet, sepolia } from 'viem/chains';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
 	const privyAppId = process.env.NEXT_PUBLIC_PRIVY_APP_ID || '';
@@ -14,13 +15,15 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 					accentColor: '#FFAF33',
 					logo: 'https://i.ibb.co/Gc3dYMZ/intelligent.png',
 				},
+				defaultChain: base,
+				supportedChains: [base, baseGoerli, mainnet, sepolia],
 				// Create embedded wallets for users who don't have a wallet
 				embeddedWallets: {
 					createOnLogin: 'users-without-wallets',
 				},
 			}}
 		>
-			{children}
+			{children}s
 		</PrivyProvider>
 	);
 }

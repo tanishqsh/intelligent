@@ -12,8 +12,8 @@ export default function LandingPage() {
 	const router = useRouter();
 
 	return (
-		<div className="bg-[#F5F4FD] min-h-screen">
-			<div className="px-12 py-12 m-auto" id="header">
+		<div className="bg-primary-white min-h-screen">
+			<div className="px-12 py-8 m-auto" id="header">
 				<motion.svg
 					initial={{ scale: 0.4, opacity: 0 }}
 					animate={{ scale: 1, opacity: 1 }}
@@ -28,13 +28,13 @@ export default function LandingPage() {
 					<circle cx="24" cy="24" r="24" fill="#FFAF34" />
 				</motion.svg>
 			</div>
-			<div className="max-w-7xl m-auto">
+			<div className="max-w-7xl mt-12 m-auto">
 				<div className="text-center">
 					<motion.h1
 						className="text-7xl font-medium cursor-default"
 						initial={{ lineHeight: '110px', opacity: 0, y: 20 }}
 						animate={{ lineHeight: '80px', opacity: 1, y: 0 }}
-						whileHover={{ lineHeight: '90px' }}
+						whileHover={{ lineHeight: '85px' }}
 						transition={{ type: 'spring', stiffness: 250 }}
 					>
 						<motion.span
@@ -57,11 +57,11 @@ export default function LandingPage() {
 							initial={{ scale: 0.2, opacity: 0 }}
 							drag
 							whileTap={{
-								scale: 0.9,
+								scale: 0.4,
 							}}
 							dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
 							animate={{
-								scale: 0.6,
+								scale: 0.8,
 								opacity: 1,
 								rotate: -10,
 								transition: {
@@ -71,7 +71,7 @@ export default function LandingPage() {
 								},
 							}}
 							whileInView={{
-								scale: 0.6,
+								scale: 0.8,
 								opacity: 1,
 								rotate: -10,
 								transition: {
@@ -82,7 +82,7 @@ export default function LandingPage() {
 							}}
 							whileHover={{ scale: 0.8, rotate: -6 }}
 							src="/farcaster_icon.svg"
-							className="w-24 inline-block border-8 rounded-3xl border-white"
+							className="w-24 inline-block border-8 rounded-3xl border-white drop-shadow-sm"
 							alt="Farcaster Badge"
 						/>
 						<motion.span
@@ -96,7 +96,7 @@ export default function LandingPage() {
 								fontWeight: 550,
 							}}
 							transition={{ type: 'spring', stiffness: 200 }}
-							className="bg-[#8A63D2] text-[#F5F4FD] inline-block font-medium rounded-md shadow-inner"
+							className="text-black inline-block font-medium rounded-md"
 						>
 							Farcaster.
 						</motion.span>
@@ -164,7 +164,7 @@ const AccessDashboardButton = () => {
 			<motion.img
 				initial={{ scale: 0.2, opacity: 0 }}
 				animate={{
-					scale: inTap ? 1.4 : 1,
+					scale: inTap ? 1.2 : 1,
 					opacity: 1,
 					transition: {
 						type: 'spring',
