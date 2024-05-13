@@ -1,7 +1,7 @@
 'use client';
 
 import { usePrivy } from '@privy-io/react-auth';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Logo from './Logo';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -9,10 +9,14 @@ import { motion } from 'framer-motion';
 export default function Header() {
 	const router = useRouter();
 
-	const { ready, authenticated, login, logout, user } = usePrivy();
+	const { ready, authenticated, logout, user } = usePrivy();
 
 	if (!ready) {
-		return <div>Loading</div>;
+		return (
+			<div className="flex items-center justify-center h-screen">
+				<Logo className="w-64 h-64" />
+			</div>
+		);
 	}
 
 	/**
@@ -25,46 +29,29 @@ export default function Header() {
 	console.log('Users:', user);
 
 	return (
-		<header className="bg-primary-white">
+		<header className="bg-white border-b">
 			<div className="px-6 py-4" id="surroundings">
-				<div className="flex justify-between items-center">
+				<div className="flex items-center justify-between">
 					<motion.div
 						initial={{ opacity: 0, scale: 0.3 }}
 						animate={{ opacity: 1, scale: 0.9 }}
 						transition={{
 							type: 'spring',
-							stiffness: 260,
-							damping: 20,
+							stiffness: 200,
 						}}
 					>
 						<Link href="/">
 							<Logo className="w-8 h-8" />
 						</Link>
 					</motion.div>
-
-					<div className="space-x-4">
-						<button onClick={() => router.replace('/dashboard')} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-							Dashboard
-						</button>
-						<button
-							onClick={() => router.replace('/dashboard/casts')}
-							className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-						>
-							Casts
-						</button>
-						<button
-							onClick={() => router.replace('/dashboard/cast-analyze')}
-							className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-						>
-							Engagement Tools
-						</button>
-					</div>
+					<Menu />
 					<div className="flex items-center justify-center space-x-4">
-						<div className="px-1 py-1 rounded-full bg-[#f1efff] shadow-inner">
+						<div className="px-1 rounded-full bg-[#f1efff] shadow-inner">
 							<img src={user?.farcaster?.pfp || 'https://via.placeholder.com/150'} alt="Profile Picture" className="rounded-full w-8"></img>
 						</div>
-						{/* <div>
+						<div>
 							<motion.button
+								onClick={logout}
 								initial={{ opacity: 0, x: 50 }}
 								animate={{ opacity: 0.4, x: 0 }}
 								whileHover={{ opacity: 0.8, x: 0 }}
@@ -73,10 +60,97 @@ export default function Header() {
 							>
 								Sign out
 							</motion.button>
-						</div> */}
+						</div>
 					</div>
 				</div>
 			</div>
 		</header>
 	);
 }
+
+const Menu = () => {
+	const pathname = usePathname();
+
+	return (
+		<div className="flex items-center justify-center space-x-8 antialiased">
+			<motion.div
+				initial={{ opacity: 0, y: 10, color: '#8888AA' }}
+				whileHover={{ opacity: 0.7, color: '#383838' }}
+				whileInView={{
+					opacity: 1,
+					y: 0,
+					transition: {
+						type: 'spring',
+						stiffness: 200,
+					},
+				}}
+				animate={{
+					opacity: 1,
+					y: 0,
+					color: pathname === '/dashboard' ? '#383838' : '#8888AA',
+				}}
+			>
+				<Link href="/dashboard">
+					<span className="font-medium cursor-pointer text-sm">Dashboard</span>
+				</Link>
+			</motion.div>
+
+			<motion.div
+				initial={{ opacity: 0, y: 10 }}
+				whileHover={{ opacity: 0.7, color: '#383838' }}
+				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard/cast-analyze' ? '#383838' : '#8888AA' }}
+				transition={{
+					delay: 0.1,
+					type: 'spring',
+					stiffness: 200,
+				}}
+			>
+				<Link href="/dashboard/cast-analyze">
+					<span className="font-medium cursor-pointer text-sm">Cast Analyze</span>
+				</Link>
+			</motion.div>
+			<motion.div
+				initial={{ opacity: 0, y: 10 }}
+				whileHover={{ opacity: 0.7, color: '#383838' }}
+				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard/search' ? '#383838' : '#8888AA' }}
+				transition={{
+					delay: 0.12,
+					type: 'spring',
+					stiffness: 200,
+				}}
+			>
+				<span className="font-medium cursor-pointer text-sm">
+					Search <sup className="text-[8px]"> Coming soon</sup>
+				</span>
+			</motion.div>
+			<motion.div
+				initial={{ opacity: 0, y: 10 }}
+				whileHover={{ opacity: 0.7, color: '#383838' }}
+				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard/ai' ? '#383838' : '#8888AA' }}
+				transition={{
+					delay: 0.14,
+					type: 'spring',
+					stiffness: 200,
+				}}
+			>
+				<span className="font-medium cursor-pointer text-sm">
+					AI Insights<sup className="text-[8px]"> Coming soon</sup>
+				</span>
+			</motion.div>
+			<motion.div
+				initial={{ opacity: 0, y: 10 }}
+				whileHover={{ opacity: 0.7, color: '#383838' }}
+				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard/ecosystem' ? '#383838' : '#8888AA' }}
+				transition={{
+					delay: 0.16,
+					type: 'spring',
+					stiffness: 200,
+				}}
+			>
+				<span className="font-medium cursor-pointer text-sm">
+					Ecosystem<sup className="text-[8px]"> Coming soon</sup>
+				</span>
+			</motion.div>
+		</div>
+	);
+};

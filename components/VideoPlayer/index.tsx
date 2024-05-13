@@ -34,7 +34,7 @@ const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({ src }) => {
 		};
 	}, [src]);
 
-	return <video ref={videoRef} controls style={{ width: '100%' }} />;
+	return <video className="rounded-md" ref={videoRef} controls style={{ width: '100%' }} />;
 };
 
 export default VideoPlayer;

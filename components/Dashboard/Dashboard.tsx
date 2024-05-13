@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 export default function Dashboard() {
 	const { ready, authenticated, login, logout, user } = usePrivy();
 
-	return (
-		<div>
-			<h1>Dashboard</h1>
-		</div>
-	);
+	if (!ready) {
+		return null;
+	}
+
+	return <div className="min-h-screen bg-primary-white">{/* <h1>Dashboard</h1> */}</div>;
 }
