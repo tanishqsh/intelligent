@@ -163,7 +163,7 @@ export default function Page() {
 			<br />
 			<hr />
 			<br />
-			<div>@{username}'s post</div>
+
 			<div>
 				<p> {new Date(timestamp).toLocaleString()} </p>
 			</div>
