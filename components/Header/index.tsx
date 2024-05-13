@@ -46,8 +46,8 @@ export default function Header() {
 					</motion.div>
 					<Menu />
 					<div className="flex items-center justify-center space-x-4">
-						<div className="px-1 rounded-full bg-[#f1efff] shadow-inner">
-							<img src={user?.farcaster?.pfp || 'https://via.placeholder.com/150'} alt="Profile Picture" className="rounded-full w-8"></img>
+						<div className="px-1 py-1 rounded-full bg-[#f1efff] shadow-inner">
+							<img src={user?.farcaster?.pfp || 'https://via.placeholder.com/150'} alt="Profile Picture" className="rounded-full w-8 h-8"></img>
 						</div>
 						<div>
 							<motion.button
