@@ -139,7 +139,7 @@ export default function Page() {
 
 	return (
 		<div className="bg-primary-white min-h-screen pb-[100px]">
-			<div className="max-w-7xl m-auto">
+			<div className="max-w-5xl m-auto">
 				<div className="pt-4">
 					<SearchBar isLoaded={isLoaded} castUrl={castUrl} setCastUrl={setCastUrl} fetchCast={fetchCast} />
 				</div>
@@ -200,7 +200,7 @@ const CastSections = ({
 
 	return (
 		<div className="w-full md:flex items-start md:space-x-4">
-			<div className="mt-4 w-full md:w-1/6">
+			<div className="mt-4 w-full md:w-2/6">
 				<motion.div
 					initial={{ opacity: 1, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -224,8 +224,106 @@ const CastSections = ({
 						</motion.div>
 					))}
 				</motion.div>
+				<motion.div
+					drag
+					initial={{ opacity: 0, y: 30 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ type: 'spring', stiffness: 100 }}
+					className="bg-white mt-4 rounded-md shadow-sm"
+				>
+					<div className="text-xs py-3 px-3 border-b capitalize flex items-center justify-between font-medium">
+						<span className="font-medium text-slate-400 text-xs uppercase font-inter">{recasts?.length} Recasts</span>
+						<motion.button
+							onClick={copyAllAddresses}
+							initial={{ scale: 1 }}
+							whileHover={{ scale: 1.05 }}
+							whileTap={{ scale: 0.9 }}
+							transition={{ type: 'spring', stiffness: 100 }}
+							className="flex space-x-2 items-center uppercase font-inter px-2 py-1 rounded-md text-slate-400"
+						>
+							<svg className="w-5" fill="none" viewBox="0 0 24 24">
+								<path
+									stroke="currentColor"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth="1.5"
+									d="M6.5 15.25V15.25C5.5335 15.25 4.75 14.4665 4.75 13.5V6.75C4.75 5.64543 5.64543 4.75 6.75 4.75H13.5C14.4665 4.75 15.25 5.5335 15.25 6.5V6.5"
+								></path>
+								<rect
+									width="10.5"
+									height="10.5"
+									x="8.75"
+									y="8.75"
+									stroke="currentColor"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth="1.5"
+									rx="2"
+								></rect>
+							</svg>
+							<span>Copy All</span>
+						</motion.button>
+					</div>
+					<div className="space-y-0 flex flex-col max-h-[400px] overflow-scroll divide-y divide-dotted">
+						{recasts?.map((recast: any, i: number) => {
+							return (
+								<motion.div
+									key={i}
+									initial={{ opacity: 0, paddingTop: 8, paddingBottom: 8, y: 30 }}
+									animate={{ opacity: 1, paddingTop: 10, paddingBottom: 10, y: 0 }}
+									whileHover={{ opacity: 1, paddingTop: 15, paddingBottom: 15 }}
+									transition={{ type: 'spring', stiffness: 100 }}
+									className="flex items-center space-x-3 hover:bg-black/[0.03] px-2"
+								>
+									<div className="flex-shrink-0 pl-2">
+										<Link target="_blank" href={`https://warpcast.com/${recast.user?.username}`}>
+											<img className="w-10 border-4 border-[#ededed] h-10 rounded-full" src={recast?.user?.pfp_url} alt="Profile" />
+										</Link>
+									</div>
+
+									<div className="flex flex-col items-start justify-start w-full">
+										<div className="font-medium w-full opacity-75 text-base font-sans">{recast?.user?.display_name}</div>
+										<div className="font-medium opacity-50 text-xs">@{recast.user?.username}</div>
+									</div>
+									<div className="flex justify-end pr-2">
+										<motion.button
+											onClick={() => copyAddress(recast?.user?.verifications?.[0])}
+											initial={{ scale: 1 }}
+											whileHover={{ scale: 1 }}
+											whileTap={{ scale: 0.9 }}
+											className="px-2"
+										>
+											<svg className="w-5 h-8 text-gray-300 hover:text-gray-400" fill="none" viewBox="0 0 24 24">
+												<path
+													stroke="currentColor"
+													strokeLinecap="round"
+													strokeLinejoin="round"
+													strokeWidth="1.5"
+													d="M19.25 8.25V17.25C19.25 18.3546 18.3546 19.25 17.25 19.25H6.75C5.64543 19.25 4.75 18.3546 4.75 17.25V6.75"
+												></path>
+												<path
+													stroke="currentColor"
+													strokeLinecap="round"
+													strokeLinejoin="round"
+													d="M16.5 13C16.5 13.2761 16.2761 13.5 16 13.5C15.7239 13.5 15.5 13.2761 15.5 13C15.5 12.7239 15.7239 12.5 16 12.5C16.2761 12.5 16.5 12.7239 16.5 13Z"
+												></path>
+												<path
+													stroke="currentColor"
+													strokeLinecap="round"
+													strokeLinejoin="round"
+													strokeWidth="1.5"
+													d="M17.25 8.25H6.5C5.5335 8.25 4.75 7.4665 4.75 6.5C4.75 5.5335 5.5335 4.75 6.5 4.75H15.25C16.3546 4.75 17.25 5.64543 17.25 6.75V8.25ZM17.25 8.25H19.25"
+												></path>
+											</svg>
+										</motion.button>
+									</div>
+								</motion.div>
+							);
+						})}
+					</div>
+				</motion.div>
 			</div>
-			<div className="w-full md:w-3/6">
+			<div className="w-full md:w-4/6">
 				<motion.div
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -274,104 +372,6 @@ const CastSections = ({
 					</div>
 				</motion.div>
 			</div>
-			<motion.div
-				drag
-				initial={{ opacity: 0, y: 30 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ type: 'spring', stiffness: 100 }}
-				className="bg-white mt-4 rounded-md shadow-sm w-2/6"
-			>
-				<div className="text-xs py-3 px-3 border-b capitalize flex items-center justify-between font-medium">
-					<span className="font-medium text-slate-400 text-xs uppercase font-inter">{recasts?.length} Recasts</span>
-					<motion.button
-						onClick={copyAllAddresses}
-						initial={{ scale: 1 }}
-						whileHover={{ scale: 1.05 }}
-						whileTap={{ scale: 0.9 }}
-						transition={{ type: 'spring', stiffness: 100 }}
-						className="flex space-x-2 items-center uppercase font-inter px-2 py-1 rounded-md text-slate-400"
-					>
-						<svg className="w-5" fill="none" viewBox="0 0 24 24">
-							<path
-								stroke="currentColor"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth="1.5"
-								d="M6.5 15.25V15.25C5.5335 15.25 4.75 14.4665 4.75 13.5V6.75C4.75 5.64543 5.64543 4.75 6.75 4.75H13.5C14.4665 4.75 15.25 5.5335 15.25 6.5V6.5"
-							></path>
-							<rect
-								width="10.5"
-								height="10.5"
-								x="8.75"
-								y="8.75"
-								stroke="currentColor"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth="1.5"
-								rx="2"
-							></rect>
-						</svg>
-						<span>Copy All</span>
-					</motion.button>
-				</div>
-				<div className="space-y-0 flex flex-col max-h-[400px] overflow-scroll divide-y divide-dotted">
-					{recasts?.map((recast: any, i: number) => {
-						return (
-							<motion.div
-								key={i}
-								initial={{ opacity: 0, paddingTop: 8, paddingBottom: 8, y: 30 }}
-								animate={{ opacity: 1, paddingTop: 10, paddingBottom: 10, y: 0 }}
-								whileHover={{ opacity: 1, paddingTop: 15, paddingBottom: 15 }}
-								transition={{ type: 'spring', stiffness: 100 }}
-								className="flex items-center space-x-3 hover:bg-black/[0.03] px-2"
-							>
-								<div className="flex-shrink-0 pl-2">
-									<Link target="_blank" href={`https://warpcast.com/${recast.user?.username}`}>
-										<img className="w-10 border-4 border-[#ededed] h-10 rounded-full" src={recast?.user?.pfp_url} alt="Profile" />
-									</Link>
-								</div>
-
-								<div className="flex flex-col items-start justify-start w-full">
-									<div className="font-medium w-full opacity-75 text-base font-sans">{recast?.user?.display_name}</div>
-									<div className="font-medium opacity-50 text-xs">@{recast.user?.username}</div>
-								</div>
-								<div className="flex justify-end pr-2">
-									<motion.button
-										onClick={() => copyAddress(recast?.user?.verifications?.[0])}
-										initial={{ scale: 1 }}
-										whileHover={{ scale: 1 }}
-										whileTap={{ scale: 0.9 }}
-										className="px-2"
-									>
-										<svg className="w-5 h-8 text-gray-300 hover:text-gray-400" fill="none" viewBox="0 0 24 24">
-											<path
-												stroke="currentColor"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth="1.5"
-												d="M19.25 8.25V17.25C19.25 18.3546 18.3546 19.25 17.25 19.25H6.75C5.64543 19.25 4.75 18.3546 4.75 17.25V6.75"
-											></path>
-											<path
-												stroke="currentColor"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												d="M16.5 13C16.5 13.2761 16.2761 13.5 16 13.5C15.7239 13.5 15.5 13.2761 15.5 13C15.5 12.7239 15.7239 12.5 16 12.5C16.2761 12.5 16.5 12.7239 16.5 13Z"
-											></path>
-											<path
-												stroke="currentColor"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth="1.5"
-												d="M17.25 8.25H6.5C5.5335 8.25 4.75 7.4665 4.75 6.5C4.75 5.5335 5.5335 4.75 6.5 4.75H15.25C16.3546 4.75 17.25 5.64543 17.25 6.75V8.25ZM17.25 8.25H19.25"
-											></path>
-										</svg>
-									</motion.button>
-								</div>
-							</motion.div>
-						);
-					})}
-				</div>
-			</motion.div>
 		</div>
 	);
 };
