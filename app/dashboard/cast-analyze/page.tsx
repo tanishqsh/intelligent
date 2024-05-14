@@ -23,9 +23,9 @@ import colors from '@/utils/colors';
 dayjs.extend(relativeTime);
 
 export default function Page() {
-	const [cast, setCast] = useState<any>(SampleCastWithVideo);
-	const [castUrl, setCastUrl] = useState(SampleWarpcastURL);
-	const [isLoaded, setIsLoaded] = useState(true);
+	const [cast, setCast] = useState<any>();
+	const [castUrl, setCastUrl] = useState('');
+	const [isLoaded, setIsLoaded] = useState(false);
 
 	useEffect(() => {
 		if (castUrl) {
