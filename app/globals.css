@@ -9,5 +9,5 @@
 }
 
 ::selection {
-	background-color: #e5e2fc;
+	@apply bg-gray-100 text-gray-800;
 }

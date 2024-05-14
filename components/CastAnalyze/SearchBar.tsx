@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import LinkSVG from './LinkSVG';
+import colors from '@/utils/colors';
 
 export default function SearchBar({
 	isLoaded,
@@ -16,7 +17,7 @@ export default function SearchBar({
 	fetchCast: () => void;
 }) {
 	return (
-		<div className="flex rounded-md bg-white shadow-sm">
+		<div className="flex rounded-md bg-neutral-50 shadow-sm">
 			<div className="pl-4 flex w-full">
 				<div className="pr-4 flex items-center">
 					<Link target="_blank" href={castUrl}>
@@ -27,7 +28,7 @@ export default function SearchBar({
 					initial={{ opacity: 1, fontWeight: 500, color: '#000000' }}
 					animate={{ opacity: isLoaded ? 1 : 0.7, fontWeight: 500, color: isLoaded ? '#12B981' : '#666666' }}
 					whileFocus={{ opacity: 1, paddingRight: 10, fontWeight: 500, filter: 'brightness(1)', color: '#666666' }}
-					className="px-3 py-2 focus:outline-none text-sm text-black w-full"
+					className="px-3 py-2 focus:outline-none text-sm text-black w-full bg-neutral-50"
 					type="text"
 					value={castUrl}
 					placeholder="Paste a Warpcast URL here and click Analyze"
@@ -41,6 +42,7 @@ export default function SearchBar({
 					paddingTop: 12,
 					paddingBottom: 12,
 					fontWeight: 500,
+					color: colors.neutral[400],
 				}}
 				animate={{
 					paddingRight: 0,
@@ -48,19 +50,20 @@ export default function SearchBar({
 					paddingTop: 12,
 					paddingBottom: 12,
 					fontWeight: 500,
+					color: colors.neutral[400],
 				}}
 				whileHover={{
-					paddingRight: 24,
-					paddingLeft: 24,
+					paddingRight: 21,
+					paddingLeft: 21,
 					paddingTop: 12,
 					paddingBottom: 12,
 					opacity: 1,
-					fontWeight: 525,
-					filter: 'brightness(1.05)',
+					fontWeight: 500,
+					color: colors.neutral[600],
 				}}
-				whileTap={{ scale: 0.9 }}
-				transition={{ type: 'spring', stiffness: 200 }}
-				className="text-sm rounded-e-md bg-black/[0.03] text-black/50 font-medium focus:outline-none flex items-center justify-center cursor-pointer group space-x-2"
+				whileTap={{ paddingRight: 21 }}
+				transition={{ type: 'spring', stiffness: 100 }}
+				className="text-sm rounded-e-md focus:outline-none flex items-center justify-center cursor-pointer group space-x-2"
 				onClick={() => fetchCast()}
 			>
 				<span>Analyze</span>
@@ -70,8 +73,8 @@ export default function SearchBar({
 						fill="none"
 						viewBox="0 0 24 24"
 					>
-						<path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13.75 6.75L19.25 12L13.75 17.25"></path>
-						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 12H4.75"></path>
+						<path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.75 6.75L19.25 12L13.75 17.25"></path>
+						<path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 12H4.75"></path>
 					</svg>
 				</span>
 			</motion.button>

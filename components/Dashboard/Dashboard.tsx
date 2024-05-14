@@ -10,5 +10,5 @@ export default function Dashboard() {
 		return null;
 	}
 
-	return <div className="min-h-screen bg-primary-white">{/* <h1>Dashboard</h1> */}</div>;
+	return <div className="min-h-screen bg-neutral-100">{/* <h1>Dashboard</h1> */}</div>;
 }

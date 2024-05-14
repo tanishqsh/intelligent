@@ -18,6 +18,7 @@ import ReplySVG from '@/components/CastAnalyze/ReplySVG';
 import ClockSVG from '@/components/CastAnalyze/ClockSVG';
 import toast from 'react-hot-toast';
 import Clock24SVG from '@/components/CastAnalyze/Clock24SVG';
+import colors from '@/utils/colors';
 
 dayjs.extend(relativeTime);
 
@@ -81,50 +82,48 @@ export default function Page() {
 		console.log(addresses);
 		toast.success('Copied all addresses', {
 			style: {
-				background: '#fefefe',
-				color: '#111',
-				border: '1px solid #ededed',
-				borderRadius: '5px',
+				background: colors.neutral[50],
+				color: colors.neutral[600],
+				borderRadius: '6px',
 				fontSize: '0.8rem',
-				fontFamily: 'Satoshi, sans-serif',
 			},
 			iconTheme: {
-				primary: '#F5F4FD',
-				secondary: 'rgb(34 197 94);',
+				primary: colors.neutral[100],
+				secondary: colors.neutral[600],
 			},
 		});
 	};
 
 	const castStats = [
 		{
-			icon: <ClockSVG className="w-5 h-5 text-slate-400" />,
+			icon: <ClockSVG className="w-5 h-5 text-neutral-300" />,
 			label: 'Posted on',
 			value: dayjs(timestamp).format('MMM D, YYYY'),
-			valueClassName: 'text-xs normal-case text-slate-500',
+			valueClassName: 'text-xs normal-case text-neutral-600',
 		},
 		{
-			icon: <Clock24SVG className="w-5 h-5 text-slate-400" />,
+			icon: <Clock24SVG className="w-5 h-5 text-neutral-300" />,
 			label: 'Age',
 			value: dayjs(timestamp).fromNow(),
-			valueClassName: 'text-xs normal-case text-slate-500',
+			valueClassName: 'text-xs normal-case text-neutral-600',
 		},
 		{
-			icon: <LikeSVG className="w-5 h-5 text-slate-500" />,
+			icon: <LikeSVG className="w-5 h-5 text-neutral-300" />,
 			label: 'Likes',
 			value: likes_count,
-			valueClassName: 'text-xs text-slate-500',
+			valueClassName: 'text-xs text-neutral-600',
 		},
 		{
-			icon: <ReplySVG className="w-5 h-5 text-slate-500" />,
+			icon: <ReplySVG className="w-5 h-5 text-neutral-300" />,
 			label: 'Replies',
 			value: replies,
-			valueClassName: 'text-xs text-slate-500',
+			valueClassName: 'text-xs text-neutral-600',
 		},
 		{
-			icon: <RecastSVG className="w-5 h-5 text-slate-500" />,
+			icon: <RecastSVG className="w-5 h-5 text-neutral-300" />,
 			label: 'Recasts',
 			value: recasts_count,
-			valueClassName: 'text-xs text-slate-500',
+			valueClassName: 'text-xs text-neutral-600',
 		},
 	];
 
@@ -138,7 +137,7 @@ export default function Page() {
 	];
 
 	return (
-		<div className="bg-primary-white min-h-screen pb-[100px]">
+		<div className="bg-neutral-100 min-h-screen pb-[100px]">
 			<div className="max-w-5xl m-auto">
 				<div className="pt-4">
 					<SearchBar isLoaded={isLoaded} castUrl={castUrl} setCastUrl={setCastUrl} fetchCast={fetchCast} />
@@ -184,16 +183,14 @@ const CastSections = ({
 		console.log('Copied address:', address);
 		toast.success('Copied address', {
 			style: {
-				background: '#fefefe',
-				color: '#111',
-				border: '1px solid #ededed',
-				borderRadius: '5px',
+				background: colors.neutral[50],
+				color: colors.neutral[600],
+				borderRadius: '6px',
 				fontSize: '0.8rem',
-				fontFamily: 'Satoshi, sans-serif',
 			},
 			iconTheme: {
-				primary: '#F5F4FD',
-				secondary: 'rgb(34 197 94);',
+				primary: colors.neutral[100],
+				secondary: colors.neutral[600],
 			},
 		});
 	};
@@ -218,28 +215,27 @@ const CastSections = ({
 						>
 							<div className="flex items-center space-x-2">
 								{stat.icon}
-								<span className="font-semibold text-slate-400 text-xs">{stat.label}</span>
+								<span className="font-semibold text-neutral-400 text-xs">{stat.label}</span>
 							</div>
 							<span className={stat.valueClassName}>{stat.value}</span>
 						</motion.div>
 					))}
 				</motion.div>
 				<motion.div
-					drag
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ type: 'spring', stiffness: 100 }}
 					className="bg-white mt-4 rounded-md shadow-sm"
 				>
-					<div className="text-xs py-3 px-3 border-b capitalize flex items-center justify-between font-medium">
-						<span className="font-medium text-slate-400 text-xs uppercase font-inter">{recasts?.length} Recasts</span>
+					<div className="text-xs py-1 px-3 border-b border-neutral-100 capitalize flex items-center justify-between">
+						<span className="font-medium text-neutral-600 text-xs font-inter">{recasts?.length} Recasts</span>
 						<motion.button
 							onClick={copyAllAddresses}
 							initial={{ scale: 1 }}
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.9 }}
 							transition={{ type: 'spring', stiffness: 100 }}
-							className="flex space-x-2 items-center uppercase font-inter px-2 py-1 rounded-md text-slate-400"
+							className="flex space-x-2 items-center font-medium uppercase px-2 py-1 rounded-md text-neutral-600"
 						>
 							<svg className="w-5" fill="none" viewBox="0 0 24 24">
 								<path
@@ -273,17 +269,21 @@ const CastSections = ({
 									animate={{ opacity: 1, paddingTop: 10, paddingBottom: 10, y: 0 }}
 									whileHover={{ opacity: 1, paddingTop: 15, paddingBottom: 15 }}
 									transition={{ type: 'spring', stiffness: 100 }}
-									className="flex items-center space-x-3 hover:bg-black/[0.03] px-2"
+									className="flex items-center space-x-3 bg-neutral-50 hover:bg-neutral-100 px-2"
 								>
 									<div className="flex-shrink-0 pl-2">
 										<Link target="_blank" href={`https://warpcast.com/${recast.user?.username}`}>
-											<img className="w-10 border-4 border-[#ededed] h-10 rounded-full" src={recast?.user?.pfp_url} alt="Profile" />
+											<img
+												className="w-10 border-4 border-neutral-100 h-10 rounded-full shadow-inner"
+												src={recast?.user?.pfp_url}
+												alt="Profile"
+											/>
 										</Link>
 									</div>
 
 									<div className="flex flex-col items-start justify-start w-full">
-										<div className="font-medium w-full opacity-75 text-base font-sans">{recast?.user?.display_name}</div>
-										<div className="font-medium opacity-50 text-xs">@{recast.user?.username}</div>
+										<div className="font-medium w-full text-base text-neutral-600">{recast?.user?.display_name}</div>
+										<div className="font-medium text-xs text-neutral-400">@{recast.user?.username}</div>
 									</div>
 									<div className="flex justify-end pr-2">
 										<motion.button
@@ -293,7 +293,7 @@ const CastSections = ({
 											whileTap={{ scale: 0.9 }}
 											className="px-2"
 										>
-											<svg className="w-5 h-8 text-gray-300 hover:text-gray-400" fill="none" viewBox="0 0 24 24">
+											<svg className="w-5 h-8 text-neutral-300 hover:text-neutral-400" fill="none" viewBox="0 0 24 24">
 												<path
 													stroke="currentColor"
 													strokeLinecap="round"
@@ -335,16 +335,16 @@ const CastSections = ({
 							<div className="w-full">
 								<div className="flex items-center space-x-4">
 									<div>
-										<img className="w-12 rounded-full border-4 border-[#ededed]" src={pfp} alt="Profile" />
+										<img className="w-12 rounded-full p-1 shadow-inner bg-neutral-100" src={pfp} alt="Profile" />
 									</div>
 									<div className="flex flex-col items-start justify-start">
-										<div className="font-medium opacity-80 text-base font-sans">{display_name}</div>
-										<div className="font-medium opacity-35 text-xs">@{username}</div>
+										<div className="font-medium text-base text-neutral-600">{display_name}</div>
+										<div className="font-medium text-xs text-neutral-400">@{username}</div>
 									</div>
 								</div>
 
-								<div className="font-sans text-sm mt-6" dangerouslySetInnerHTML={{ __html: text?.replace(/\n/g, '<br />') }} />
-								<div className="w-full m-auto border-10 h-auto mt-4">
+								<div className="text-sm mt-6 text-neutral-600" dangerouslySetInnerHTML={{ __html: text?.replace(/\n/g, '<br />') }} />
+								<div className="w-full m-auto h-auto mt-4">
 									{embeds?.map((embed: any) => {
 										if (embed?.url?.endsWith('.m3u8')) {
 											return (
