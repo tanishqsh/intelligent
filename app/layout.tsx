@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" className={`${general_sans.variable} ${space_mono.variable} ${inter.variable} `}>
-			<body className={general_sans.className}>
+			<body>
 				<Toaster position="top-center" reverseOrder={false} />
 				<Providers>{children}</Providers>
 			</body>

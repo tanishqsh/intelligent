@@ -12,7 +12,7 @@ export default function LandingPage() {
 	const router = useRouter();
 
 	return (
-		<div className="bg-primary-white min-h-screen">
+		<div className="bg-primary-white min-h-screen font-general-sans">
 			<div className="px-12 py-8 m-auto" id="header">
 				<motion.svg
 					initial={{ scale: 0.4, opacity: 0 }}
