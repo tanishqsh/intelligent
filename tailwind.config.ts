@@ -11,8 +11,6 @@ const config: Config = {
 			colors: {
 				'intelligent-yellow': '#FFAF34',
 				'primary-white': '#F5F4FD',
-				'gray-black': '#8888AA',
-				'intelligent-shade-2': '#ECEAFA',
 			},
 			fontFamily: {
 				'general-sans': 'var(--font-generalSans)',

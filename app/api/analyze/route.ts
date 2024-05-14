@@ -27,6 +27,7 @@ export async function GET(request: NextRequest) {
 	// retrieving hash to call fetchReactionsForCast
 	const cast = data.cast;
 	let recasts: any;
+	let likes: any;
 
 	try {
 		recasts = await client.fetchReactionsForCast(cast?.hash, ReactionsType.Recasts, {
@@ -37,5 +38,14 @@ export async function GET(request: NextRequest) {
 		return NextResponse.json({ message: 'Failed to fetch reactions', error: true, success: false });
 	}
 
-	return NextResponse.json({ cast: { ...data.cast, list_recasts: recasts }, error: false, success: true });
+	try {
+		likes = await client.fetchReactionsForCast(cast?.hash, ReactionsType.Likes, {
+			limit: 100,
+		});
+	} catch (error) {
+		console.error('Error fetching reactions (/analyze): ', error);
+		return NextResponse.json({ message: 'Failed to fetch reactions', error: true, success: false });
+	}
+
+	return NextResponse.json({ cast: { ...data.cast, list_recasts: recasts, list_likes: likes }, error: false, success: true });
 }
