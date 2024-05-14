@@ -20,7 +20,7 @@ export default function SearchBar({
 			<div className="pl-4 flex w-full">
 				<div className="pr-4 flex items-center">
 					<Link target="_blank" href={castUrl}>
-						<LinkSVG className={'w-4 h-4 ' + (isLoaded ? 'text-green-500' : 'text-gray-400')} />
+						<LinkSVG className={'w-4 h-4 ' + (isLoaded ? 'text-intelligent-yellow' : 'text-gray-400')} />
 					</Link>
 				</div>
 				<motion.input
