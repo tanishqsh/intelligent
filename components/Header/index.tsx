@@ -46,6 +46,7 @@ export default function Header() {
 					</motion.div>
 					<Menu />
 					<div className="flex items-center justify-center space-x-4">
+						<div className="px-3 py-1 rounded-full bg-[#f1efff] shadow-inner text-sm font-medium">beta</div>
 						<div className="px-1 py-1 rounded-full bg-[#f1efff] shadow-inner">
 							<img src={user?.farcaster?.pfp || 'https://via.placeholder.com/150'} alt="Profile Picture" className="rounded-full w-8 h-8"></img>
 						</div>
@@ -74,20 +75,11 @@ const Menu = () => {
 	return (
 		<div className="flex items-center justify-center space-x-8 antialiased">
 			<motion.div
-				initial={{ opacity: 0, y: 10, color: '#8888AA' }}
-				whileHover={{ opacity: 0.7, color: '#383838' }}
-				whileInView={{
-					opacity: 1,
-					y: 0,
-					transition: {
-						type: 'spring',
-						stiffness: 200,
-					},
-				}}
-				animate={{
-					opacity: 1,
-					y: 0,
-					color: pathname === '/dashboard' ? '#383838' : '#8888AA',
+				initial={{ opacity: 0, y: 10 }}
+				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard' ? '#383838' : '#8888AA' }}
+				whileHover={{ opacity: 1, color: '#383838' }}
+				transition={{
+					duration: 0.2,
 				}}
 			>
 				<Link href="/dashboard">
@@ -97,19 +89,17 @@ const Menu = () => {
 
 			<motion.div
 				initial={{ opacity: 0, y: 10 }}
-				whileHover={{ opacity: 0.7, color: '#383838' }}
 				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard/cast-analyze' ? '#383838' : '#8888AA' }}
+				whileHover={{ opacity: 1, color: '#383838' }}
 				transition={{
-					delay: 0.1,
-					type: 'spring',
-					stiffness: 200,
+					duration: 0.2,
 				}}
 			>
 				<Link href="/dashboard/cast-analyze">
 					<span className="font-medium cursor-pointer text-sm">Cast Analyze</span>
 				</Link>
 			</motion.div>
-			<motion.div
+			{/* <motion.div
 				initial={{ opacity: 0, y: 10 }}
 				whileHover={{ opacity: 0.7, color: '#383838' }}
 				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard/search' ? '#383838' : '#8888AA' }}
@@ -150,7 +140,7 @@ const Menu = () => {
 				<span className="font-medium cursor-pointer text-sm">
 					Ecosystem<sup className="text-[8px]"> Coming soon</sup>
 				</span>
-			</motion.div>
+			</motion.div> */}
 		</div>
 	);
 };

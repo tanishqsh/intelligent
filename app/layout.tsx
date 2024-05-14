@@ -3,8 +3,10 @@ import { Inter, Space_Mono } from 'next/font/google';
 import './globals.css';
 import Providers from '@/utils/providers';
 import localFont from 'next/font/local';
+import { Toaster } from 'react-hot-toast';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+
 const general_sans = localFont({
 	src: './fonts/GeneralSans-Variable.ttf',
 	display: 'swap',
@@ -24,8 +26,9 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={`${general_sans.variable} ${space_mono.variable}`}>
+		<html lang="en" className={`${general_sans.variable} ${space_mono.variable} ${inter.variable} `}>
 			<body className={general_sans.className}>
+				<Toaster position="top-center" reverseOrder={false} />
 				<Providers>{children}</Providers>
 			</body>
 		</html>

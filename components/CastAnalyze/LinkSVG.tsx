@@ -1,5 +1,5 @@
-const LinkSVG = () => (
-	<svg className="text-[#9e9e9e] w-4" fill="none" viewBox="0 0 24 24">
+const LinkSVG = ({ className }: { className?: string }) => (
+	<svg className={className} fill="none" viewBox="0 0 24 24">
 		<path
 			stroke="currentColor"
 			strokeLinecap="round"

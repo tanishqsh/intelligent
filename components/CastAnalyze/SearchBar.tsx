@@ -4,20 +4,30 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import LinkSVG from './LinkSVG';
 
-export default function SearchBar({ castUrl, setCastUrl, fetchCast }: { castUrl: string; setCastUrl: (value: string) => void; fetchCast: () => void }) {
+export default function SearchBar({
+	isLoaded,
+	castUrl,
+	setCastUrl,
+	fetchCast,
+}: {
+	isLoaded: boolean;
+	castUrl: string;
+	setCastUrl: (value: string) => void;
+	fetchCast: () => void;
+}) {
 	return (
 		<div className="flex rounded-md bg-white shadow-sm">
 			<div className="pl-4 flex w-full">
 				<div className="pr-4 flex items-center">
 					<Link target="_blank" href={castUrl}>
-						<LinkSVG />
+						<LinkSVG className={'w-4 h-4 ' + (isLoaded ? 'text-green-500' : 'text-gray-500')} />
 					</Link>
 				</div>
 				<motion.input
-					whileFocus={{ paddingRight: 10, fontWeight: 450, filter: 'brightness(1)' }}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					className="px-3 py-2 focus:outline-none text-sm text-[#383838] focus:ring-opacity-50 w-full"
+					initial={{ opacity: 1, fontWeight: 500, color: '#000000' }}
+					animate={{ opacity: isLoaded ? 1 : 0.7, fontWeight: 500, color: isLoaded ? '#12B981' : '#666666' }}
+					whileFocus={{ opacity: 1, paddingRight: 10, fontWeight: 550, filter: 'brightness(1)', color: '#666666' }}
+					className="px-3 py-2 focus:outline-none text-sm text-black w-full"
 					type="text"
 					value={castUrl}
 					placeholder="Paste a Warpcast URL here and click Analyze"
@@ -26,35 +36,31 @@ export default function SearchBar({ castUrl, setCastUrl, fetchCast }: { castUrl:
 			</div>
 			<motion.button
 				initial={{
-					paddingRight: 4,
-					paddingLeft: 4,
-					paddingTop: 2,
-					paddingBottom: 2,
-					opacity: 0.6,
+					paddingRight: 20,
+					paddingLeft: 20,
+					paddingTop: 12,
+					paddingBottom: 12,
 					fontWeight: 500,
-					backgroundColor: '#ECEAFA',
 				}}
 				animate={{
 					paddingRight: 20,
 					paddingLeft: 20,
 					paddingTop: 12,
 					paddingBottom: 12,
-					opacity: 1,
 					fontWeight: 500,
-					backgroundColor: '#FFAF34',
 				}}
 				whileHover={{
 					paddingRight: 24,
 					paddingLeft: 24,
 					paddingTop: 12,
 					paddingBottom: 12,
-					opacity: 0.9,
+					opacity: 1,
 					fontWeight: 525,
-					backgroundColor: '#FFAF34',
+					filter: 'brightness(1.05)',
 				}}
 				whileTap={{ scale: 0.9 }}
-				transition={{ type: 'spring', duration: 0.1, stiffness: 200 }}
-				className="text-sm rounded-e-lg"
+				transition={{ type: 'spring', stiffness: 200 }}
+				className="text-sm rounded-e-md bg-zinc-100 text-black font-medium focus:outline-none"
 				onClick={() => fetchCast()}
 			>
 				Analyze

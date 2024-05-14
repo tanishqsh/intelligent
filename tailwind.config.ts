@@ -17,6 +17,7 @@ const config: Config = {
 			fontFamily: {
 				'general-sans': 'var(--font-generalSans)',
 				'space-mono': 'var(--font-spaceMono)',
+				inter: 'var(--font-inter)',
 			},
 		},
 	},
