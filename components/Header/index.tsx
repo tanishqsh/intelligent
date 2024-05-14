@@ -29,7 +29,7 @@ export default function Header() {
 	console.log('Users:', user);
 
 	return (
-		<header className="bg-white border-b">
+		<header className="bg-primary-white">
 			<div className="px-6 py-4" id="surroundings">
 				<div className="flex items-center justify-between">
 					<motion.div
