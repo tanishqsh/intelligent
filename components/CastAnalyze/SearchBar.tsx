@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import LinkSVG from './LinkSVG';
+import LinkSVG from './SVG/LinkSVG';
 import colors from '@/utils/colors';
 
 export default function SearchBar({
