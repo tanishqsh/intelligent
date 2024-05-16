@@ -19,13 +19,19 @@ import colors from '@/utils/colors';
 import CastPreview from './CastPreview';
 import RecastsTab from './RecastsTab';
 import CastStatsTab from './CastStatsTab';
+import ClockEmptySVG from './SVG/ClockEmptySVG';
+import { motion } from 'framer-motion';
 
 dayjs.extend(relativeTime);
 
 export default function CastAnalyze() {
 	const [cast, setCast] = useState<any>(SampleCastWithVideo);
+	const [lastSynced, setLastSynced] = useState<any>(null);
 	const [castUrl, setCastUrl] = useState(SampleWarpcastURL);
 	const [isLoaded, setIsLoaded] = useState(true);
+
+	// live sync
+	const [isConstantSyncOn, setIsConstantSyncOn] = useState(false);
 
 	useEffect(() => {
 		if (castUrl) {
@@ -44,6 +50,8 @@ export default function CastAnalyze() {
 
 		if (response.data.success) {
 			setCast(response.data.cast);
+			let lastSynced = new Date();
+			setLastSynced(lastSynced);
 			setIsLoaded(true);
 		} else {
 			toast.error('Failed to fetch cast, please try again later');
@@ -55,6 +63,18 @@ export default function CastAnalyze() {
 			console.log('From the state:', cast);
 		}
 	}, [cast]);
+
+	useEffect(() => {
+		if (castUrl && isConstantSyncOn) {
+			// try fetching every 2 seconds
+			const interval = setInterval(() => {
+				fetchCast();
+				console.log('Cast synched!');
+			}, 2000);
+			return () => clearInterval(interval);
+		}
+	}),
+		[castUrl];
 
 	// about caster
 	const username = cast?.author?.username;
@@ -94,6 +114,12 @@ export default function CastAnalyze() {
 	};
 
 	const castStats = [
+		{
+			icon: <ClockEmptySVG className="w-5 h-5 text-neutral-300" />,
+			label: 'Last synced',
+			value: dayjs(lastSynced).fromNow(),
+			valueClassName: 'text-xs normal-case text-neutral-600',
+		},
 		{
 			icon: <ClockSVG className="w-5 h-5 text-neutral-300" />,
 			label: 'Posted on',
@@ -135,6 +161,13 @@ export default function CastAnalyze() {
 		},
 	];
 
+	// update last synced every 1 second
+	useEffect(() => {
+		const interval = setInterval(() => {}, 1000);
+
+		return () => clearInterval(interval);
+	}, []);
+
 	return (
 		<div className="bg-neutral-100 min-h-screen pb-[100px]">
 			<div className="max-w-5xl m-auto">
@@ -143,7 +176,7 @@ export default function CastAnalyze() {
 				</div>
 				{isLoaded && (
 					<div className="w-full md:flex items-start md:space-x-4">
-						<div className="mt-4 w-full md:w-2/6">
+						<div className="mt-4 w-full md:w-2/6 space-y-4">
 							<CastStatsTab castStats={castStats} />
 							<RecastsTab recasts={recasts} copyAllAddresses={copyAllAddresses} />
 						</div>
@@ -156,3 +189,60 @@ export default function CastAnalyze() {
 		</div>
 	);
 }
+
+const CastActions = ({
+	isConstantSyncOn,
+	setIsConstantSyncOn,
+}: {
+	isConstantSyncOn: boolean;
+	setIsConstantSyncOn: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+	return (
+		<div>
+			<motion.div
+				initial={{ opacity: 1, y: 30 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ type: 'spring', stiffness: 100 }}
+				className="shadow-sm bg-white font-inter rounded-md uppercase font-medium divide-y divide-dotted"
+			>
+				<motion.div
+					initial={{ opacity: 0, y: 20, paddingTop: 10, paddingBottom: 10 }}
+					animate={{ opacity: 1, y: 0, paddingTop: 10, paddingBottom: 10 }}
+					whileHover={{ opacity: 1, paddingTop: 15, paddingBottom: 15 }}
+					transition={{ type: 'spring', stiffness: 100 }}
+					className={`font-medium text-xs w-full py-2 px-2 justify-between flex items-center rounded-t-md`}
+				>
+					<div className="flex items-center space-x-2">
+						{isConstantSyncOn ? (
+							<button onClick={() => setIsConstantSyncOn(!isConstantSyncOn)}>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-neutral-300">
+									<path
+										fillRule="evenodd"
+										d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z"
+										clipRule="evenodd"
+									/>
+								</svg>
+							</button>
+						) : (
+							<button onClick={() => setIsConstantSyncOn(!isConstantSyncOn)}>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-neutral-300">
+									<path
+										fillRule="evenodd"
+										d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
+										clipRule="evenodd"
+									/>
+								</svg>
+							</button>
+						)}
+
+						<span className="font-semibold text-neutral-400 text-xs">
+							Live sync
+							{isConstantSyncOn ? <span> ON </span> : <span> OFF</span>}
+						</span>
+					</div>
+					<div className={`h-2 w-2 rounded-full ${isConstantSyncOn ? 'bg-green-500' : 'bg-neutral-300'}`}></div>
+				</motion.div>
+			</motion.div>
+		</div>
+	);
+};

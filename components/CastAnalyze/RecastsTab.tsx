@@ -26,7 +26,7 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddres
 			initial={{ opacity: 0, y: 30 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ type: 'spring', stiffness: 100 }}
-			className="bg-white mt-4 rounded-md shadow-sm"
+			className="bg-white rounded-md shadow-sm"
 		>
 			<div className="text-xs py-1 px-3 border-b border-neutral-100 capitalize flex items-center justify-between">
 				<span className="font-medium text-neutral-600 text-xs font-inter">{recasts?.length} Recasts</span>
@@ -36,7 +36,7 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddres
 					whileHover={{ scale: 1.05 }}
 					whileTap={{ scale: 0.9 }}
 					transition={{ type: 'spring', stiffness: 100 }}
-					className="flex space-x-2 items-center font-medium uppercase px-2 py-1 rounded-md text-neutral-600"
+					className="flex space-x-1 items-center font-medium px-2 py-1 rounded-md text-neutral-600"
 				>
 					<svg className="w-5" fill="none" viewBox="0 0 24 24">
 						<path
