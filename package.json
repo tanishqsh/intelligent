@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@firebase/firestore": "^4.6.2",
     "@neynar/nodejs-sdk": "^1.21.2",
     "@privy-io/react-auth": "^1.64.0",
     "axios": "^1.6.8",
     "dayjs": "^1.11.11",
+    "firebase": "^10.12.0",
     "framer-motion": "^11.1.9",
     "hls.js": "^1.5.8",
     "next": "14.2.3",

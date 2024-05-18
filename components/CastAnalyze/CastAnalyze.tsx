@@ -4,6 +4,7 @@ import SearchBar from '@/components/CastAnalyze/SearchBar';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 import { useEffect, useState } from 'react';
 
@@ -21,17 +22,31 @@ import RecastsTab from './RecastsTab';
 import CastStatsTab from './CastStatsTab';
 import ClockEmptySVG from './SVG/ClockEmptySVG';
 import { motion } from 'framer-motion';
+import { fetchCast } from '@/lib/backend/fetchCast';
 
-dayjs.extend(relativeTime);
+// firebase
+import { collection, query, where, onSnapshot, QuerySnapshot, DocumentData } from 'firebase/firestore';
+import firestore from '@/lib/firebase/firestore';
+import RepliesTab from './RepliesTab';
+
+interface FirestoreData {
+	id: string;
+	reactionType?: 'like' | 'recast';
+	[key: string]: any;
+}
 
 export default function CastAnalyze() {
-	const [cast, setCast] = useState<any>(SampleCastWithVideo);
+	const [cast, setCast] = useState<any>();
 	const [lastSynced, setLastSynced] = useState<any>(null);
-	const [castUrl, setCastUrl] = useState(SampleWarpcastURL);
-	const [isLoaded, setIsLoaded] = useState(true);
+	const [castUrl, setCastUrl] = useState('');
+	const [isLoaded, setIsLoaded] = useState(false);
 
-	// live sync
-	const [isConstantSyncOn, setIsConstantSyncOn] = useState(false);
+	// listener stores replies
+	const [replies, setReplies] = useState<any[]>([]);
+	const [likes, setLikes] = useState<any[]>([]);
+	const [recasts, setRecasts] = useState<any[]>([]);
+
+	const [listenerStarted, setListenerStarted] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (castUrl) {
@@ -39,61 +54,91 @@ export default function CastAnalyze() {
 		}
 	}, [castUrl]);
 
-	const fetchCast = async () => {
-		const url = `/api/analyze?castUrl=${encodeURIComponent(castUrl)}`;
-		const response = await axios.get(url);
-		console.log(response.data);
-		if (response.data.error) {
-			console.error(response.data.message);
-			return;
-		}
-
-		if (response.data.success) {
-			setCast(response.data.cast);
-			let lastSynced = new Date();
-			setLastSynced(lastSynced);
+	const beginfetchCast = async () => {
+		const data = await fetchCast(castUrl);
+		console.log('Data in Frontend Component:', data);
+		if (data.success) {
+			setCast(data.cast);
 			setIsLoaded(true);
-		} else {
-			toast.error('Failed to fetch cast, please try again later');
+			startListener();
 		}
 	};
 
 	useEffect(() => {
-		if (cast) {
-			console.log('From the state:', cast);
+		let unsubscribeReplies: (() => void) | undefined;
+		if (listenerStarted && cast && isLoaded) {
+			const q = query(collection(firestore, 'replies'), where('parentHash', '==', cast.hash));
+
+			unsubscribeReplies = onSnapshot(q, (snapshot: QuerySnapshot<DocumentData>) => {
+				const newData = snapshot.docs.map((doc) => ({
+					id: doc.id,
+					...doc.data(),
+				}));
+				console.log('New data:', newData);
+				setReplies(newData);
+			});
 		}
-	}, [cast]);
+
+		return () => {
+			if (unsubscribeReplies) unsubscribeReplies();
+		};
+	}, [listenerStarted]);
 
 	useEffect(() => {
-		if (castUrl && isConstantSyncOn) {
-			// try fetching every 2 seconds
-			const interval = setInterval(() => {
-				fetchCast();
-				console.log('Cast synched!');
-			}, 2000);
-			return () => clearInterval(interval);
+		let unsubscribeReactions: (() => void) | undefined;
+
+		if (listenerStarted && cast && isLoaded) {
+			const reactionsCollectionPath = `casts/${cast.hash}/reactions`;
+			const reactionsCollection = collection(firestore, reactionsCollectionPath);
+			unsubscribeReactions = onSnapshot(reactionsCollection, (snapshot: QuerySnapshot<DocumentData>) => {
+				const newLikes: FirestoreData[] = [];
+				const newRecasts: FirestoreData[] = [];
+
+				snapshot.docs.forEach((doc) => {
+					const data: FirestoreData = {
+						id: doc.id,
+						...doc.data(),
+					};
+
+					if (data.reactionType === 'like') {
+						newLikes.push(data);
+					} else if (data.reactionType === 'recast') {
+						newRecasts.push(data);
+					}
+				});
+
+				console.log('New likes:', newLikes);
+				console.log('New recasts:', newRecasts);
+
+				setLikes(newLikes);
+				setRecasts(newRecasts);
+			});
 		}
-	}),
-		[castUrl];
+
+		return () => {
+			if (unsubscribeReactions) unsubscribeReactions();
+		};
+	}, [listenerStarted, cast, isLoaded]);
+
+	const startListener = () => {
+		setListenerStarted(true);
+	};
 
 	// about caster
-	const username = cast?.author?.username;
-	const pfp = cast?.author?.pfp_url;
-	const display_name = cast?.author?.display_name;
+	const username = cast?.castedBy?.profileHandle;
+	const pfp = cast?.castedBy?.profileImage;
+	const display_name = cast?.castedBy?.profileDisplayName;
 
 	// about cast
 	const text = cast?.text; // this should be rendered so that \n can be rendered as line
-	const timestamp = cast?.timestamp;
+	const timestamp = cast?.castedAtTimestamp;
 	const embeds = cast?.embeds;
 	const hash = cast?.hash;
 
 	// stats
-	const likes_count = cast?.reactions?.likes_count;
-	const recasts_count = cast?.reactions?.recasts_count;
-	const replies = cast?.replies?.count;
-
-	// list recasts
-	const recasts = cast?.list_recasts?.reactions;
+	const likes_count = cast?.numberOfLikes || 0;
+	const recasts_count = cast?.numberOfRecasts || 0;
+	const replies_count = cast?.numberOfReplies || 0;
 
 	const copyAllAddresses = () => {
 		const addresses = recasts.map((recast: any) => recast.user?.verifications?.[0]);
@@ -141,7 +186,7 @@ export default function CastAnalyze() {
 		{
 			icon: <ReplySVG className="w-5 h-5 text-neutral-300" />,
 			label: 'Replies',
-			value: replies,
+			value: replies_count,
 			valueClassName: 'text-xs text-neutral-600',
 		},
 		{
@@ -161,18 +206,11 @@ export default function CastAnalyze() {
 		},
 	];
 
-	// update last synced every 1 second
-	useEffect(() => {
-		const interval = setInterval(() => {}, 1000);
-
-		return () => clearInterval(interval);
-	}, []);
-
 	return (
 		<div className="bg-neutral-100 min-h-screen pb-[100px]">
 			<div className="max-w-5xl m-auto">
 				<div className="pt-4">
-					<SearchBar isLoaded={isLoaded} castUrl={castUrl} setCastUrl={setCastUrl} fetchCast={fetchCast} />
+					<SearchBar isLoaded={isLoaded} castUrl={castUrl} setCastUrl={setCastUrl} fetchCast={beginfetchCast} />
 				</div>
 				{isLoaded && (
 					<div className="w-full md:flex items-start md:space-x-4">
@@ -182,6 +220,9 @@ export default function CastAnalyze() {
 						</div>
 						<div className="w-full md:w-4/6">
 							<CastPreview pfp={pfp} display_name={display_name} username={username} text={text} embeds={embeds} />
+							<div className="mt-4">
+								<RepliesTab replies={replies} />
+							</div>
 						</div>
 					</div>
 				)}

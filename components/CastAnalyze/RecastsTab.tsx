@@ -63,6 +63,10 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddres
 			</div>
 			<div className="space-y-0 flex flex-col max-h-[400px] overflow-scroll divide-y divide-dotted">
 				{recasts?.map((recast: any, i: number) => {
+					let profileHandle = recast?.reactedBy?.profileHandle;
+					let profileImage = recast?.reactedBy?.profileImage;
+					let profileDisplayName = recast?.reactedBy?.profileDisplayName;
+
 					return (
 						<motion.div
 							key={i}
@@ -73,22 +77,18 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddres
 							className="flex items-center space-x-3 bg-neutral-50 hover:bg-neutral-100 px-2"
 						>
 							<div className="flex-shrink-0 pl-2">
-								<Link target="_blank" href={`https://warpcast.com/${recast.user?.username}`}>
-									<img
-										className="w-10 border-4 border-neutral-100 h-10 rounded-full shadow-inner"
-										src={recast?.user?.pfp_url}
-										alt="Profile"
-									/>
+								<Link target="_blank" href={`https://warpcast.com/${profileHandle}`}>
+									<img className="w-10 border-4 border-neutral-100 h-10 rounded-full shadow-inner" src={profileImage} alt="Profile" />
 								</Link>
 							</div>
 
 							<div className="flex flex-col items-start justify-start w-full">
-								<div className="font-medium w-full text-base text-neutral-600">{recast?.user?.display_name}</div>
-								<div className="font-medium text-xs text-neutral-400">@{recast.user?.username}</div>
+								<div className="font-medium w-full text-base text-neutral-600">{profileDisplayName}</div>
+								<div className="font-medium text-xs text-neutral-400">@{profileHandle}</div>
 							</div>
 							<div className="flex justify-end pr-2">
 								<motion.button
-									onClick={() => copyAddress(recast?.user?.verifications?.[0])}
+									// onClick={() => copyAddress(recast?.user?.verifications?.[0])}
 									initial={{ scale: 1 }}
 									whileHover={{ scale: 1 }}
 									whileTap={{ scale: 0.9 }}

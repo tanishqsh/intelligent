@@ -12,7 +12,7 @@ const CastPreview = ({ pfp, display_name, username, text, embeds }: { pfp: strin
 			className="bg-white mt-4 rounded-md shadow-sm w-full"
 		>
 			<div className="flex space-x-4 items-start">
-				<div className="flex items-start justify-center space-x-4 p-6">
+				<div className=" p-6">
 					<div className="w-full">
 						<div className="flex items-center space-x-4">
 							<div>
@@ -25,7 +25,7 @@ const CastPreview = ({ pfp, display_name, username, text, embeds }: { pfp: strin
 						</div>
 
 						<div className="text-sm mt-4 text-neutral-600" dangerouslySetInnerHTML={{ __html: text?.replace(/\n/g, '<br />') }} />
-						<div className="w-full m-auto h-auto">
+						<div className="w-full m-auto h-auto flex items-center justify-center">
 							{embeds?.map((embed: any) => {
 								if (embed?.url?.endsWith('.m3u8')) {
 									return (
