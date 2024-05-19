@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
-const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddresses: () => void }) => {
+const LikesTab = ({ likes, copyAllAddresses }: { likes: any; copyAllAddresses: () => void }) => {
 	const copyAddress = (address: string) => {
 		navigator.clipboard.writeText(address);
 		console.log('Copied address:', address);
@@ -29,7 +29,7 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddres
 			className="bg-white rounded-md shadow-sm"
 		>
 			<div className="text-xs py-2 px-3 border-b border-neutral-100 capitalize flex items-center justify-between">
-				<span className="px-1 font-medium text-neutral-600 text-xs font-inter">{recasts?.length} Recasts</span>
+				<span className="px-1 font-medium text-neutral-600 text-xs font-inter">{likes?.length} Likes</span>
 				<motion.button
 					onClick={copyAllAddresses}
 					initial={{ scale: 1 }}
@@ -62,10 +62,10 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddres
 				</motion.button>
 			</div>
 			<div className="space-y-0 flex flex-col max-h-[400px] overflow-scroll divide-y divide-dotted">
-				{recasts?.map((recast: any, i: number) => {
-					let profileHandle = recast?.reactedBy?.profileHandle;
-					let profileImage = recast?.reactedBy?.profileImage;
-					let profileDisplayName = recast?.reactedBy?.profileDisplayName;
+				{likes?.map((like: any, i: number) => {
+					let profileHandle = like?.reactedBy?.profileHandle;
+					let profileImage = like?.reactedBy?.profileImage;
+					let profileDisplayName = like?.reactedBy?.profileDisplayName;
 
 					return (
 						<motion.div
@@ -126,4 +126,4 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddres
 	);
 };
 
-export default RecastsTab;
+export default LikesTab;

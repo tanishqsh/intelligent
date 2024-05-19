@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import PowerBadgeSVG from './SVG/PowerBadgeSVG';
-import PopularSVG from './SVG/PopularSVG';
 import dayjs from 'dayjs';
 dayjs.extend(require('dayjs/plugin/relativeTime'));
 
@@ -12,9 +11,9 @@ export default function RepliesTab({ replies }: { replies: any[] }) {
 
 	return (
 		<div>
-			<div className="text-neutral-400 text-xs bg-white py-3 rounded-t-md">
-				<div className="text-xs py-1 px-3 border-neutral-100 capitalize flex items-center justify-between">
-					<span className="font-medium text-neutral-600 text-xs font-inter">{repliesCount} Replies</span>
+			<div className="text-neutral-400 text-xs bg-white shadow-sm border-b border-neutral-100 py-3 rounded-t-md">
+				<div className="text-xs py-1 px-2 capitalize flex items-center justify-between">
+					<span className="font-medium text-neutral-600 text-xs font-inter px-3">{repliesCount} Replies</span>
 				</div>
 			</div>
 			<div className="space-y-0 flex flex-col max-h-[600px] overflow-scroll divide-y divide-dotted">
@@ -36,11 +35,11 @@ export default function RepliesTab({ replies }: { replies: any[] }) {
 							animate={{ opacity: 1, paddingTop: 10, paddingBottom: 10, y: 0 }}
 							whileHover={{ opacity: 1, paddingTop: 15, paddingBottom: 15 }}
 							transition={{ type: 'spring', stiffness: 100 }}
-							className="flex items-center space-x-3 bg-neutral-50 hover:bg-neutral-100 px-2"
+							className="flex items-center space-x-3 bg-neutral-50 hover:bg-neutral-100 px-2 shadow-sm"
 						>
 							<div className="flex justify-between w-full">
 								<div className="">
-									<div className="flex space-x-2 py-1">
+									<div className="flex space-x-2 py-1 cursor-default">
 										<div className="flex-shrink-0 pl-2">
 											<Link target="_blank" href={`https://warpcast.com/${replierHandle}`}>
 												<img className="w-10 border-4 border-neutral-100 h-10 rounded-full shadow-inner" src={pfp} alt="Profile" />
@@ -55,7 +54,11 @@ export default function RepliesTab({ replies }: { replies: any[] }) {
 												<div>{isPowerUser && <PowerBadgeSVG className="w-4" />}</div>
 												<div className="font-medium text-xs text-neutral-400 opacity-75">@{replierHandle}</div>
 											</div>
-											<div className="text-[15px] text-neutral-600 pt-[2px]">{text}</div>
+											<div
+												className="text-[15px] text-neutral-600 pt-[2px]"
+												dangerouslySetInnerHTML={{ __html: text?.replace(/\n/g, '<br/>') }}
+											/>
+
 											<div className="font-medium text-xs text-neutral-400 opacity-75 w-full pt-[2px]">{formattedAge}</div>
 										</div>
 									</div>

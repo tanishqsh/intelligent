@@ -28,7 +28,7 @@ export default function RootLayout({
 	return (
 		<html lang="en" className={`${general_sans.variable} ${space_mono.variable} ${inter.variable} `}>
 			<body>
-				<Toaster position="top-center" reverseOrder={false} />
+				<Toaster position="top-right" reverseOrder={false} />
 				<Providers>{children}</Providers>
 			</body>
 		</html>
