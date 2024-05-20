@@ -51,15 +51,8 @@ export default function CastAnalyze() {
 
 	const [listenerStarted, setListenerStarted] = useState<boolean>(false);
 
-	useEffect(() => {
-		if (castUrl) {
-			console.log(castUrl);
-		}
-	}, [castUrl]);
-
 	const beginFetchCast = async (): Promise<void> => {
 		const data = await fetchCast(castUrl);
-		console.log('Data in Frontend Component:', data);
 		if (data.success) {
 			setCast(data.cast);
 			setIsLoaded(true);
@@ -77,7 +70,6 @@ export default function CastAnalyze() {
 					id: doc.id,
 					...doc.data(),
 				}));
-				console.log('New replies data:', newData);
 				setReplies(newData);
 			});
 		}
@@ -109,9 +101,6 @@ export default function CastAnalyze() {
 						newRecasts.push(data);
 					}
 				});
-
-				console.log('New likes:', newLikes);
-				console.log('New recasts:', newRecasts);
 
 				setLikes(newLikes);
 				setRecasts(newRecasts);

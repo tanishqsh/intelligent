@@ -12,8 +12,6 @@ export default function Header() {
 
 	const { ready, authenticated, logout, user } = usePrivy();
 
-	console.log('User:', user);
-
 	if (!ready) {
 		return (
 			<div className="flex items-center justify-center h-screen">
@@ -29,7 +27,7 @@ export default function Header() {
 		router.replace('/');
 	}
 
-	console.log('Users:', user);
+	console.log('Fetched User:', user);
 
 	return (
 		<header className="bg-neutral-100">
