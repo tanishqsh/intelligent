@@ -27,8 +27,6 @@ export default function Header() {
 		router.replace('/');
 	}
 
-	console.log('Fetched User:', user);
-
 	return (
 		<header className="bg-neutral-100">
 			<div className="px-6 py-4" id="surroundings">

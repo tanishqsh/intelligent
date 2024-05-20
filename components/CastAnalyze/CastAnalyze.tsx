@@ -73,7 +73,6 @@ export default function CastAnalyze() {
 		if (user?.farcaster?.fid) {
 			const data = await fetchAlfaFrensData(user.farcaster.fid);
 			if (data.success) {
-				console.log('INSIDE COMPONENT: ', data);
 				setAlfaFrensData(data);
 			}
 		}
