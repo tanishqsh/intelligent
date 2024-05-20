@@ -198,10 +198,14 @@ export default function CastAnalyze() {
 	const copyAllAddresses = (type: string) => {
 		let addresses: string[] = []; // Ensure addresses is initialized
 
+		let likesArray = useAlfaFrensFiltering ? filteredLikes : likes;
+		let recastsArray = useAlfaFrensFiltering ? filteredRecasts : recasts;
+		let repliesArray = useAlfaFrensFiltering ? filteredReplies : replies;
+
 		if (type === 'likes') {
 			addresses = Array.from(
 				new Set(
-					likes
+					likesArray
 						.map((like) => {
 							const connectedWalletAddress =
 								like?.reactedBy?.connectedAddresses &&
@@ -217,7 +221,7 @@ export default function CastAnalyze() {
 		} else if (type === 'recasts') {
 			addresses = Array.from(
 				new Set(
-					recasts
+					recastsArray
 						.map((recast) => {
 							const connectedWalletAddress =
 								recast?.reactedBy?.connectedAddresses &&
@@ -233,7 +237,7 @@ export default function CastAnalyze() {
 		} else if (type === 'replies') {
 			addresses = Array.from(
 				new Set(
-					replies
+					repliesArray
 						.map((reply) => {
 							const connectedWalletAddress =
 								reply?.castedBy?.connectedAddresses &&
