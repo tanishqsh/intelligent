@@ -1,7 +1,9 @@
 import colors from '@/utils/colors';
+import toastStyles from '@/utils/toastStyles';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
+import PowerBadgeSVG from './SVG/PowerBadgeSVG';
 
 const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddresses: () => void }) => {
 	const copyAddress = (address: string) => {
@@ -66,6 +68,26 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddres
 					let profileHandle = recast?.reactedBy?.profileHandle;
 					let profileImage = recast?.reactedBy?.profileImage;
 					let profileDisplayName = recast?.reactedBy?.profileDisplayName;
+					let isPowerUser = recast?.reactedBy?.isFarcasterPowerUser;
+
+					let connectedWalletAddress =
+						recast?.reactedBy?.connectedAddresses && recast.reactedBy.connectedAddresses.length > 0
+							? recast.reactedBy.connectedAddresses[0].address
+							: null;
+
+					const copyAddress = () => {
+						navigator.clipboard.writeText(connectedWalletAddress);
+						toast.success(
+							`${profileDisplayName}'s address (****${connectedWalletAddress.slice(0, 4)}...${connectedWalletAddress.slice(
+								-4
+							)}) copied to clipboard`,
+							toastStyles.success
+						);
+					};
+
+					const noWalletConnected = () => {
+						toast.error(`${profileDisplayName} has not connected a wallet`, toastStyles.error);
+					};
 
 					return (
 						<motion.div
@@ -83,18 +105,24 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddres
 							</div>
 
 							<div className="flex flex-col items-start justify-start w-full">
-								<div className="font-medium w-full text-base text-neutral-600">{profileDisplayName}</div>
+								<div className="font-medium w-full text-base text-neutral-600 flex items-center">
+									{profileDisplayName} <div>{isPowerUser && <PowerBadgeSVG className="w-4" />}</div>
+								</div>
 								<div className="font-medium text-xs text-neutral-400">@{profileHandle}</div>
 							</div>
 							<div className="flex justify-end pr-2">
 								<motion.button
-									// onClick={() => copyAddress(recast?.user?.verifications?.[0])}
+									onClick={() => (connectedWalletAddress ? copyAddress() : noWalletConnected())}
 									initial={{ scale: 1 }}
 									whileHover={{ scale: 1 }}
 									whileTap={{ scale: 0.9 }}
 									className="px-2"
 								>
-									<svg className="w-5 h-8 text-neutral-300 hover:text-neutral-400" fill="none" viewBox="0 0 24 24">
+									<svg
+										className={`w-5 h-8 ${connectedWalletAddress ? 'text-neutral-300 hover:text-neutral-400' : 'text-rose-600'}`}
+										fill="none"
+										viewBox="0 0 24 24"
+									>
 										<path
 											stroke="currentColor"
 											strokeLinecap="round"

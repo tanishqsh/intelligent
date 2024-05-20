@@ -1,6 +1,6 @@
 'use client';
 
-import SearchBar from '@/components/CastAnalyze/SearchBar';
+import SearchBar from '@/components/CastAnalyze/SearchBar/SearchBar';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';

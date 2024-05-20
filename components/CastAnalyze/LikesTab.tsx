@@ -1,4 +1,5 @@
 import colors from '@/utils/colors';
+import toastStyles from '@/utils/toastStyles';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -66,6 +67,26 @@ const LikesTab = ({ likes, copyAllAddresses }: { likes: any; copyAllAddresses: (
 					let profileHandle = like?.reactedBy?.profileHandle;
 					let profileImage = like?.reactedBy?.profileImage;
 					let profileDisplayName = like?.reactedBy?.profileDisplayName;
+					let isPowerUser = like?.reactedBy?.isFarcasterPowerUser;
+
+					let connectedWalletAddress =
+						like?.reactedBy?.connectedAddresses && like.reactedBy.connectedAddresses.length > 0
+							? like.reactedBy.connectedAddresses[0].address
+							: null;
+
+					const copyAddress = () => {
+						navigator.clipboard.writeText(connectedWalletAddress);
+						toast.success(
+							`${profileDisplayName}'s address (****${connectedWalletAddress.slice(0, 4)}...${connectedWalletAddress.slice(
+								-4
+							)}) copied to clipboard`,
+							toastStyles.success
+						);
+					};
+
+					const noWalletConnected = () => {
+						toast.error(`${profileDisplayName} has not connected a wallet`, toastStyles.error);
+					};
 
 					return (
 						<motion.div
@@ -88,13 +109,17 @@ const LikesTab = ({ likes, copyAllAddresses }: { likes: any; copyAllAddresses: (
 							</div>
 							<div className="flex justify-end pr-2">
 								<motion.button
-									// onClick={() => copyAddress(recast?.user?.verifications?.[0])}
+									onClick={() => (connectedWalletAddress ? copyAddress() : noWalletConnected())}
 									initial={{ scale: 1 }}
 									whileHover={{ scale: 1 }}
 									whileTap={{ scale: 0.9 }}
 									className="px-2"
 								>
-									<svg className="w-5 h-8 text-neutral-300 hover:text-neutral-400" fill="none" viewBox="0 0 24 24">
+									<svg
+										className={`w-5 h-8 ${connectedWalletAddress ? 'text-neutral-300 hover:text-neutral-400' : 'text-rose-600'}`}
+										fill="none"
+										viewBox="0 0 24 24"
+									>
 										<path
 											stroke="currentColor"
 											strokeLinecap="round"

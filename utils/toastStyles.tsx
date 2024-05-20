@@ -13,6 +13,18 @@ const toastStyles = {
 			secondary: colors.neutral[600],
 		},
 	},
+	error: {
+		style: {
+			background: colors.neutral[50],
+			color: colors.neutral[600],
+			borderRadius: '4px',
+			fontSize: '0.8rem',
+		},
+		iconTheme: {
+			primary: colors.rose[100],
+			secondary: colors.rose[600],
+		},
+	},
 };
 
 export default toastStyles;
