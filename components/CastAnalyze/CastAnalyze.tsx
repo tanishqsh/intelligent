@@ -28,6 +28,8 @@ import firestore from '@/lib/firebase/firestore';
 import RepliesTab from './RepliesTab';
 import LikesTab from './LikesTab';
 import toastStyles from '@/utils/toastStyles';
+import { usePrivy } from '@privy-io/react-auth';
+import { fetchAlfaFrensData } from '@/lib/backend/fetchAlfaFrensData';
 
 interface FirestoreData {
 	id: string;
@@ -36,9 +38,11 @@ interface FirestoreData {
 }
 
 export default function CastAnalyze() {
-	const [cast, setCast] = useState<any>();
-	const [castUrl, setCastUrl] = useState('');
-	const [isLoaded, setIsLoaded] = useState(false);
+	const { ready, authenticated, login, logout, user } = usePrivy();
+
+	const [cast, setCast] = useState<any>(SampleCastWithVideo);
+	const [castUrl, setCastUrl] = useState('https://warpcast.com/tanishq/0x413c137b');
+	const [isLoaded, setIsLoaded] = useState(true);
 
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -49,6 +53,13 @@ export default function CastAnalyze() {
 
 	const [listenerStarted, setListenerStarted] = useState<boolean>(false);
 
+	// alfafrens data
+	const [alfaFrensData, setAlfaFrensData] = useState<any[]>([]);
+	const [useAlfaFrensFiltering, setUseAlfaFrensFiltering] = useState<boolean>(false);
+	const [filteredReplies, setFilteredReplies] = useState<any[]>([]);
+	const [filteredLikes, setFilteredLikes] = useState<any[]>([]);
+	const [filteredRecasts, setFilteredRecasts] = useState<any[]>([]);
+
 	const beginFetchCast = async (): Promise<void> => {
 		const data = await fetchCast(castUrl);
 		if (data.success) {
@@ -57,6 +68,61 @@ export default function CastAnalyze() {
 			startListener();
 		}
 	};
+
+	const fetchAlfaFrens = async () => {
+		if (user?.farcaster?.fid) {
+			const data = await fetchAlfaFrensData(user.farcaster.fid);
+			if (data.success) {
+				console.log('INSIDE COMPONENT: ', data);
+				setAlfaFrensData(data);
+			}
+		}
+	};
+
+	useEffect(() => {
+		// filter replies, likes, and recasts
+		if (useAlfaFrensFiltering) {
+			const filteredReplies = replies.filter((reply) => {
+				//@ts-ignore
+				let found = alfaFrensData?.channelData?.members?.find((member: any) => member.fid === reply?.fid && member.isSubscribed);
+				if (found) {
+					found = { ...found, isSubscribed: true }; // Adding the key member.isSubscribed
+				}
+				return found;
+			});
+			setFilteredReplies(filteredReplies);
+
+			const filteredLikes = likes.filter((like) => {
+				//@ts-ignore
+				let found = alfaFrensData?.channelData?.members?.find((member: any) => member.fid === like?.reactedBy?.userId && member.isSubscribed);
+				if (found) {
+					found = { ...found, isSubscribed: true }; // Adding the key member.isSubscribed
+				}
+				return found;
+			});
+			setFilteredLikes(filteredLikes);
+
+			const filteredRecasts = recasts.filter((recast) => {
+				//@ts-ignore
+				let found = alfaFrensData?.channelData?.members?.find((member: any) => member.fid === recast?.reactedBy?.userId && member.isSubscribed);
+				if (found) {
+					found = { ...found, isSubscribed: true }; // Adding the key member.isSubscribed
+				}
+				return found;
+			});
+			setFilteredRecasts(filteredRecasts);
+		}
+	}, [replies, likes, recasts, useAlfaFrensFiltering, alfaFrensData]);
+
+	// this useEffect just fetches data from AlfaFrens, temporary,  will move to a separate component, and probably use a hook
+
+	useEffect(() => {
+		if (ready && authenticated) {
+			if (user?.farcaster?.fid) {
+				fetchAlfaFrens();
+			}
+		}
+	}, [ready, authenticated, user]);
 
 	useEffect(() => {
 		let unsubscribeReplies: (() => void) | undefined;
@@ -279,14 +345,14 @@ export default function CastAnalyze() {
 					<div className="w-full md:flex items-start md:space-x-4">
 						<div className="mt-4 w-full md:w-2/6 space-y-4">
 							<CastStatsTab castStats={castStats} />
-
-							<RecastsTab recasts={recasts} copyAllAddresses={copyAllAddresses} />
-							<LikesTab likes={likes} copyAllAddresses={copyAllAddresses} />
+							<CastActions useAlfaFrensFiltering={useAlfaFrensFiltering} setUseAlfaFrensFiltering={setUseAlfaFrensFiltering} />
+							<RecastsTab recasts={useAlfaFrensFiltering ? filteredRecasts : recasts} copyAllAddresses={copyAllAddresses} />
+							<LikesTab likes={useAlfaFrensFiltering ? filteredLikes : likes} copyAllAddresses={copyAllAddresses} />
 						</div>
 						<div className="w-full md:w-4/6">
 							<CastPreview pfp={pfp} display_name={display_name} username={username} text={text} embeds={embeds} />
 							<div className="mt-4">
-								<RepliesTab replies={replies} copyAllAddresses={copyAllAddresses} />
+								<RepliesTab replies={useAlfaFrensFiltering ? filteredReplies : replies} copyAllAddresses={copyAllAddresses} />
 							</div>
 						</div>
 					</div>
@@ -297,11 +363,11 @@ export default function CastAnalyze() {
 }
 
 const CastActions = ({
-	isConstantSyncOn,
-	setIsConstantSyncOn,
+	useAlfaFrensFiltering,
+	setUseAlfaFrensFiltering,
 }: {
-	isConstantSyncOn: boolean;
-	setIsConstantSyncOn: React.Dispatch<React.SetStateAction<boolean>>;
+	useAlfaFrensFiltering: boolean;
+	setUseAlfaFrensFiltering: (value: boolean) => void;
 }) => {
 	return (
 		<div>
@@ -311,43 +377,18 @@ const CastActions = ({
 				transition={{ type: 'spring', stiffness: 100 }}
 				className="shadow-sm bg-white font-inter rounded-md uppercase font-medium divide-y divide-dotted"
 			>
-				<motion.div
-					initial={{ opacity: 0, y: 20, paddingTop: 10, paddingBottom: 10 }}
-					animate={{ opacity: 1, y: 0, paddingTop: 10, paddingBottom: 10 }}
-					whileHover={{ opacity: 1, paddingTop: 15, paddingBottom: 15 }}
-					transition={{ type: 'spring', stiffness: 100 }}
-					className={`font-medium text-xs w-full py-2 px-2 justify-between flex items-center rounded-t-md`}
-				>
+				<div className={`font-medium inline-flex text-xs w-full py-2 px-2 justify-between items-center rounded-t-md`}>
 					<div className="flex items-center space-x-2">
-						{isConstantSyncOn ? (
-							<button onClick={() => setIsConstantSyncOn(!isConstantSyncOn)}>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-neutral-300">
-									<path
-										fillRule="evenodd"
-										d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z"
-										clipRule="evenodd"
-									/>
-								</svg>
-							</button>
-						) : (
-							<button onClick={() => setIsConstantSyncOn(!isConstantSyncOn)}>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-neutral-300">
-									<path
-										fillRule="evenodd"
-										d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
-										clipRule="evenodd"
-									/>
-								</svg>
-							</button>
-						)}
-
-						<span className="font-semibold text-neutral-400 text-xs">
-							Live sync
-							{isConstantSyncOn ? <span> ON </span> : <span> OFF</span>}
-						</span>
+						<img className="w-4" src="/alfa.png" />
+						<span className="font-semibold text-neutral-400 text-xs">Filter AlfaFrens Subscibers</span>
 					</div>
-					<div className={`h-2 w-2 rounded-full ${isConstantSyncOn ? 'bg-green-500' : 'bg-neutral-300'}`}></div>
-				</motion.div>
+					<input
+						onChange={(e) => setUseAlfaFrensFiltering(e.target.checked)}
+						type="checkbox"
+						checked={useAlfaFrensFiltering}
+						className="h-4 w-4 text-purple-600"
+					/>
+				</div>
 			</motion.div>
 		</div>
 	);

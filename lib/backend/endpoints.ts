@@ -7,6 +7,12 @@ const endpoints = {
 		query: 'castUrl',
 		notes: 'Fetches the cast from the given Warpcast URL',
 	},
+	get_alfafrens: {
+		path: `${rootUrl}/api/alfafrens/getUserStats`,
+		type: 'GET',
+		query: 'fid',
+		notes: 'Fetches AlfaFrens from the given FID',
+	},
 };
 
 export { rootUrl, endpoints };

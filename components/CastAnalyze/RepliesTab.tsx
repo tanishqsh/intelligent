@@ -118,7 +118,8 @@ export default function RepliesTab({ replies, copyAllAddresses }: { replies: any
 									</div>
 								</div>
 
-								<div className="">
+								<div className="flex">
+									<div>{reply.isSubscribed && <img src="/alfa.png" className="w-6 h-6" />}</div>
 									<motion.button
 										onClick={() => (connectedWalletAddress ? copyAddress() : noWalletConnected())}
 										initial={{ scale: 1 }}
