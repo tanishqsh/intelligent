@@ -58,10 +58,15 @@ const LikesTab = ({ likes, copyAllAddresses }: { likes: any; copyAllAddresses: (
 							? like.reactedBy.connectedAddresses[0].address
 							: null;
 
+					let blockchain =
+						like?.reactedBy?.connectedAddresses && like.reactedBy.connectedAddresses.length > 0
+							? like.reactedBy.connectedAddresses[0].blockchain
+							: null;
+
 					const copyAddress = () => {
 						navigator.clipboard.writeText(connectedWalletAddress);
 						toast.success(
-							`${profileDisplayName}'s address (****${connectedWalletAddress.slice(0, 4)}...${connectedWalletAddress.slice(
+							`${profileDisplayName}'s ${blockchain} address (${connectedWalletAddress.slice(0, 4)}...${connectedWalletAddress.slice(
 								-4
 							)}) copied to clipboard`,
 							toastStyles.success

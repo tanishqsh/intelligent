@@ -196,8 +196,9 @@ export default function CastAnalyze() {
 			);
 		}
 
+		const arrayLength = addresses.length;
 		navigator.clipboard.writeText(addresses.join('\n'));
-		toast.success(`All addresses copied to clipboard`, toastStyles.success);
+		toast.success(`Found ${arrayLength} verified ethereum addresses. Copied to clipboard. `, toastStyles.success);
 	};
 
 	const castStats = [
@@ -297,7 +298,7 @@ export default function CastAnalyze() {
 						<div className="w-full md:w-4/6">
 							<CastPreview pfp={pfp} display_name={display_name} username={username} text={text} embeds={embeds} />
 							<div className="mt-4">
-								<RepliesTab replies={replies} />
+								<RepliesTab replies={replies} copyAllAddresses={copyAllAddresses} />
 							</div>
 						</div>
 					</div>

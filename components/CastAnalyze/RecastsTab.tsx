@@ -58,10 +58,15 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any[]; copyAllAddr
 							? recast.reactedBy.connectedAddresses[0].address
 							: null;
 
+					const blockchain =
+						recast?.reactedBy?.connectedAddresses && recast.reactedBy.connectedAddresses.length > 0
+							? recast.reactedBy.connectedAddresses[0].blockchain
+							: null;
+
 					const copyAddress = () => {
 						navigator.clipboard.writeText(connectedWalletAddress);
 						toast.success(
-							`${profileDisplayName}'s address (****${connectedWalletAddress.slice(0, 4)}...${connectedWalletAddress.slice(
+							`${profileDisplayName}'s ${blockchain} address (${connectedWalletAddress.slice(0, 4)}...${connectedWalletAddress.slice(
 								-4
 							)}) copied to clipboard`,
 							toastStyles.success

@@ -8,13 +8,43 @@ import toast from 'react-hot-toast';
 import toastStyles from '@/utils/toastStyles';
 dayjs.extend(require('dayjs/plugin/relativeTime'));
 
-export default function RepliesTab({ replies }: { replies: any[] }) {
+export default function RepliesTab({ replies, copyAllAddresses }: { replies: any[]; copyAllAddresses: (type: string) => void }) {
 	const repliesCount = replies.length;
 	return (
 		<div>
 			<div className="text-neutral-400 text-xs bg-white shadow-sm border-b border-neutral-100 py-3 rounded-t-md">
 				<div className="text-xs py-1 px-2 capitalize flex items-center justify-between">
 					<span className="font-medium text-neutral-600 text-xs font-inter px-3">{repliesCount} Replies</span>
+					<motion.button
+						onClick={replies?.length > 0 ? () => copyAllAddresses('replies') : () => toast.error('No replies to copy', toastStyles.error)}
+						initial={{ scale: 1 }}
+						whileHover={{ scale: 1.05 }}
+						whileTap={{ scale: 0.9 }}
+						transition={{ type: 'spring', stiffness: 100 }}
+						className="flex space-x-1 items-center font-medium px-2 py-1 rounded-md text-neutral-600"
+					>
+						<svg className="w-5" fill="none" viewBox="0 0 24 24">
+							<path
+								stroke="currentColor"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="1.5"
+								d="M6.5 15.25V15.25C5.5335 15.25 4.75 14.4665 4.75 13.5V6.75C4.75 5.64543 5.64543 4.75 6.75 4.75H13.5C14.4665 4.75 15.25 5.5335 15.25 6.5V6.5"
+							></path>
+							<rect
+								width="10.5"
+								height="10.5"
+								x="8.75"
+								y="8.75"
+								stroke="currentColor"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="1.5"
+								rx="2"
+							></rect>
+						</svg>
+						<span>Copy All</span>
+					</motion.button>
 				</div>
 			</div>
 			<div className="space-y-0 flex flex-col max-h-[600px] overflow-scroll divide-y divide-dotted">
@@ -38,10 +68,13 @@ export default function RepliesTab({ replies }: { replies: any[] }) {
 							: null;
 
 					const copyAddress = () => {
-						if (blockchain === 'ethereum') {
-							navigator.clipboard.writeText(connectedWalletAddress);
-						}
-						toast.success(`${replierDisplayName}'s address copied to clipboard`, toastStyles.success);
+						navigator.clipboard.writeText(connectedWalletAddress);
+						toast.success(
+							`${replierDisplayName}'s ${blockchain} address (${connectedWalletAddress.slice(0, 4)}...${connectedWalletAddress.slice(
+								-4
+							)}) copied to clipboard`,
+							toastStyles.success
+						);
 					};
 
 					const noWalletConnected = () => {
