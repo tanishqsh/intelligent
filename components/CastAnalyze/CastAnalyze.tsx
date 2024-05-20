@@ -42,7 +42,7 @@ export default function CastAnalyze() {
 
 	const [cast, setCast] = useState<any>();
 	const [castUrl, setCastUrl] = useState('');
-	const [isLoaded, setIsLoaded] = useState(true);
+	const [isLoaded, setIsLoaded] = useState(false);
 
 	const [isLoading, setIsLoading] = useState(false);
 
