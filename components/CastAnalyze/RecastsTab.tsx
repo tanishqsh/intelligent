@@ -5,24 +5,7 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import PowerBadgeSVG from './SVG/PowerBadgeSVG';
 
-const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddresses: () => void }) => {
-	const copyAddress = (address: string) => {
-		navigator.clipboard.writeText(address);
-		console.log('Copied address:', address);
-		toast.success('Copied address', {
-			style: {
-				background: colors.neutral[50],
-				color: colors.neutral[600],
-				borderRadius: '6px',
-				fontSize: '0.8rem',
-			},
-			iconTheme: {
-				primary: colors.neutral[100],
-				secondary: colors.neutral[600],
-			},
-		});
-	};
-
+const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any[]; copyAllAddresses: (type: string) => void }) => {
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 30 }}
@@ -33,7 +16,7 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any; copyAllAddres
 			<div className="text-xs py-2 px-3 border-b border-neutral-100 capitalize flex items-center justify-between">
 				<span className="px-1 font-medium text-neutral-600 text-xs font-inter">{recasts?.length} Recasts</span>
 				<motion.button
-					onClick={copyAllAddresses}
+					onClick={recasts?.length > 0 ? () => copyAllAddresses('recasts') : () => toast.error('No recasts to copy', toastStyles.error)}
 					initial={{ scale: 1 }}
 					whileHover={{ scale: 1.05 }}
 					whileTap={{ scale: 0.9 }}

@@ -3,25 +3,9 @@ import toastStyles from '@/utils/toastStyles';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
+import PowerBadgeSVG from './SVG/PowerBadgeSVG';
 
-const LikesTab = ({ likes, copyAllAddresses }: { likes: any; copyAllAddresses: () => void }) => {
-	const copyAddress = (address: string) => {
-		navigator.clipboard.writeText(address);
-		console.log('Copied address:', address);
-		toast.success('Copied address', {
-			style: {
-				background: colors.neutral[50],
-				color: colors.neutral[600],
-				borderRadius: '6px',
-				fontSize: '0.8rem',
-			},
-			iconTheme: {
-				primary: colors.neutral[100],
-				secondary: colors.neutral[600],
-			},
-		});
-	};
-
+const LikesTab = ({ likes, copyAllAddresses }: { likes: any; copyAllAddresses: (type: string) => void }) => {
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 30 }}
@@ -32,7 +16,7 @@ const LikesTab = ({ likes, copyAllAddresses }: { likes: any; copyAllAddresses: (
 			<div className="text-xs py-2 px-3 border-b border-neutral-100 capitalize flex items-center justify-between">
 				<span className="px-1 font-medium text-neutral-600 text-xs font-inter">{likes?.length} Likes</span>
 				<motion.button
-					onClick={copyAllAddresses}
+					onClick={likes?.length > 0 ? () => copyAllAddresses('likes') : () => toast.error('No likes to copy', toastStyles.error)}
 					initial={{ scale: 1 }}
 					whileHover={{ scale: 1.05 }}
 					whileTap={{ scale: 0.9 }}
@@ -104,7 +88,9 @@ const LikesTab = ({ likes, copyAllAddresses }: { likes: any; copyAllAddresses: (
 							</div>
 
 							<div className="flex flex-col items-start justify-start w-full">
-								<div className="font-medium w-full text-base text-neutral-600">{profileDisplayName}</div>
+								<div className="font-medium w-full text-base text-neutral-600 flex items-center">
+									{profileDisplayName} <div>{isPowerUser && <PowerBadgeSVG className="w-4" />}</div>
+								</div>
 								<div className="font-medium text-xs text-neutral-400">@{profileHandle}</div>
 							</div>
 							<div className="flex justify-end pr-2">

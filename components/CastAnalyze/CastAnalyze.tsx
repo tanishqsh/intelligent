@@ -143,11 +143,61 @@ export default function CastAnalyze() {
 	const recasts_count = cast?.numberOfRecasts || 0;
 	const replies_count = cast?.numberOfReplies || 0;
 
-	const copyAllAddresses = () => {
-		const addresses = recasts.map((recast: any) => recast.user?.verifications?.[0]);
-		navigator.clipboard.writeText(addresses.join(', '));
-		console.log('Copied addresses:', addresses);
-		toast.success('Copied all addresses', toastStyles.success);
+	const copyAllAddresses = (type: string) => {
+		let addresses: string[] = []; // Ensure addresses is initialized
+
+		if (type === 'likes') {
+			addresses = Array.from(
+				new Set(
+					likes
+						.map((like) => {
+							const connectedWalletAddress =
+								like?.reactedBy?.connectedAddresses &&
+								like.reactedBy.connectedAddresses.length > 0 &&
+								like.reactedBy.connectedAddresses[0].blockchain === 'ethereum'
+									? like.reactedBy.connectedAddresses[0].address
+									: null;
+							return connectedWalletAddress;
+						})
+						.filter((address) => address !== null) // Filter out null addresses
+				)
+			);
+		} else if (type === 'recasts') {
+			addresses = Array.from(
+				new Set(
+					recasts
+						.map((recast) => {
+							const connectedWalletAddress =
+								recast?.reactedBy?.connectedAddresses &&
+								recast.reactedBy.connectedAddresses.length > 0 &&
+								recast.reactedBy.connectedAddresses[0].blockchain === 'ethereum'
+									? recast.reactedBy.connectedAddresses[0].address
+									: null;
+							return connectedWalletAddress;
+						})
+						.filter((address) => address !== null) // Filter out null addresses
+				)
+			);
+		} else if (type === 'replies') {
+			addresses = Array.from(
+				new Set(
+					replies
+						.map((reply) => {
+							const connectedWalletAddress =
+								reply?.castedBy?.connectedAddresses &&
+								reply.castedBy.connectedAddresses.length > 0 &&
+								reply.castedBy.connectedAddresses[0].blockchain === 'ethereum'
+									? reply.castedBy.connectedAddresses[0].address
+									: null;
+							return connectedWalletAddress;
+						})
+						.filter((address) => address !== null) // Filter out null addresses
+				)
+			);
+		}
+
+		navigator.clipboard.writeText(addresses.join('\n'));
+		toast.success(`All addresses copied to clipboard`, toastStyles.success);
 	};
 
 	const castStats = [

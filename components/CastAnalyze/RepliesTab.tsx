@@ -32,12 +32,20 @@ export default function RepliesTab({ replies }: { replies: any[] }) {
 							? reply.castedBy.connectedAddresses[0].address
 							: null;
 
+					const blockchain =
+						reply?.castedBy?.connectedAddresses && reply.castedBy.connectedAddresses.length > 0
+							? reply.castedBy.connectedAddresses[0].blockchain
+							: null;
+
 					const copyAddress = () => {
-						navigator.clipboard.writeText(connectedWalletAddress);
+						if (blockchain === 'ethereum') {
+							navigator.clipboard.writeText(connectedWalletAddress);
+						}
 						toast.success(`${replierDisplayName}'s address copied to clipboard`, toastStyles.success);
 					};
 
 					const noWalletConnected = () => {
+						navigator.clipboard.writeText('');
 						toast.error(`${replierDisplayName} has not connected a wallet`, toastStyles.error);
 					};
 
