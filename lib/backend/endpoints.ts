@@ -1,4 +1,4 @@
-const rootUrl = process.env.NEXT_PUBLIC_ENV === 'dev' ? 'http://localhost:3000' : 'http://localhost:3000';
+const rootUrl = process.env.NEXT_PUBLIC_ENV === 'dev' ? 'http://localhost:3000' : 'api.intelligent.wtf';
 
 const endpoints = {
 	sync_cast: {

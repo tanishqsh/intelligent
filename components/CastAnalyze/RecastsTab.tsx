@@ -46,7 +46,7 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any[]; copyAllAddr
 					<span>Copy All</span>
 				</motion.button>
 			</div>
-			<div className="space-y-0 flex flex-col max-h-[400px] overflow-scroll divide-y divide-dotted">
+			<div className="space-y-0 flex flex-col max-h-[400px] overflow-scroll divide-y divide-dotted cursor-scrollbar">
 				{recasts?.map((recast: any, i: number) => {
 					let profileHandle = recast?.reactedBy?.profileHandle;
 					let profileImage = recast?.reactedBy?.profileImage;

@@ -292,6 +292,7 @@ export default function CastAnalyze() {
 					<div className="w-full md:flex items-start md:space-x-4">
 						<div className="mt-4 w-full md:w-2/6 space-y-4">
 							<CastStatsTab castStats={castStats} />
+
 							<RecastsTab recasts={recasts} copyAllAddresses={copyAllAddresses} />
 							<LikesTab likes={likes} copyAllAddresses={copyAllAddresses} />
 						</div>
