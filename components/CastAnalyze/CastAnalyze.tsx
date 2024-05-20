@@ -1,7 +1,6 @@
 'use client';
 
 import SearchBar from '@/components/CastAnalyze/SearchBar/SearchBar';
-import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
@@ -16,7 +15,6 @@ import ReplySVG from '@/components/CastAnalyze/SVG/ReplySVG';
 import ClockSVG from '@/components/CastAnalyze/SVG/ClockSVG';
 import toast from 'react-hot-toast';
 import Clock24SVG from '@/components/CastAnalyze/SVG/Clock24SVG';
-import colors from '@/utils/colors';
 import CastPreview from './CastPreview';
 import RecastsTab from './RecastsTab';
 import CastStatsTab from './CastStatsTab';
