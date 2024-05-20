@@ -40,8 +40,8 @@ interface FirestoreData {
 export default function CastAnalyze() {
 	const { ready, authenticated, login, logout, user } = usePrivy();
 
-	const [cast, setCast] = useState<any>(SampleCastWithVideo);
-	const [castUrl, setCastUrl] = useState('https://warpcast.com/tanishq/0x413c137b');
+	const [cast, setCast] = useState<any>();
+	const [castUrl, setCastUrl] = useState('');
 	const [isLoaded, setIsLoaded] = useState(true);
 
 	const [isLoading, setIsLoading] = useState(false);
@@ -71,7 +71,7 @@ export default function CastAnalyze() {
 
 	const fetchAlfaFrens = async () => {
 		if (user?.farcaster?.fid) {
-			const data = await fetchAlfaFrensData(user.farcaster.fid);
+			const data = await fetchAlfaFrensData(user?.farcaster?.fid);
 			if (data.success) {
 				setAlfaFrensData(data);
 			}
@@ -80,7 +80,7 @@ export default function CastAnalyze() {
 
 	useEffect(() => {
 		// filter replies, likes, and recasts
-		if (useAlfaFrensFiltering) {
+		if (useAlfaFrensFiltering && alfaFrensData) {
 			const filteredReplies = replies.filter((reply) => {
 				//@ts-ignore
 				let found = alfaFrensData?.channelData?.members?.find((member: any) => member.fid === reply?.fid && member.isSubscribed);
