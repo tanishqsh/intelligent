@@ -33,7 +33,7 @@ export default function Dashboard() {
 					))}
 				</div>
 				<p className="text-neutral-400 max-w-sm text-center">
-					We are working on releasing the dashboard. Stay updated,{' '}
+					Dashboard coming soon. <br /> Stay up-to-date,{' '}
 					<Link href="https://warpcast.com/~/channel/intelligent">
 						<span className="text-amber-600">/intelligent </span>
 					</Link>{' '}
