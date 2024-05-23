@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import colors from '@/utils/colors';
 
-export default function Header() {
+const Header = () => {
 	const router = useRouter();
 
 	const { ready, authenticated, logout, user } = usePrivy();
@@ -24,7 +24,8 @@ export default function Header() {
 	 *
 	 */
 	if (!authenticated) {
-		return router.replace('/');
+		router.replace('/');
+		return null;
 	}
 
 	return (
@@ -66,7 +67,7 @@ export default function Header() {
 			</div>
 		</header>
 	);
-}
+};
 
 const Menu = () => {
 	const pathname = usePathname();
@@ -143,3 +144,5 @@ const Menu = () => {
 		</div>
 	);
 };
+
+export default Header;
