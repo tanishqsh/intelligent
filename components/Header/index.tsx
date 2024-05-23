@@ -4,7 +4,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import { usePathname, useRouter } from 'next/navigation';
 import Logo from './Logo';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import colors from '@/utils/colors';
 
 export default function Header() {
@@ -24,7 +24,7 @@ export default function Header() {
 	 *
 	 */
 	if (!authenticated) {
-		router.replace('/');
+		return router.replace('/');
 	}
 
 	return (
@@ -45,11 +45,11 @@ export default function Header() {
 					</motion.div>
 					<Menu />
 					<div className="flex items-center justify-center space-x-4">
-						{/* <div className="px-2 py-1 rounded-full bg-[#f1efff]/10 text-slate-400 shadow-inner text-xs font-medium">0/∞</div> */}
+						{/* <div className="px-2 py-1 rounded-full bg-[#f1efff]/10 text-slate-400 shadow-inner text-xs font-medium">Subscribed</div> */}
 						<div className="px-1 py-1 rounded-full bg-neutral-100 shadow-inner">
 							<img src={user?.farcaster?.pfp || 'https://via.placeholder.com/150'} alt="Profile Picture" className="rounded-full w-8 h-8"></img>
 						</div>
-						{/* <div>
+						<div>
 							<motion.button
 								onClick={logout}
 								initial={{ opacity: 0, x: 50 }}
@@ -60,7 +60,7 @@ export default function Header() {
 							>
 								Sign out
 							</motion.button>
-						</div> */}
+						</div>
 					</div>
 				</div>
 			</div>

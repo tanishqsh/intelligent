@@ -5,13 +5,15 @@ const endpoints = {
 		path: `${rootUrl}/api/sync-cast`,
 		type: 'GET',
 		query: 'castUrl',
-		notes: 'Fetches the cast from the given Warpcast URL',
 	},
 	get_alfafrens: {
 		path: `${rootUrl}/api/alfafrens/getUserStats`,
 		type: 'GET',
 		query: 'fid',
-		notes: 'Fetches AlfaFrens from the given FID',
+	},
+	log_user: {
+		path: `${rootUrl}/api/user/log-user`,
+		type: 'POST',
 	},
 };
 

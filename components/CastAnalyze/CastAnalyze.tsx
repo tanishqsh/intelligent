@@ -30,7 +30,7 @@ import useRepliesData from './hooks/useRepliesData';
 import useReactionData from './hooks/useReactionData';
 
 export default function CastAnalyze() {
-	const { ready, authenticated, user } = usePrivy();
+	const { ready, authenticated, user, getAccessToken } = usePrivy();
 
 	const [cast, setCast] = useState<any>();
 	const [castUrl, setCastUrl] = useState('');
@@ -52,7 +52,8 @@ export default function CastAnalyze() {
 	const { likes, recasts } = useReactionData(listenerActive, cast, isLoaded);
 
 	const beginFetchCast = async (): Promise<void> => {
-		const data = await fetchCast(castUrl);
+		const accessToken = (await getAccessToken()) || '';
+		const data = await fetchCast(castUrl, accessToken);
 		if (data.success) {
 			setCast(data.cast);
 			setIsLoaded(true);

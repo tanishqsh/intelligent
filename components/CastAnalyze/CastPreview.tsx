@@ -26,22 +26,22 @@ const CastPreview = ({ pfp, display_name, username, text, embeds }: { pfp: strin
 
 						<div className="text-sm mt-4 text-neutral-600" dangerouslySetInnerHTML={{ __html: text?.replace(/\n/g, '<br />') }} />
 						<div className="w-full m-auto h-auto flex items-center justify-center">
-							{embeds?.map((embed: any) => {
+							{embeds?.map((embed: any, index: number) => {
 								if (embed?.url?.endsWith('.m3u8')) {
 									return (
-										<div className="mt-4" key={embed.id}>
+										<div className="mt-4" key={index}>
 											<VideoPlayer src={embed?.url} />
 										</div>
 									);
 								} else if (embed?.url?.match(/\.(jpeg|jpg|gif|png)$/) || embed?.url?.includes('imagedelivery.net')) {
 									return (
-										<div className="mt-4" key={embed.id}>
+										<div className="mt-4" key={index}>
 											<img className="rounded-md" src={embed?.url} alt="Embed" />
 										</div>
 									);
 								} else {
 									return (
-										<div className="w-full mt-4 rounded-md" key={embed.id}>
+										<div className="w-full mt-4 rounded-md" key={index}>
 											<iframe src={embed?.url} className="w-full h-96" />
 										</div>
 									);

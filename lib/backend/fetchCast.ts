@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { endpoints } from './endpoints';
 
-const fetchCast = async (castUrl: string) => {
-	if (!castUrl) {
-		console.error('Invalid cast URL');
+const fetchCast = async (castUrl: string, accessToken: string) => {
+	if (!castUrl || !accessToken) {
+		console.error('Invalid cast data');
 		return;
 	}
+
+	axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
 	const url = `${endpoints.sync_cast.path}?castUrl=${encodeURIComponent(castUrl)}`;
 	const response = await axios.get(url);

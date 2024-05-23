@@ -1,32 +1,34 @@
 'use client';
-import { usePrivy } from '@privy-io/react-auth';
+import { useLogin, usePrivy } from '@privy-io/react-auth';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Logo from '../Header/Logo';
+import toast from 'react-hot-toast';
+import toastStyles from '@/utils/toastStyles';
+import { logUser } from '@/lib/backend/logUser';
 
 export default function LandingPage() {
-	const { ready, authenticated, login, logout, user } = usePrivy();
+	const { ready, authenticated, getAccessToken, logout } = usePrivy();
+
+	const { login } = useLogin({
+		onComplete: async (user, isNewUser, wasAlreadyAuthenticated, loginMethod, linkedAccount) => {
+			const accessToken = await getAccessToken();
+			if (!accessToken) return;
+			await logUser(user, accessToken, toast, logout);
+		},
+		onError: (error) => {
+			console.log(error);
+			toast.error('Sign in not completed, please try again.', toastStyles.error);
+		},
+	});
 
 	const disableButton = !ready || (ready && authenticated);
-
-	const router = useRouter();
 
 	return (
 		<div className="bg-neutral-100 min-h-screen font-general-sans">
 			<div className="px-12 py-8 m-auto" id="header">
-				<motion.svg
-					initial={{ scale: 0.4, opacity: 0 }}
-					animate={{ scale: 1, opacity: 1 }}
-					transition={{ type: 'spring', duration: 0.8, stiffness: 200 }}
-					whileHover={{ scale: 1.2 }}
-					width="36"
-					height="36"
-					viewBox="0 0 48 48"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<circle cx="24" cy="24" r="24" fill="#FFAF34" />
-				</motion.svg>
+				<Logo className="w-9 h-9 cursor-pointer" />
 			</div>
 			<div className="max-w-7xl mt-12 m-auto">
 				<div className="text-center">
@@ -164,7 +166,7 @@ const AccessDashboardButton = () => {
 			<motion.img
 				initial={{ scale: 0.2, opacity: 0 }}
 				animate={{
-					scale: inTap ? 1.2 : 1,
+					scale: inTap ? 1.05 : 1,
 					opacity: 1,
 					transition: {
 						type: 'spring',
@@ -173,7 +175,7 @@ const AccessDashboardButton = () => {
 				}}
 				src={user?.farcaster?.pfp || 'https://via.placeholder.com/150'}
 				alt="Profile Picture"
-				className="rounded-full w-12 border-2 border-yellow-500"
+				className="rounded-full w-12 h-12 aspect-square border-2 border-yellow-500"
 			></motion.img>
 			<motion.span initial={{ opacity: 1, x: 0 }} animate={{ opacity: 1, x: 0 }}>
 				Access Dashboard

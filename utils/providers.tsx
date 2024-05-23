@@ -13,7 +13,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 				appearance: {
 					theme: 'light',
 					accentColor: '#FFAF33',
-					logo: 'https://intelligent-pi.vercel.app/intelligent.png',
+					logo: 'https://intelligent.wtf/intelligent.png',
 				},
 				defaultChain: base,
 				supportedChains: [base, baseGoerli, mainnet, sepolia],
