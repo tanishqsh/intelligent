@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import toastStyles from '@/utils/toastStyles';
 dayjs.extend(require('dayjs/plugin/relativeTime'));
 
-export default function RepliesTab({ replies, copyAllAddresses }: { replies: any[]; copyAllAddresses: (type: string) => void }) {
+export default function RepliesTab({ replies, copyAllAddresses }: { replies: any[]; copyAllAddresses: (type: string, array: any[]) => void }) {
 	const repliesCount = replies.length;
 	return (
 		<div>
@@ -16,7 +16,7 @@ export default function RepliesTab({ replies, copyAllAddresses }: { replies: any
 				<div className="text-xs py-1 px-2 capitalize flex items-center justify-between">
 					<span className="font-medium text-neutral-600 text-xs font-inter px-3">{repliesCount} Replies</span>
 					<motion.button
-						onClick={replies?.length > 0 ? () => copyAllAddresses('replies') : () => toast.error('No replies to copy', toastStyles.error)}
+						onClick={replies?.length > 0 ? () => copyAllAddresses('replies', replies) : () => toast.error('No replies to copy', toastStyles.error)}
 						initial={{ scale: 1 }}
 						whileHover={{ scale: 1.05 }}
 						whileTap={{ scale: 0.9 }}
