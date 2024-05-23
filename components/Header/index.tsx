@@ -95,7 +95,7 @@ const Menu = () => {
 				}}
 			>
 				<Link href="/dashboard/cast-analyze">
-					<span className="font-medium cursor-pointer text-sm">Cast Analyze</span>
+					<span className="font-medium cursor-pointer text-sm">Analyze</span>
 				</Link>
 			</motion.div>
 			{/* <motion.div

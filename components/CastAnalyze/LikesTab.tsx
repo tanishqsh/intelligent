@@ -5,7 +5,7 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import PowerBadgeSVG from './SVG/PowerBadgeSVG';
 
-const LikesTab = ({ likes, copyAllAddresses }: { likes: any; copyAllAddresses: (type: string) => void }) => {
+const LikesTab = ({ likes, copyAllAddresses }: { likes: any; copyAllAddresses: (type: string, array: any[]) => void }) => {
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 30 }}
@@ -16,7 +16,7 @@ const LikesTab = ({ likes, copyAllAddresses }: { likes: any; copyAllAddresses: (
 			<div className="text-xs py-2 px-3 border-b border-neutral-100 capitalize flex items-center justify-between">
 				<span className="px-1 font-medium text-neutral-600 text-xs font-inter">{likes?.length} Likes</span>
 				<motion.button
-					onClick={likes?.length > 0 ? () => copyAllAddresses('likes') : () => toast.error('No likes to copy', toastStyles.error)}
+					onClick={likes?.length > 0 ? () => copyAllAddresses('likes', likes) : () => toast.error('No likes to copy', toastStyles.error)}
 					initial={{ scale: 1 }}
 					whileHover={{ scale: 1.05 }}
 					whileTap={{ scale: 0.9 }}

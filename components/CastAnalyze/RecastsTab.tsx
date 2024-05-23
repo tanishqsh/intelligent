@@ -5,7 +5,7 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import PowerBadgeSVG from './SVG/PowerBadgeSVG';
 
-const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any[]; copyAllAddresses: (type: string) => void }) => {
+const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any[]; copyAllAddresses: (type: string, array: any[]) => void }) => {
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 30 }}
@@ -16,7 +16,7 @@ const RecastsTab = ({ recasts, copyAllAddresses }: { recasts: any[]; copyAllAddr
 			<div className="text-xs py-2 px-3 border-b border-neutral-100 capitalize flex items-center justify-between">
 				<span className="px-1 font-medium text-neutral-600 text-xs font-inter">{recasts?.length} Recasts</span>
 				<motion.button
-					onClick={recasts?.length > 0 ? () => copyAllAddresses('recasts') : () => toast.error('No recasts to copy', toastStyles.error)}
+					onClick={recasts?.length > 0 ? () => copyAllAddresses('recasts', recasts) : () => toast.error('No recasts to copy', toastStyles.error)}
 					initial={{ scale: 1 }}
 					whileHover={{ scale: 1.05 }}
 					whileTap={{ scale: 0.9 }}
