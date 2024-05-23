@@ -23,11 +23,11 @@ import { fetchCast } from '@/lib/backend/fetchCast';
 import RepliesTab from './RepliesTab';
 import LikesTab from './LikesTab';
 import { usePrivy } from '@privy-io/react-auth';
-import { fetchAlfaFrensData } from '@/lib/backend/fetchAlfaFrensData';
 import CastActions from './CastActions';
 import copyAllAddresses from './utils/copyAddressArray';
 import useRepliesData from './hooks/useRepliesData';
 import useReactionData from './hooks/useReactionData';
+import useAlfaFrensData from './hooks/useAlfaFrensData';
 
 export default function CastAnalyze() {
 	const { ready, authenticated, user, getAccessToken } = usePrivy();
@@ -41,7 +41,6 @@ export default function CastAnalyze() {
 	const [listenerActive, setListenerActive] = useState<boolean>(false);
 
 	// alfafrens data
-	const [alfaFrensData, setAlfaFrensData] = useState<any[]>([]);
 	const [useAlfaFrensFiltering, setUseAlfaFrensFiltering] = useState<boolean>(false);
 	const [filteredReplies, setFilteredReplies] = useState<any[]>([]);
 	const [filteredLikes, setFilteredLikes] = useState<any[]>([]);
@@ -50,6 +49,7 @@ export default function CastAnalyze() {
 	// call replies and reactions hook
 	const { replies } = useRepliesData(listenerActive, cast, isLoaded);
 	const { likes, recasts } = useReactionData(listenerActive, cast, isLoaded);
+	const { members } = useAlfaFrensData(listenerActive, String(user?.farcaster?.fid || ''), isLoaded);
 
 	const beginFetchCast = async (): Promise<void> => {
 		const accessToken = (await getAccessToken()) || '';
@@ -61,21 +61,16 @@ export default function CastAnalyze() {
 		}
 	};
 
-	const fetchAlfaFrens = async () => {
-		if (user?.farcaster?.fid) {
-			const data = await fetchAlfaFrensData(user?.farcaster?.fid);
-			if (data.success) {
-				setAlfaFrensData(data);
-			}
-		}
-	};
+	useEffect(() => {
+		console.log('members', members);
+	}, [members]);
 
 	useEffect(() => {
 		// filter replies, likes, and recasts
-		if (useAlfaFrensFiltering && alfaFrensData) {
+		if (useAlfaFrensFiltering && members?.length > 0) {
 			const filteredReplies = replies.filter((reply) => {
 				//@ts-ignore
-				let found = alfaFrensData?.channelData?.members?.find((member: any) => member.fid === reply?.fid && member.isSubscribed);
+				let found = members?.find((member: any) => member.fid === reply?.fid && member.isSubscribed);
 				if (found) {
 					found = { ...found, isSubscribed: true }; // Adding the key member.isSubscribed
 				}
@@ -85,7 +80,7 @@ export default function CastAnalyze() {
 
 			const filteredLikes = likes.filter((like) => {
 				//@ts-ignore
-				let found = alfaFrensData?.channelData?.members?.find((member: any) => member.fid === like?.reactedBy?.userId && member.isSubscribed);
+				let found = members?.find((member: any) => member.fid === like?.reactedBy?.userId && member.isSubscribed);
 				if (found) {
 					found = { ...found, isSubscribed: true }; // Adding the key member.isSubscribed
 				}
@@ -95,7 +90,7 @@ export default function CastAnalyze() {
 
 			const filteredRecasts = recasts.filter((recast) => {
 				//@ts-ignore
-				let found = alfaFrensData?.channelData?.members?.find((member: any) => member.fid === recast?.reactedBy?.userId && member.isSubscribed);
+				let found = members?.find((member: any) => member.fid === recast?.reactedBy?.userId && member.isSubscribed);
 				if (found) {
 					found = { ...found, isSubscribed: true }; // Adding the key member.isSubscribed
 				}
@@ -103,15 +98,7 @@ export default function CastAnalyze() {
 			});
 			setFilteredRecasts(filteredRecasts);
 		}
-	}, [replies, likes, recasts, useAlfaFrensFiltering, alfaFrensData]);
-
-	useEffect(() => {
-		if (ready && authenticated) {
-			if (user?.farcaster?.fid) {
-				fetchAlfaFrens();
-			}
-		}
-	}, [ready, authenticated, user]);
+	}, [replies, likes, recasts, useAlfaFrensFiltering, members]);
 
 	const startListener = () => {
 		setListenerActive(true);
