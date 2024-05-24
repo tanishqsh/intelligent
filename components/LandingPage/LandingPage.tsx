@@ -2,14 +2,18 @@
 import { useLogin, usePrivy } from '@privy-io/react-auth';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Logo from '../Header/Logo';
 import toast from 'react-hot-toast';
 import toastStyles from '@/utils/toastStyles';
 import { logUser } from '@/lib/backend/logUser';
+import FingerprintSVG from './SVG/FingerprintSVG';
 
 export default function LandingPage() {
-	const { ready, authenticated, getAccessToken, logout } = usePrivy();
+	const { ready, authenticated, getAccessToken, logout, linkPasskey, user, unlinkPasskey } = usePrivy();
+
+	const [isPasskeyLinked, setIsPasskeyLinked] = useState(false);
+	const [passkeyAccount, setPasskeyAccount] = useState<any>(null);
 
 	const { login } = useLogin({
 		onComplete: async (user, isNewUser, wasAlreadyAuthenticated, loginMethod, linkedAccount) => {
@@ -22,6 +26,21 @@ export default function LandingPage() {
 			toast.error('Sign in not completed, please try again.', toastStyles.error);
 		},
 	});
+
+	useEffect(() => {
+		// get the linkedAccounts
+		const linkedAccounts = user?.linkedAccounts || [];
+
+		// retrieve account
+		const passkeyAccount = linkedAccounts.find((account) => account.type === 'passkey');
+
+		if (passkeyAccount) {
+			setPasskeyAccount(passkeyAccount);
+			setIsPasskeyLinked(true);
+		} else {
+			setIsPasskeyLinked(false);
+		}
+	}, [user]);
 
 	const disableButton = !ready || (ready && authenticated);
 
@@ -103,7 +122,11 @@ export default function LandingPage() {
 							Farcaster.
 						</motion.span>
 					</motion.h1>
-					<div className="mt-12">{authenticated && <AccessDashboardButton />}</div>
+					<div className="flex justify-center items-center space-x-2">
+						<div className="mt-12">{authenticated && !isPasskeyLinked && <LinkPasskeyButton />}</div>
+						<div className="mt-12">{authenticated && isPasskeyLinked && <UnlinkPasskeyButton id={passkeyAccount.credentialId} />}</div>
+						<div className="mt-12">{authenticated && <AccessDashboardButton />}</div>
+					</div>
 					<div className="mt-8">
 						{!authenticated && (
 							<motion.button
@@ -143,6 +166,49 @@ export default function LandingPage() {
 		</div>
 	);
 }
+
+const UnlinkPasskeyButton = ({ id }: { id: string }) => {
+	const { unlinkPasskey } = usePrivy();
+
+	return (
+		<motion.button
+			initial={{ paddingRight: 4, paddingLeft: 4, paddingTop: 2, paddingBottom: 2, opacity: 0.6, fontWeight: 500 }}
+			animate={{ paddingRight: 13, paddingLeft: 13, paddingTop: 5, paddingBottom: 5, opacity: 1, fontWeight: 500 }}
+			whileHover={{ paddingRight: 16, paddingLeft: 16, paddingTop: 5, paddingBottom: 5, opacity: 0.9, fontWeight: 475 }}
+			whileTap={{ scale: 0.9 }}
+			transition={{ type: 'spring', duration: 0.1, stiffness: 200 }}
+			className="text-2xl bg-yellow-400 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-500"
+			onClick={() => unlinkPasskey(id)}
+		>
+			<FingerprintSVG />
+
+			<motion.span initial={{ opacity: 1, x: 0 }} animate={{ opacity: 1, x: 0 }}>
+				Unlink Passkey
+			</motion.span>
+		</motion.button>
+	);
+};
+
+const LinkPasskeyButton = () => {
+	const { linkPasskey } = usePrivy();
+
+	return (
+		<motion.button
+			initial={{ paddingRight: 4, paddingLeft: 4, paddingTop: 2, paddingBottom: 2, opacity: 0.6, fontWeight: 500 }}
+			animate={{ paddingRight: 13, paddingLeft: 13, paddingTop: 5, paddingBottom: 5, opacity: 1, fontWeight: 500 }}
+			whileHover={{ paddingRight: 16, paddingLeft: 16, paddingTop: 5, paddingBottom: 5, opacity: 0.9, fontWeight: 475 }}
+			whileTap={{ scale: 0.9 }}
+			transition={{ type: 'spring', duration: 0.1, stiffness: 200 }}
+			className="text-2xl bg-yellow-400 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-500"
+			onClick={linkPasskey}
+		>
+			<FingerprintSVG />
+			<motion.span initial={{ opacity: 1, x: 0 }} animate={{ opacity: 1, x: 0 }}>
+				Link Passkey
+			</motion.span>
+		</motion.button>
+	);
+};
 
 const AccessDashboardButton = () => {
 	const { ready, user, logout } = usePrivy();

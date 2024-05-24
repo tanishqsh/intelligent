@@ -32,9 +32,9 @@ import useAlfaFrensData from './hooks/useAlfaFrensData';
 export default function CastAnalyze() {
 	const { ready, authenticated, user, getAccessToken } = usePrivy();
 
-	const [cast, setCast] = useState<any>();
-	const [castUrl, setCastUrl] = useState('');
-	const [isLoaded, setIsLoaded] = useState(false);
+	const [cast, setCast] = useState<any>(SampleCastWithVideo);
+	const [castUrl, setCastUrl] = useState(SampleWarpcastURL);
+	const [isLoaded, setIsLoaded] = useState(true);
 
 	const [isLoading, setIsLoading] = useState(false);
 
