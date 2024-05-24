@@ -5,6 +5,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import HighlightedText from '../ui/HighlightedText/HighlightedText';
 
 export default function Dashboard() {
 	const { ready, authenticated, login, logout, user } = usePrivy();
@@ -25,19 +26,25 @@ export default function Dashboard() {
 							transition={{
 								duration: 5,
 								repeat: Infinity,
-								repeatType: 'reverse',
+								delay: index * 0.5,
 								backgroundTransition: { delay: 2.5 },
 							}}
 							className="h-[20px] w-[200px] rounded-full m-auto"
 						></motion.div>
 					))}
 				</div>
-				<p className="text-neutral-400 max-w-sm text-center">
-					Dashboard coming soon. <br /> Stay up-to-date,{' '}
+				<motion.p
+					initial={{ opacity: 0, translateY: 20 }}
+					animate={{ opacity: 1, translateY: 0 }}
+					transition={{ type: 'spring', stiffness: 100 }}
+					className="text-black max-w-xs text-center leading-tight font-general-sans font-medium text-4xl"
+				>
+					Your <HighlightedText> dashboard </HighlightedText> will be here soon.
+					{/* {' '}
 					<Link href="https://warpcast.com/~/channel/intelligent">
 						<span className="text-amber-600">/intelligent </span>
-					</Link>{' '}
-				</p>
+					</Link>{' '} */}
+				</motion.p>
 			</div>
 		</div>
 	);
