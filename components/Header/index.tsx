@@ -6,6 +6,7 @@ import Logo from './Logo';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import colors from '@/utils/colors';
+import HoverHighlightedText from '../ui/HoverHighlightText/HoverHighlightedText';
 
 const Header = () => {
 	const router = useRouter();
@@ -73,30 +74,36 @@ const Menu = () => {
 	const pathname = usePathname();
 
 	return (
-		<div className="flex items-center justify-center space-x-8 antialiased">
+		<div className="flex items-center justify-center space-x-8 antialiased font-general-sans">
 			<motion.div
 				initial={{ opacity: 0, y: 10 }}
 				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard' ? colors.neutral[800] : colors.neutral[400] }}
-				whileHover={{ opacity: 1, color: colors.neutral[900] }}
+				whileHover={{ opacity: 1, color: '#000000' }}
 				transition={{
-					duration: 0.2,
+					type: 'spring',
+					stiffness: 100,
 				}}
 			>
 				<Link href="/dashboard">
-					<span className="font-medium cursor-pointer text-sm">Dashboard</span>
+					<HoverHighlightedText>
+						<span className="font-medium cursor-pointer text-sm">Dashboard</span>
+					</HoverHighlightedText>
 				</Link>
 			</motion.div>
 
 			<motion.div
 				initial={{ opacity: 0, y: 10 }}
 				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard/cast-analyze' ? colors.neutral[800] : colors.neutral[400] }}
-				whileHover={{ opacity: 1, color: colors.neutral[900] }}
+				whileHover={{ opacity: 1, color: '#000000' }}
 				transition={{
-					duration: 0.2,
+					type: 'spring',
+					stiffness: 100,
 				}}
 			>
 				<Link href="/dashboard/cast-analyze">
-					<span className="font-medium cursor-pointer text-sm">Analyze</span>
+					<HoverHighlightedText>
+						<span className="font-medium cursor-pointer text-sm">Analyze</span>
+					</HoverHighlightedText>
 				</Link>
 			</motion.div>
 			{/* <motion.div

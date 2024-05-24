@@ -19,7 +19,7 @@ export default function SearchBar({
 	beginFetchCast: () => void;
 }) {
 	return (
-		<div className="flex rounded-md bg-neutral-50 shadow-sm">
+		<div className="flex rounded-lg bg-neutral-50 shadow-sm">
 			<div className="pl-4 flex w-full">
 				<div className="pr-4 flex items-center">
 					<Link target="_blank" href={castUrl}>
@@ -35,12 +35,12 @@ export default function SearchBar({
 				>
 					<motion.input
 						initial={{ opacity: 1, fontWeight: 500, color: '#000000' }}
-						animate={{ opacity: isLoaded ? 1 : 0.7, fontWeight: 500, color: isLoaded ? '#12B981' : '#666666' }}
-						whileFocus={{ opacity: 1, paddingRight: 10, fontWeight: 500, filter: 'brightness(1)', color: '#666666' }}
+						animate={{ opacity: isLoaded ? 1 : 0.7, fontWeight: 400, color: isLoaded ? '#12B981' : '#666666' }}
+						whileFocus={{ opacity: 1, paddingRight: 10, fontWeight: 450, filter: 'brightness(1)', color: '#999999' }}
 						className="px-3 py-2 focus:outline-none text-sm text-black w-full bg-neutral-50 cursor-text"
 						type="text"
 						value={castUrl}
-						placeholder="Paste a Warpcast URL here and click Analyze"
+						placeholder="Paste a Cast URL here and click Analyze"
 						onChange={(e) => setCastUrl(e.target.value)}
 					/>
 				</motion.div>
