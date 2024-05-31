@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import colors from '@/utils/colors';
 import HoverHighlightedText from '../ui/HoverHighlightText/HoverHighlightedText';
+import DegenAllowance from './DegenAllowance/DegenAllowance';
 
 const Header = () => {
 	const router = useRouter();
@@ -34,6 +35,7 @@ const Header = () => {
 			<div className="px-6 py-4" id="surroundings">
 				<div className="flex items-center justify-between">
 					<motion.div
+						className="w-1/3"
 						initial={{ opacity: 0, scale: 0.3 }}
 						animate={{ opacity: 1, scale: 0.9 }}
 						transition={{
@@ -46,8 +48,9 @@ const Header = () => {
 						</Link>
 					</motion.div>
 					<Menu />
-					<div className="flex items-center justify-center space-x-4">
+					<div className="flex items-center justify-center space-x-4 w-1/3">
 						{/* <div className="px-2 py-1 rounded-full bg-[#f1efff]/10 text-slate-400 shadow-inner text-xs font-medium">Subscribed</div> */}
+						<DegenAllowance />
 						<div className="px-1 py-1 rounded-full bg-neutral-100 shadow-inner">
 							<img src={user?.farcaster?.pfp || 'https://via.placeholder.com/150'} alt="Profile Picture" className="rounded-full w-8 h-8"></img>
 						</div>
