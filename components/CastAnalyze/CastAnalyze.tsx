@@ -62,10 +62,6 @@ export default function CastAnalyze() {
 	};
 
 	useEffect(() => {
-		console.log('members', members);
-	}, [members]);
-
-	useEffect(() => {
 		// filter replies, likes, and recasts
 		if (useAlfaFrensFiltering && members?.length > 0) {
 			const filteredReplies = replies.filter((reply) => {

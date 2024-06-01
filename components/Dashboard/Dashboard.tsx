@@ -19,6 +19,7 @@ type ChartData = {
 
 export default function Dashboard() {
 	const [chartData, setChartData] = useState<ChartData[]>([]);
+	const [hoveredUserStat, setHoveredUserStat] = useState(null);
 
 	const { ready, authenticated, login, logout, user, getAccessToken } = usePrivy();
 
@@ -27,7 +28,7 @@ export default function Dashboard() {
 		axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 		const fid = user?.farcaster?.fid;
 		const response = await axios.get(`${endpoints.get_chart1.path}?fid=${fid}`);
-		console.log(response.data.graphData);
+
 		setChartData(response.data.graphData);
 	};
 
@@ -43,16 +44,21 @@ export default function Dashboard() {
 		return null;
 	}
 
+	console.log(hoveredUserStat, 'hoveredUserStat');
+
 	return (
 		<div className="min-h-screen bg-neutral-100 pt-12">
-			<div className="flex flex-col rounded-2xl max-w-7xl m-auto bg-white/50 shadow-sm items-start justify-start">
+			<div className="flex rounded-2xl max-w-7xl m-auto bg-white/50 shadow-sm items-start justify-start">
 				<div className="h-[500px] w-full">
-					<EngagementChart data={chartData} />
+					<EngagementChart setHoveredUserStat={setHoveredUserStat} data={chartData} />
+					{/* <button onClick={fetchChartData}>Fetch Data</button> */}
 				</div>
 			</div>
 		</div>
 	);
+}
 
+const ComingSoon = () => {
 	return (
 		<div className="h-screen bg-neutral-100 flex items-center justify-center">
 			<div className="space-y-8 mt-[-200px]">
@@ -83,4 +89,4 @@ export default function Dashboard() {
 			</div>
 		</div>
 	);
-}
+};

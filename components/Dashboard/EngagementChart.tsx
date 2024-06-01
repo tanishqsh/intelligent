@@ -1,11 +1,13 @@
 import dayjs from 'dayjs';
 import { ResponsiveLine } from '@nivo/line';
-dayjs.extend(require('dayjs/plugin/utc'));
-dayjs.extend(require('dayjs/plugin/timezone'));
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const customColors = ['#FFAF34', '#FACC16', '#0000ff', '#ff00ff', '#00ffff', '#ffff00'];
 
-const EngagementChart = ({ data = [] }: { data: any[] }) => {
+const EngagementChart = ({ data = [], setHoveredUserStat }: { data: any[]; setHoveredUserStat: (state: any) => void }) => {
 	// find the range of the values dynamically
 	let max = 0;
 	let min = Infinity;
@@ -29,14 +31,14 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 	const lineData = data.map((d: any) => ({
 		id: d.id,
 		data: d.data.map((p: any) => ({
-			// @ts-ignore
 			x: dayjs(p.x).tz(userTimezone).toDate(),
 			y: p.y,
 		})),
 	}));
-
 	return (
 		<ResponsiveLine
+			enableArea={true}
+			areaOpacity={0.1}
 			theme={{
 				axis: {
 					ticks: {
@@ -69,7 +71,7 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 			xScale={{ type: 'time', format: 'native', precision: 'hour' }}
 			yScale={{ type: 'linear', stacked: false, min: 'auto', max: 'auto' }}
 			yFormat=" >-.2f"
-			curve="monotoneX"
+			curve="step"
 			axisLeft={{
 				tickSize: 15,
 				tickPadding: 10,
@@ -85,32 +87,29 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 				legendPosition: 'middle',
 				tickSize: 15,
 				tickPadding: 10,
-				tickValues: 'every 2 hours', // Increased interval to reduce label overlap
+				tickValues: 'every 4 hours', // Increased interval to reduce label overlap
 			}}
 			axisBottom={{
 				format: '',
-				legend: 'Follower Growth vs Engagement',
+				legend: 'Follower Growth vs Engagement over the last 24 hours',
 				legendPosition: 'middle',
 				legendOffset: 65,
 			}}
 			enableGridX={true}
 			enableGridY={true}
-			lineWidth={3}
-			pointSize={12}
+			lineWidth={1}
+			pointSize={2}
 			colors={customColors}
 			pointColor={{ theme: 'background' }}
-			pointBorderWidth={1}
+			pointBorderWidth={2}
 			pointBorderColor={{ from: 'serieColor' }}
 			pointLabel="data.yFormatted"
-			pointLabelYOffset={-12}
+			pointLabelYOffset={0}
 			enableSlices="x"
 			sliceTooltip={({ slice }) => {
-				// print serieId
-				console.log(slice.points[0].serieId);
-
 				const likes = slice.points.find((point) => point.serieId === 'Likes')?.data.y || 0;
 				const recasts = slice.points.find((point) => point.serieId === 'Recasts')?.data.y || 0;
-				const follows = slice.points.find((point) => point.serieId === 'Followers Gained')?.data.y || 0;
+				const follows = slice.points.find((point) => point.serieId === 'Followers')?.data.y || 0;
 				const date = dayjs(slice.points[0].data.x).format('dddd, MMMM D, YYYY h:mm A');
 
 				return (
@@ -131,9 +130,11 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 				);
 			}}
 			animate={true}
-			motionConfig="gentle"
+			motionConfig="wobbly"
 			onMouseEnter={(data, event) => {
 				// console.log('onMouseEnter', data?.points);
+				// @ts-ignore
+				setHoveredUserStat(data?.points?.[0]?.data?.y);
 			}}
 			legends={[
 				{
@@ -142,7 +143,7 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 					justify: false,
 					translateX: -75,
 					translateY: -75,
-					itemsSpacing: 2,
+					itemsSpacing: 6,
 					itemDirection: 'left-to-right',
 					itemWidth: 80,
 					itemHeight: 12,

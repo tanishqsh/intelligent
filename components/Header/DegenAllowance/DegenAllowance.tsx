@@ -17,7 +17,6 @@ const DegenAllowance = () => {
 	const fetchAllowance = async () => {
 		try {
 			const response = await axios.get('/api/degen?fid=' + user?.farcaster?.fid);
-			console.log(response.data);
 			setRemainingAllowance(response.data.allowance?.remaining_allowance);
 			setTotalAllowance(response.data.allowance?.tip_allowance);
 		} catch (error) {
