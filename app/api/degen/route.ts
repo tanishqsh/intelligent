@@ -19,11 +19,8 @@ export async function GET(request: NextRequest) {
 
 	try {
 		const response = await axios.get(url);
-		console.log(response.data);
 		return NextResponse.json({ ...response.data, error: false, success: true });
 	} catch (error) {
-		console.error(error);
+		return NextResponse.json({ message: 'An error occurred', error: true, success: false });
 	}
-
-	return NextResponse.json({ message: 'Hello, World!' });
 }

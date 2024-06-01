@@ -6,13 +6,52 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import HighlightedText from '../ui/HighlightedText/HighlightedText';
+import EngagementChart from './EngagementChart';
+import data from './line_chart.json';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { endpoints } from '@/lib/backend/endpoints';
+
+type ChartData = {
+	id: string;
+	data: { x: string; y: number }[];
+};
 
 export default function Dashboard() {
-	const { ready, authenticated, login, logout, user } = usePrivy();
+	const [chartData, setChartData] = useState<ChartData[]>([]);
+
+	const { ready, authenticated, login, logout, user, getAccessToken } = usePrivy();
+
+	const fetchChartData = async () => {
+		const accessToken = getAccessToken();
+		axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+		const fid = user?.farcaster?.fid;
+		const response = await axios.get(`${endpoints.get_chart1.path}?fid=${fid}`);
+		console.log(response.data.graphData);
+		setChartData(response.data.graphData);
+	};
+
+	useEffect(() => {
+		const fid = user?.farcaster?.fid;
+
+		if (ready && fid) {
+			fetchChartData();
+		}
+	}, [user]);
 
 	if (!ready) {
 		return null;
 	}
+
+	return (
+		<div className="min-h-screen bg-neutral-100 pt-12">
+			<div className="flex flex-col rounded-2xl max-w-7xl m-auto bg-white/50 shadow-sm items-start justify-start">
+				<div className="h-[500px] w-full">
+					<EngagementChart data={chartData} />
+				</div>
+			</div>
+		</div>
+	);
 
 	return (
 		<div className="h-screen bg-neutral-100 flex items-center justify-center">
@@ -40,10 +79,6 @@ export default function Dashboard() {
 					className="text-black max-w-xs text-center leading-tight font-general-sans font-medium text-4xl"
 				>
 					Your <HighlightedText> dashboard </HighlightedText> will be here soon.
-					{/* {' '}
-					<Link href="https://warpcast.com/~/channel/intelligent">
-						<span className="text-amber-600">/intelligent </span>
-					</Link>{' '} */}
 				</motion.p>
 			</div>
 		</div>

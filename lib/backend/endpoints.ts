@@ -15,6 +15,10 @@ const endpoints = {
 		path: `${rootUrl}/api/user/log-user`,
 		type: 'POST',
 	},
+	get_chart1: {
+		path: `${rootUrl}/api/mimir/get-chart1`,
+		type: 'GET',
+	},
 };
 
 export { rootUrl, endpoints };
