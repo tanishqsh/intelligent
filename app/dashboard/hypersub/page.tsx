@@ -55,9 +55,8 @@ export default function Hypersub() {
 							};
 
 							return (
-								<div className="space-y-0 flex flex-col max-h-[200px] overflow-scroll divide-y divide-dotted">
+								<div key={i} className="space-y-0 flex flex-col max-h-[200px] overflow-scroll divide-y divide-dotted">
 									<motion.div
-										key={i}
 										initial={{ opacity: 0, paddingTop: 8, paddingBottom: 8, y: 30 }}
 										animate={{ opacity: 1, paddingTop: 10, paddingBottom: 10, y: 0 }}
 										whileHover={{ opacity: 1, paddingTop: 15, paddingBottom: 15 }}
