@@ -1,7 +1,12 @@
 'use client';
 
 import Dashboard from '@/components/Dashboard/Dashboard';
+import { DurationProvider } from '@/components/Dashboard/DurationContext';
 
 export default function Page() {
-	return <Dashboard />;
+	return (
+		<DurationProvider>
+			<Dashboard />
+		</DurationProvider>
+	);
 }

@@ -1,0 +1,27 @@
+{
+	"subscriptions_created": [
+		{
+			"object": "subscription",
+			"provider_name": "fabric_stp",
+			"contract_address": "0xd899404e3a2272862d87b2bf68426e1b5ec77dda",
+			"chain": 8453,
+			"metadata": {
+				"title": "intelligent",
+				"symbol": "NTL",
+				"art_url": "https://storage.withfabric.xyz/loom/ce90d7b7-49f3-4159-ac27-eb34d00973fe.png"
+			},
+			"owner_address": "0x1b9ad081e4a94fbb566486f3d86f97a1da1c94b0",
+			"price": {
+				"period_duration_seconds": 2592000,
+				"tokens_per_period": "6299999998560000"
+			},
+			"protocol_version": 1,
+			"token": {
+				"symbol": "ETH",
+				"address": null,
+				"decimals": 18,
+				"erc20": false
+			}
+		}
+	]
+}

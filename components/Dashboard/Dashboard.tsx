@@ -1,92 +1,61 @@
 'use client';
 
-import colors from '@/utils/colors';
 import { usePrivy } from '@privy-io/react-auth';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import HighlightedText from '../ui/HighlightedText/HighlightedText';
 import EngagementChart from './EngagementChart';
-import data from './line_chart.json';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { endpoints } from '@/lib/backend/endpoints';
-
-type ChartData = {
-	id: string;
-	data: { x: string; y: number }[];
-};
+import useUserStatisticsData from './hooks/useUserStatisticsData';
+import { useChartData } from './hooks/useChartData';
+import Overview from './Overview/Overview';
+import { useDuration } from './DurationContext';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function Dashboard() {
-	const [chartData, setChartData] = useState<ChartData[]>([]);
-	const [hoveredUserStat, setHoveredUserStat] = useState(null);
+	const { duration } = useDuration();
+	const { ready, user } = usePrivy();
+	const { userStatistics, error: userStatsError } = useUserStatisticsData(user?.farcaster?.fid?.toString() || '', ready);
 
-	const { ready, authenticated, login, logout, user, getAccessToken } = usePrivy();
+	console.log('About to send duration to useChartData:', duration);
+	const { chartData, error: chartError } = useChartData(duration);
 
-	const fetchChartData = async () => {
-		const accessToken = getAccessToken();
-		axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-		const fid = user?.farcaster?.fid;
-		const response = await axios.get(`${endpoints.get_chart1.path}?fid=${fid}`);
-
-		setChartData(response.data.graphData);
-	};
-
-	useEffect(() => {
-		const fid = user?.farcaster?.fid;
-
-		if (ready && fid) {
-			fetchChartData();
-		}
-	}, [user]);
-
-	if (!ready) {
-		return null;
-	}
-
-	console.log(hoveredUserStat, 'hoveredUserStat');
+	console.log(userStatistics, 'userStatistics');
 
 	return (
-		<div className="min-h-screen bg-neutral-100 pt-12">
-			<div className="flex rounded-2xl max-w-7xl m-auto bg-white/50 shadow-sm items-start justify-start">
-				<div className="h-[500px] w-full">
-					<EngagementChart setHoveredUserStat={setHoveredUserStat} data={chartData} />
-					{/* <button onClick={fetchChartData}>Fetch Data</button> */}
+		<div className="min-h-screen bg-neutral-100 pb-24">
+			<div className="max-w-7xl m-auto space-y-4 pt-12">
+				<Overview />
+				{ready && userStatistics && chartData && (
+					<motion.div
+						initial={{ y: 50, opacity: 0 }}
+						animate={{ y: 0, opacity: 1 }}
+						transition={{ duration: 0.5 }}
+						className="flex flex-col rounded-2xl m-auto bg-white/50 shadow-sm items-start justify-start"
+					>
+						<AnimatePresence mode="wait">
+							<motion.div
+								initial={{ y: 10, opacity: 0 }}
+								animate={{ y: 0, opacity: 1 }}
+								exit={{ y: 10, opacity: 0 }}
+								transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+								key={duration}
+								className="h-[500px] w-full overflow-hidden"
+							>
+								<EngagementChart data={chartData} />
+							</motion.div>
+						</AnimatePresence>
+					</motion.div>
+				)}
+				{/* <div className="flex justify-between space-x-4">
+					<div className="bg-white p-10 text-neutral-400 w-1/2 rounded-xl">Top Casts</div>
+					<div className="bg-white p-10 text-neutral-400 w-1/2 rounded-xl">Impactful Engagers</div>
 				</div>
+				<div className="flex justify-between">
+					<div className="bg-white p-10 text-neutral-400">Top Mentions</div>
+					<div className="bg-white p-10 text-neutral-400">Top 10 most engaged people with you in last [duration] </div>
+				</div>
+				<div className="flex justify-between">
+					<div className="bg-white p-10 text-neutral-400">Impactful Followers - top 10 followers in last [duration] with over 10K followers</div>
+					<div className="bg-white p-10 text-neutral-400">Impactful Unfollowers - top 10 unfollowers in last [duration] with over 10K followers</div>
+				</div> */}
 			</div>
 		</div>
 	);
 }
-
-const ComingSoon = () => {
-	return (
-		<div className="h-screen bg-neutral-100 flex items-center justify-center">
-			<div className="space-y-8 mt-[-200px]">
-				<div className="space-y-2 h-[100px] overflow-hidden">
-					{[...Array(10)].map((_, index) => (
-						<motion.div
-							key={index}
-							initial={{ width: '200px', height: '20px', translateY: '40px', background: colors.neutral[100] }}
-							animate={{ width: '200px', height: '20px', translateY: '-40px', background: colors.neutral[200] }}
-							transition={{
-								duration: 5,
-								repeat: Infinity,
-								delay: index * 0.5,
-								backgroundTransition: { delay: 2.5 },
-							}}
-							className="h-[20px] w-[200px] rounded-full m-auto"
-						></motion.div>
-					))}
-				</div>
-				<motion.p
-					initial={{ opacity: 0, translateY: 20 }}
-					animate={{ opacity: 1, translateY: 0 }}
-					transition={{ type: 'spring', stiffness: 100 }}
-					className="text-black max-w-xs text-center leading-tight font-general-sans font-medium text-4xl"
-				>
-					Your <HighlightedText> dashboard </HighlightedText> will be here soon.
-				</motion.p>
-			</div>
-		</div>
-	);
-};

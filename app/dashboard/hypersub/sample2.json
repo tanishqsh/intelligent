@@ -1,0 +1,268 @@
+{
+	"subscribers": [
+		{
+			"object": "subscriber",
+			"user": {
+				"object": "user",
+				"fid": 191780,
+				"custody_address": "0xd8d373a3648a19e1c38ed765db820e907bb3ab4a",
+				"username": "agrimony.eth",
+				"display_name": "agrimony↑🎩",
+				"pfp_url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/5331ae97-9d36-42f0-9d61-57c21acf7f00/original",
+				"profile": {
+					"bio": {
+						"text": "👋 running nodes and saying gm\n\nhttp://deca.art/agrimony | ex contributor @airswap"
+					}
+				},
+				"follower_count": 2604,
+				"following_count": 772,
+				"verifications": ["0xb152df6b3646d04a3232821778277049ae21bb99", "0xdb3ec7b16fd60fb4fdb58a438bd8af57d8d3a91c"],
+				"verified_addresses": {
+					"eth_addresses": ["0xb152df6b3646d04a3232821778277049ae21bb99", "0xdb3ec7b16fd60fb4fdb58a438bd8af57d8d3a91c"],
+					"sol_addresses": []
+				},
+				"active_status": "inactive",
+				"power_badge": true
+			},
+			"subscribed_to": [
+				{
+					"object": "subscription_dehydrated",
+					"provider_name": "fabric_stp",
+					"contract_address": "0xd899404e3a2272862d87b2bf68426e1b5ec77dda",
+					"chain": 8453
+				}
+			]
+		},
+		{
+			"object": "subscriber",
+			"user": {
+				"object": "user",
+				"fid": 2329,
+				"custody_address": "0x1a94e90bc4ce76b347e922baa64231a289ea563a",
+				"username": "veekay",
+				"display_name": "veekay ",
+				"pfp_url": "https://i.imgur.com/CTXyF8X.png",
+				"profile": {
+					"bio": {
+						"text": "tokens, tribes & games | building /farsight & hosting /football"
+					}
+				},
+				"follower_count": 3379,
+				"following_count": 989,
+				"verifications": ["0x8441fa93a8f2e372aba8a9f94f9dd78e9fb7ea36"],
+				"verified_addresses": {
+					"eth_addresses": ["0x8441fa93a8f2e372aba8a9f94f9dd78e9fb7ea36"],
+					"sol_addresses": []
+				},
+				"active_status": "inactive",
+				"power_badge": true
+			},
+			"subscribed_to": [
+				{
+					"object": "subscription_dehydrated",
+					"provider_name": "fabric_stp",
+					"contract_address": "0xd899404e3a2272862d87b2bf68426e1b5ec77dda",
+					"chain": 8453
+				}
+			]
+		},
+		{
+			"object": "subscriber",
+			"user": {
+				"object": "user",
+				"fid": 1407,
+				"custody_address": "0xa3037d4c94aa42088aacf5fce2f885c0de893b56",
+				"username": "zinger",
+				"display_name": "Zinger ↑",
+				"pfp_url": "https://i.imgur.com/ZIIiTPV.jpg",
+				"profile": {
+					"bio": {
+						"text": "/new-york by day 🗽 /zinger by night 😈 Fan of eating tacos and bringing people together, often at the same time 🌮"
+					}
+				},
+				"follower_count": 8866,
+				"following_count": 794,
+				"verifications": ["0xafca747b067c40ae0dda3f170ae971a2cbf4d05c"],
+				"verified_addresses": {
+					"eth_addresses": ["0xafca747b067c40ae0dda3f170ae971a2cbf4d05c"],
+					"sol_addresses": ["6EAaPqnwT54YnYfCRyupN8rK25i2hbguBFcbfVQ8hGWj"]
+				},
+				"active_status": "inactive",
+				"power_badge": true
+			},
+			"subscribed_to": [
+				{
+					"object": "subscription_dehydrated",
+					"provider_name": "fabric_stp",
+					"contract_address": "0xd899404e3a2272862d87b2bf68426e1b5ec77dda",
+					"chain": 8453
+				}
+			]
+		},
+		{
+			"object": "subscriber",
+			"user": {
+				"object": "user",
+				"fid": 2566,
+				"custody_address": "0xaa358664132a21318ee2dc5cbca1830c31c04b10",
+				"username": "aditak",
+				"display_name": "Aditya Tak 🎩🔵🍖🐹",
+				"pfp_url": "https://lh3.googleusercontent.com/C04qEi4pxoFrQAvczNIVoJHlsSc4vAI2QXLHm9dopguNeoH0Wtaf9c1UZMO3-fY3p4hgRYtfQOm3L0UJiwCN_Hucm4IfNGZObFZqWg",
+				"profile": {
+					"bio": {
+						"text": "Community, Content & Growth | 🛠️ Building @farmedia.eth | Leading @laxmichitfund | Player /fbi"
+					}
+				},
+				"follower_count": 1540,
+				"following_count": 328,
+				"verifications": ["0xcf1d78daf41d4fbddc91dd8d00d2f5f88046a3a3"],
+				"verified_addresses": {
+					"eth_addresses": ["0xcf1d78daf41d4fbddc91dd8d00d2f5f88046a3a3"],
+					"sol_addresses": []
+				},
+				"active_status": "inactive",
+				"power_badge": true
+			},
+			"subscribed_to": [
+				{
+					"object": "subscription_dehydrated",
+					"provider_name": "fabric_stp",
+					"contract_address": "0xd899404e3a2272862d87b2bf68426e1b5ec77dda",
+					"chain": 8453
+				}
+			]
+		},
+		{
+			"object": "subscriber",
+			"user": {
+				"object": "user",
+				"fid": 379972,
+				"custody_address": "0x0f3e6cd7a4f5586cc364e8330620d3e3f25b995d",
+				"username": "duttsaheb.eth",
+				"display_name": "Ashish Dutt 🎩🔵🐹",
+				"pfp_url": "https://v3ty3djs7ei5zovhkh2jqpykshqla3xyxthnvuqmyyrq5ooz2hoa.arweave.net/rueNjTL5Edy6p1H0mD8KkeCwbvi8ztrSDMYjDrnZ0dw/",
+				"profile": {
+					"bio": {
+						"text": "Diving deep into web3! Building /onchain-rookies: where rookies learn and grow together."
+					}
+				},
+				"follower_count": 746,
+				"following_count": 491,
+				"verifications": ["0x1a02bba11779618f1a815b154ea976bf9f7aadae"],
+				"verified_addresses": {
+					"eth_addresses": ["0x1a02bba11779618f1a815b154ea976bf9f7aadae"],
+					"sol_addresses": []
+				},
+				"active_status": "inactive",
+				"power_badge": true
+			},
+			"subscribed_to": [
+				{
+					"object": "subscription_dehydrated",
+					"provider_name": "fabric_stp",
+					"contract_address": "0xd899404e3a2272862d87b2bf68426e1b5ec77dda",
+					"chain": 8453
+				}
+			]
+		},
+		{
+			"object": "subscriber",
+			"user": {
+				"object": "user",
+				"fid": 2915,
+				"custody_address": "0x7217a07c230de31a432e136c9cc48f80aef4c969",
+				"username": "gaurang.eth",
+				"display_name": "Gaurang Desai 🎩🔮",
+				"pfp_url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/bb1410ab-b9d5-490f-3b3a-cdbb20c94b00/original",
+				"profile": {
+					"bio": {
+						"text": "oncha↑n summer "
+					}
+				},
+				"follower_count": 637,
+				"following_count": 730,
+				"verifications": ["0x0040daac32d83c78546ae36da42a496b28ab09e1"],
+				"verified_addresses": {
+					"eth_addresses": ["0x0040daac32d83c78546ae36da42a496b28ab09e1"],
+					"sol_addresses": ["7cLXS1j9z42jKM9bEpX2NAhoXj5FwUpnmVwkJ23gXk7K"]
+				},
+				"active_status": "inactive",
+				"power_badge": false
+			},
+			"subscribed_to": [
+				{
+					"object": "subscription_dehydrated",
+					"provider_name": "fabric_stp",
+					"contract_address": "0xd899404e3a2272862d87b2bf68426e1b5ec77dda",
+					"chain": 8453
+				}
+			]
+		},
+		{
+			"object": "subscriber",
+			"user": {
+				"object": "user",
+				"fid": 403619,
+				"custody_address": "0xd04e431836b6b5407ac54f0da37194fe1d4b47f1",
+				"username": "maretus.eth",
+				"display_name": "Maretus 🎩",
+				"pfp_url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/e4a93dfc-8be2-43da-7d08-3676c489b700/original",
+				"profile": {
+					"bio": {
+						"text": "Full time reply guy, co-founder of /9to5 and /success.\n\n\n\n\n\n\n\n\n\nSearch Marketing Director of Kraken Kratom.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n$DEGEN Maxi & Base Fanboy. "
+					}
+				},
+				"follower_count": 8925,
+				"following_count": 2472,
+				"verifications": ["0xcb69c793478a7355178979ae0be453bf61c378ee"],
+				"verified_addresses": {
+					"eth_addresses": ["0xcb69c793478a7355178979ae0be453bf61c378ee"],
+					"sol_addresses": []
+				},
+				"active_status": "inactive",
+				"power_badge": true
+			},
+			"subscribed_to": [
+				{
+					"object": "subscription_dehydrated",
+					"provider_name": "fabric_stp",
+					"contract_address": "0xd899404e3a2272862d87b2bf68426e1b5ec77dda",
+					"chain": 8453
+				}
+			]
+		},
+		{
+			"object": "subscriber",
+			"user": {
+				"object": "user",
+				"fid": 364953,
+				"custody_address": "0x945116e47f1656ccfcaad32fdcaa8e79f7e43f36",
+				"username": "psydeffects",
+				"display_name": "Shoaib🎩🍖🛫",
+				"pfp_url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/f2aa29f9-ae9d-460b-3bb7-cde9af954b00/rectcrop3",
+				"profile": {
+					"bio": {
+						"text": "DigitalMarketing| Pharmacist| Cat lover| Dog lover| Climbing Mountains| Chasing Beaches|\nConnect and Grow|. \n\nPsydeffects.lens"
+					}
+				},
+				"follower_count": 2608,
+				"following_count": 997,
+				"verifications": ["0x3a77a32a7a47e72824aaff264742ce7ed0c821d0", "0xf62e749138792eb1dd180a31e75b8eec17420b7d"],
+				"verified_addresses": {
+					"eth_addresses": ["0x3a77a32a7a47e72824aaff264742ce7ed0c821d0", "0xf62e749138792eb1dd180a31e75b8eec17420b7d"],
+					"sol_addresses": []
+				},
+				"active_status": "inactive",
+				"power_badge": true
+			},
+			"subscribed_to": [
+				{
+					"object": "subscription_dehydrated",
+					"provider_name": "fabric_stp",
+					"contract_address": "0xd899404e3a2272862d87b2bf68426e1b5ec77dda",
+					"chain": 8453
+				}
+			]
+		}
+	]
+}

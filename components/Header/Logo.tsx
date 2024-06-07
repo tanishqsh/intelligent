@@ -4,9 +4,9 @@ export default function Logo({ className }: { className?: string }) {
 	return (
 		<AnimatePresence>
 			<motion.svg
-				initial={{ opacity: 0, scale: 0.3 }}
+				initial={{ opacity: 0, scale: 0.85 }}
 				animate={{ opacity: 1, scale: 0.9 }}
-				exit={{ opacity: 0, scale: 0.3 }}
+				exit={{ opacity: 0, scale: 0.85 }}
 				className={className}
 				viewBox="0 0 48 48"
 				fill="none"

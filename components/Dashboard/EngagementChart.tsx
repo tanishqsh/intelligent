@@ -2,12 +2,44 @@ import dayjs from 'dayjs';
 import { ResponsiveLine } from '@nivo/line';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import colors from '@/utils/colors';
+import { useDuration } from './DurationContext';
+import Duration from './Overview/Duration';
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(require('dayjs/plugin/relativeTime'));
 
-const customColors = ['#FFAF34', '#FACC16', '#0000ff', '#ff00ff', '#00ffff', '#ffff00'];
+const customColors = [colors.neutral[500], colors.neutral[400], colors.amber[500]];
 
-const EngagementChart = ({ data = [], setHoveredUserStat }: { data: any[]; setHoveredUserStat: (state: any) => void }) => {
+type Precision = 'hour' | 'day' | 'month';
+
+const EngagementChart = ({ data = [] }: { data: any[] }) => {
+	const { duration } = useDuration();
+
+	let tickValues = 'every 2 hour';
+	let precision: Precision = 'hour';
+	let format = '%I:%M %p';
+
+	switch (duration) {
+		case Duration.DAYS_7:
+			tickValues = 'every 24 hours';
+			precision = 'hour';
+			format = '%a, %d %b';
+			break;
+		case Duration.DAYS_30:
+			tickValues = 'every 2 days';
+			precision = 'hour';
+			format = '%e %b';
+			break;
+		case Duration.DAYS_180:
+			tickValues = 'every 7 days';
+			precision = 'hour';
+			format = '%m/%y';
+			break;
+		default:
+			break;
+	}
+
 	// find the range of the values dynamically
 	let max = 0;
 	let min = Infinity;
@@ -35,8 +67,10 @@ const EngagementChart = ({ data = [], setHoveredUserStat }: { data: any[]; setHo
 			y: p.y,
 		})),
 	}));
+
 	return (
 		<ResponsiveLine
+			areaBaselineValue={0}
 			enableArea={true}
 			areaOpacity={0.1}
 			theme={{
@@ -53,22 +87,22 @@ const EngagementChart = ({ data = [], setHoveredUserStat }: { data: any[]; setHo
 				},
 				grid: {
 					line: {
-						stroke: '#FFAF34', // Customize the grid line color
+						stroke: '#cccccc', // Customize the grid line color
 						strokeWidth: 1, // Customize the grid line width
 						strokeDasharray: '1 8', // Customize the grid line style (dashed)
 					},
 				},
 				crosshair: {
 					line: {
-						stroke: '#FFAF34', // Customize the crosshair line color
+						stroke: '#cccccc', // Customize the crosshair line color
 						strokeWidth: 1, // Customize the crosshair line width
 						strokeDasharray: '8 8', // Customize the crosshair line style (dashed)
 					},
 				},
 			}}
 			data={lineData}
-			margin={{ top: 100, right: 100, bottom: 100, left: 100 }}
-			xScale={{ type: 'time', format: 'native', precision: 'hour' }}
+			margin={{ top: 60, right: 100, bottom: 80, left: 100 }}
+			xScale={{ type: 'time', format: 'native', precision: precision }}
 			yScale={{ type: 'linear', stacked: false, min: 'auto', max: 'auto' }}
 			yFormat=" >-.2f"
 			curve="step"
@@ -76,32 +110,29 @@ const EngagementChart = ({ data = [], setHoveredUserStat }: { data: any[]; setHo
 				tickSize: 15,
 				tickPadding: 10,
 				tickRotation: 0,
-				format: '.2s',
 				legend: 'Engagement',
 				legendOffset: -65,
 				legendPosition: 'middle',
+				tickValues: 10,
+				format: (value) => `${value}`,
 			}}
-			axisTop={{
-				format: '%I:%M %p',
-				legendOffset: -65,
+			// axisLeft={null}
+			axisBottom={{
+				format: format,
+				legendOffset: 0,
 				legendPosition: 'middle',
 				tickSize: 15,
 				tickPadding: 10,
-				tickValues: 'every 4 hours', // Increased interval to reduce label overlap
+				tickValues: '' + tickValues, // Increased interval to reduce label overlap
 			}}
-			axisBottom={{
-				format: '',
-				legend: 'Follower Growth vs Engagement over the last 24 hours',
-				legendPosition: 'middle',
-				legendOffset: 65,
-			}}
+			// axisBottom={null}
 			enableGridX={true}
 			enableGridY={true}
-			lineWidth={1}
-			pointSize={2}
+			lineWidth={0}
+			pointSize={6.5}
 			colors={customColors}
 			pointColor={{ theme: 'background' }}
-			pointBorderWidth={2}
+			pointBorderWidth={8}
 			pointBorderColor={{ from: 'serieColor' }}
 			pointLabel="data.yFormatted"
 			pointLabelYOffset={0}
@@ -110,45 +141,39 @@ const EngagementChart = ({ data = [], setHoveredUserStat }: { data: any[]; setHo
 				const likes = slice.points.find((point) => point.serieId === 'Likes')?.data.y || 0;
 				const recasts = slice.points.find((point) => point.serieId === 'Recasts')?.data.y || 0;
 				const follows = slice.points.find((point) => point.serieId === 'Followers')?.data.y || 0;
-				const date = dayjs(slice.points[0].data.x).format('dddd, MMMM D, YYYY h:mm A');
 
 				return (
 					<div className="bg-white/20 backdrop-blur-md px-4 py-2 shadow-sm border border-[#ededed]/30 rounded-md">
-						<div className="text-xs text-black/50">{date}</div>
+						<div className="text-xs text-black/50">
+							{dayjs(slice.points[0].data.x).format('dddd, MMMM D, h:mm A')} ({dayjs(slice.points[0].data.x).fromNow()}){' '}
+						</div>
 						<div className="mt-2 space-x-1">
-							<div className="text-xs rounded-full text-[#ffa013] px-[6px] py-[2px] bg-[#ffa013]/10 font-medium inline-block">
+							<div className="text-xs rounded-full text-neutral-800 px-[6px] py-[2px] bg-neutral-800/10 font-medium inline-block">
 								{Number(likes)} likes
 							</div>
-							<div className="text-xs rounded-full text-[#ffcc00] px-[6px] py-[2px] bg-[#ffcc00]/10 font-medium inline-block">
+							<div className="text-xs rounded-full text-neutral-600 px-[6px] py-[2px] bg-neutral-500/10 font-medium inline-block">
 								{Number(recasts)} recasts
 							</div>
-							<div className="text-xs rounded-full text-[#0033ff] px-[6px] py-[2px] bg-[#0033ff]/10 font-medium inline-block">
+							<div className="text-xs rounded-full text-amber-500 px-[6px] py-[2px] bg-amber-500/10 font-medium inline-block">
 								{Number(follows)} followers
 							</div>
 						</div>
 					</div>
 				);
 			}}
-			animate={true}
-			motionConfig="wobbly"
-			onMouseEnter={(data, event) => {
-				// console.log('onMouseEnter', data?.points);
-				// @ts-ignore
-				setHoveredUserStat(data?.points?.[0]?.data?.y);
-			}}
 			legends={[
 				{
-					anchor: 'top-left',
+					anchor: 'top',
 					direction: 'row',
 					justify: false,
-					translateX: -75,
-					translateY: -75,
-					itemsSpacing: 6,
+					translateX: 0,
+					translateY: -30,
+					itemsSpacing: 3,
 					itemDirection: 'left-to-right',
-					itemWidth: 80,
-					itemHeight: 12,
-					itemOpacity: 0.75,
-					symbolSize: 12,
+					itemWidth: 70,
+					itemHeight: 8,
+					itemOpacity: 0.5,
+					symbolSize: 8,
 					symbolShape: 'circle',
 					symbolBorderColor: 'rgba(0, 0, 0, .5)',
 				},

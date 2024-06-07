@@ -4,7 +4,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import { usePathname, useRouter } from 'next/navigation';
 import Logo from './Logo';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import colors from '@/utils/colors';
 import HoverHighlightedText from '../ui/HoverHighlightText/HoverHighlightedText';
 import DegenAllowance from './DegenAllowance/DegenAllowance';
@@ -61,7 +61,7 @@ const Header = () => {
 								animate={{ opacity: 0.4, x: 0 }}
 								whileHover={{ opacity: 0.8, x: 0 }}
 								whileTap={{ scale: 0.9 }}
-								className="font-medium cursor-pointer text-sm"
+								className="font-medium cursor-pointer text-xs"
 							>
 								Sign out
 							</motion.button>
@@ -80,8 +80,8 @@ const Menu = () => {
 		<div className="flex items-center justify-center space-x-8 antialiased font-general-sans">
 			<motion.div
 				initial={{ opacity: 0, y: 10 }}
-				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard' ? colors.neutral[800] : colors.neutral[400] }}
-				whileHover={{ opacity: 1, color: '#000000' }}
+				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard' ? colors.neutral[600] : colors.neutral[400] }}
+				whileHover={{ opacity: 1, color: colors.neutral[600] }}
 				transition={{
 					type: 'spring',
 					stiffness: 100,
@@ -96,7 +96,7 @@ const Menu = () => {
 
 			<motion.div
 				initial={{ opacity: 0, y: 10 }}
-				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard/cast-analyze' ? colors.neutral[800] : colors.neutral[400] }}
+				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard/cast-analyze' ? colors.neutral[800] : '#8888AA' }}
 				whileHover={{ opacity: 1, color: '#000000' }}
 				transition={{
 					type: 'spring',
@@ -120,10 +120,10 @@ const Menu = () => {
 				}}
 			>
 				<span className="font-medium cursor-pointer text-sm">
-					Search <sup className="text-[8px]"> Coming soon</sup>
+					Search <sup className="text-[8px]"> soon</sup>
 				</span>
-			</motion.div>
-			<motion.div
+			</motion.div> */}
+			{/* <motion.div
 				initial={{ opacity: 0, y: 10 }}
 				whileHover={{ opacity: 0.7, color: '#383838' }}
 				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard/ai' ? '#383838' : '#8888AA' }}
@@ -134,21 +134,7 @@ const Menu = () => {
 				}}
 			>
 				<span className="font-medium cursor-pointer text-sm">
-					AI Insights<sup className="text-[8px]"> Coming soon</sup>
-				</span>
-			</motion.div>
-			<motion.div
-				initial={{ opacity: 0, y: 10 }}
-				whileHover={{ opacity: 0.7, color: '#383838' }}
-				animate={{ opacity: 1, y: 0, color: pathname === '/dashboard/ecosystem' ? '#383838' : '#8888AA' }}
-				transition={{
-					delay: 0.16,
-					type: 'spring',
-					stiffness: 200,
-				}}
-			>
-				<span className="font-medium cursor-pointer text-sm">
-					Ecosystem<sup className="text-[8px]"> Coming soon</sup>
+					AI Insights<sup className="text-[8px]"> soon</sup>
 				</span>
 			</motion.div> */}
 		</div>
