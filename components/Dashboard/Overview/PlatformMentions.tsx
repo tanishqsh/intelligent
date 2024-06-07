@@ -11,11 +11,15 @@ export default function PlatformMentions() {
 	const { stats, error } = useDashboardStats();
 
 	if (error) {
-		console.error(error);
+		// console.log(error);
 	}
 
 	if (!stats) {
 		return null;
+	}
+
+	if (chartError) {
+		console.log(chartError);
 	}
 
 	const getStatsByDuration = (duration: string) => {

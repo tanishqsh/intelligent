@@ -3,7 +3,6 @@ import { collection, doc, onSnapshot, DocumentData } from 'firebase/firestore';
 import firestore from '@/lib/firebase/firestore';
 
 const useUserStatisticsData = (fid: string, isReady: boolean) => {
-	console.log(`UseUSData called at ${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })}`);
 	const [userStatistics, setUserStatistics] = useState<DocumentData | null>(null);
 	const [error, setError] = useState<string | null>(null);
 

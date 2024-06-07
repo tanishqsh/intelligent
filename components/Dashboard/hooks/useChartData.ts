@@ -2,7 +2,6 @@ import axios from 'axios';
 import useSWR from 'swr';
 import { usePrivy } from '@privy-io/react-auth';
 import { endpoints } from '@/lib/backend/endpoints';
-import Duration from '../Overview/Duration';
 
 const fetcher = async (url: string, token: string) => {
 	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -11,8 +10,6 @@ const fetcher = async (url: string, token: string) => {
 };
 
 export const useChartData = (interval = '24 hours') => {
-	console.log(`UseChartData called at ${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })}`);
-
 	const { ready, user, getAccessToken } = usePrivy();
 
 	const swrKey = ready && user?.farcaster?.fid ? `${endpoints.get_chart1.path}?fid=${user.farcaster.fid}&duration=${interval}` : null;
@@ -32,8 +29,6 @@ export const useChartData = (interval = '24 hours') => {
 			refreshInterval: 0,
 		}
 	);
-
-	console.log('Graph Data', data, 'Error', error);
 
 	return { chartData: data, error };
 };

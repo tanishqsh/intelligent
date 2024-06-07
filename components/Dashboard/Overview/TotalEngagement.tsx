@@ -11,7 +11,7 @@ export default function TotalEngagement() {
 	const { stats, error } = useDashboardStats();
 
 	if (error) {
-		console.error(error);
+		// console.log(error);
 	}
 
 	if (!stats) {

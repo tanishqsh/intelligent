@@ -121,9 +121,8 @@ const extractReactionStats = (reactions_stat: any) => {
 
 export const useDashboardStats = () => {
 	const { ready, user } = usePrivy();
-	const { userStatistics, error } = useUserStatisticsData(user?.farcaster?.fid?.toString() || '', ready);
 
-	console.log(userStatistics, 'userStatistics');
+	const { userStatistics, error } = useUserStatisticsData(user?.farcaster?.fid?.toString() || '', ready);
 
 	const stats = useMemo(() => {
 		if (!userStatistics) return null;

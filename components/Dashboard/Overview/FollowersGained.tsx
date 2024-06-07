@@ -11,7 +11,7 @@ export default function FollowersGained() {
 	const { stats, error } = useDashboardStats();
 
 	if (error) {
-		console.error(error);
+		// console.log(error);
 	}
 
 	if (!stats) {

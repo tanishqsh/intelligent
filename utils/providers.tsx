@@ -12,7 +12,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 			config={{
 				appearance: {
 					theme: 'light',
-					accentColor: '#FFAF33',
+					accentColor: '#F59E0C',
 					logo: 'https://intelligent.wtf/intelligent.png',
 				},
 				defaultChain: base,

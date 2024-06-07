@@ -13,10 +13,7 @@ export default function Dashboard() {
 	const { ready, user } = usePrivy();
 	const { userStatistics, error: userStatsError } = useUserStatisticsData(user?.farcaster?.fid?.toString() || '', ready);
 
-	console.log('About to send duration to useChartData:', duration);
 	const { chartData, error: chartError } = useChartData(duration);
-
-	console.log(userStatistics, 'userStatistics');
 
 	return (
 		<div className="min-h-screen bg-neutral-100 pb-24">
