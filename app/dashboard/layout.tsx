@@ -5,8 +5,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<div>
 			<Header />
-			<Subheader />
 			<div>{children}</div>
+			<Subheader />
 		</div>
 	);
 }

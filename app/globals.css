@@ -12,6 +12,25 @@
 	@apply bg-gray-100 text-gray-800;
 }
 
+.possible-link a {
+	@apply text-amber-700;
+	@apply hover:text-amber-600;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	word-break: break-all;
+	hyphens: auto;
+}
+
+.possible-link a::before {
+	content: '';
+	display: inline-block;
+	width: 1rem; /* Adjust the width as needed */
+	height: 1rem; /* Adjust the height as needed */
+	background: url('/link.svg') no-repeat center center;
+	background-size: contain;
+	margin-right: 0.25rem;
+	margin-bottom: -0.25rem;
+}
 .custom-scrollbar {
 	scrollbar-width: thin; /* For Firefox */
 	scrollbar-color: #374151 #d1d5db; /* For Firefox */

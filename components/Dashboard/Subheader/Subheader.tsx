@@ -14,6 +14,10 @@ const Subheader = () => {
 			name: 'Hypersub',
 			route: '/dashboard/hypersub',
 		},
+		{
+			name: 'Analyze',
+			route: '/dashboard/cast-analyze',
+		},
 	];
 	const [activeTab, setActiveTab] = useState(tabs[0]);
 	const activeIndex = tabs.findIndex((tab) => tab.name === activeTab.name);
@@ -27,7 +31,7 @@ const Subheader = () => {
 
 	return (
 		<div className="fixed bottom-8 left-0 right-0 flex items-center justify-center">
-			<div className="bg-neutral-200/10 backdrop-blur-sm inline-block rounded-full text-center p-1 border-2 border-neutral-400/10">
+			<div className="bg-neutral-200/10 z-[9999] relative backdrop-blur-md inline-block rounded-full text-center p-1 border-2 border-neutral-400/10">
 				<div className="relative flex items-center justify-center">
 					<motion.div
 						className="absolute bg-intelligent-yellow/50 rounded-full"
@@ -35,7 +39,7 @@ const Subheader = () => {
 						layoutId="tab"
 						initial={false}
 						animate={{ left: `${(100 / tabs.length) * activeIndex}%` }}
-						transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+						transition={{ type: 'spring', stiffness: 200, damping: 30 }}
 						style={{ width: `${100 / tabs.length}%`, height: '100%', top: 0, bottom: 0 }}
 					/>
 					{tabs.map((tab, index) => (

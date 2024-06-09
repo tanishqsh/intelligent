@@ -5,15 +5,15 @@ import { useDuration } from '../DurationContext';
 
 const intervals = [Duration.HOURS_24, Duration.DAYS_7, Duration.DAYS_30, Duration.DAYS_180];
 
-const DurationSelector = () => {
+const DurationSelector = ({ placement = '' }: { placement?: string }) => {
 	const { duration, setDuration } = useDuration();
 
 	return (
 		<div className="flex relative">
 			{intervals.map((interval, index) => (
 				<div
-					key={interval}
-					className={`relative px-2 py-1 rounded-sm cursor-pointer ${interval === duration ? 'z-10' : ''}`}
+					key={index}
+					className={`relative px-2 py-1 rounded-sm cursor-pointer ${interval === duration ? 'z-0' : ''}`}
 					onClick={() => setDuration(interval)}
 				>
 					<motion.p
@@ -26,9 +26,9 @@ const DurationSelector = () => {
 					{duration === interval && (
 						<motion.div
 							className="absolute inset-0 bg-intelligent-yellow/30 rounded-lg"
-							layoutId="underline"
+							layoutId={'durationSelector' + placement}
 							initial={false}
-							transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+							transition={{ type: 'spring', stiffness: 200, damping: 20 }}
 						/>
 					)}
 				</div>
