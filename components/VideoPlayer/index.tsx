@@ -17,12 +17,12 @@ const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({ src }) => {
 				hls.loadSource(src);
 				hls.attachMedia(videoRef.current);
 				hls.on(Hls.Events.MANIFEST_PARSED, function () {
-					videoRef.current?.play();
+					// Removed autoplay
 				});
 			} else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
 				videoRef.current.src = src;
 				videoRef.current.addEventListener('loadedmetadata', function () {
-					videoRef.current?.play();
+					// Removed autoplay
 				});
 			}
 		}
