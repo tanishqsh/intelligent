@@ -18,7 +18,7 @@ const AllowanceDisplay = ({ fid }: { fid: string }) => {
 	if (error) return <div>Failed to load</div>;
 	if (!data) return <div className="text-sm">Loading</div>;
 
-	let degenRate = 0.025;
+	let degenRate = 0.019;
 	let tipAllowance = allowance?.tip_allowance || 0;
 	let tipAllowanceUSD = tipAllowance * degenRate;
 	let remainingAllowance = allowance?.remaining_allowance || 0;
