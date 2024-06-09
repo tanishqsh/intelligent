@@ -42,6 +42,7 @@ export default function CastAnalyze() {
 
 	// alfafrens data
 	const [useAlfaFrensFiltering, setUseAlfaFrensFiltering] = useState<boolean>(false);
+	const [useDegenTipsFiltering, setUseDegenTipsFiltering] = useState<boolean>(false);
 	const [filteredReplies, setFilteredReplies] = useState<any[]>([]);
 	const [filteredLikes, setFilteredLikes] = useState<any[]>([]);
 	const [filteredRecasts, setFilteredRecasts] = useState<any[]>([]);
@@ -64,7 +65,7 @@ export default function CastAnalyze() {
 	useEffect(() => {
 		// filter replies, likes, and recasts
 		if (useAlfaFrensFiltering && members?.length > 0) {
-			const filteredReplies = replies.filter((reply) => {
+			let filteredReplies = replies.filter((reply) => {
 				//@ts-ignore
 				let found = members?.find((member: any) => member.fid === reply?.fid && member.isSubscribed);
 				if (found) {
@@ -72,6 +73,7 @@ export default function CastAnalyze() {
 				}
 				return found;
 			});
+
 			setFilteredReplies(filteredReplies);
 
 			const filteredLikes = likes.filter((like) => {
@@ -95,6 +97,20 @@ export default function CastAnalyze() {
 			setFilteredRecasts(filteredRecasts);
 		}
 	}, [replies, likes, recasts, useAlfaFrensFiltering, members]);
+
+	useEffect(() => {
+		if (useDegenTipsFiltering) {
+			console.log('Use DeGen Tips Filtering: ', useDegenTipsFiltering);
+			console.log('Replies', replies);
+
+			const filteredReplies = replies.filter((reply) => {
+				const isDegenTip = reply.text.toLowerCase().includes('$degen');
+				console.log(`Reply ${reply.id} is a Degen Tip: ${isDegenTip}`);
+				return isDegenTip;
+			});
+			setFilteredReplies(filteredReplies);
+		}
+	}, [replies, useDegenTipsFiltering]);
 
 	const startListener = () => {
 		setListenerActive(true);
@@ -165,14 +181,22 @@ export default function CastAnalyze() {
 					<div className="w-full md:flex items-start md:space-x-4">
 						<div className="mt-4 w-full md:w-2/6 space-y-4">
 							<CastStatsTab castStats={castStats} />
-							<CastActions useAlfaFrensFiltering={useAlfaFrensFiltering} setUseAlfaFrensFiltering={setUseAlfaFrensFiltering} />
+							<CastActions
+								useDegenTipsFiltering={useDegenTipsFiltering}
+								setUseDegenTipsFiltering={setUseDegenTipsFiltering}
+								useAlfaFrensFiltering={useAlfaFrensFiltering}
+								setUseAlfaFrensFiltering={setUseAlfaFrensFiltering}
+							/>
 							<RecastsTab recasts={useAlfaFrensFiltering ? filteredRecasts : recasts} copyAllAddresses={copyAllAddresses} />
 							<LikesTab likes={useAlfaFrensFiltering ? filteredLikes : likes} copyAllAddresses={copyAllAddresses} />
 						</div>
 						<div className="w-full md:w-4/6">
 							<CastPreview pfp={pfp} display_name={display_name} username={username} text={text} embeds={embeds} />
 							<div className="mt-4">
-								<RepliesTab replies={useAlfaFrensFiltering ? filteredReplies : replies} copyAllAddresses={copyAllAddresses} />
+								<RepliesTab
+									replies={useAlfaFrensFiltering || useDegenTipsFiltering ? filteredReplies : replies}
+									copyAllAddresses={copyAllAddresses}
+								/>
 							</div>
 						</div>
 					</div>
