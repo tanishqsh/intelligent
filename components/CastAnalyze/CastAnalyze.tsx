@@ -100,12 +100,8 @@ export default function CastAnalyze() {
 
 	useEffect(() => {
 		if (useDegenTipsFiltering) {
-			console.log('Use DeGen Tips Filtering: ', useDegenTipsFiltering);
-			console.log('Replies', replies);
-
 			const filteredReplies = replies.filter((reply) => {
 				const isDegenTip = reply.text.toLowerCase().includes('$degen');
-				console.log(`Reply ${reply.id} is a Degen Tip: ${isDegenTip}`);
 				return isDegenTip;
 			});
 			setFilteredReplies(filteredReplies);

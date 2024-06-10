@@ -8,6 +8,7 @@ import Overview from './Overview/Overview';
 import { useDuration } from './DurationContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import TopCasts from './TopCasts/TopCasts';
+import ImpactFollowers from './ImpactFollowers/ImpactFollowers';
 
 export default function Dashboard() {
 	const { duration } = useDuration();
@@ -48,6 +49,9 @@ export default function Dashboard() {
 				<div className="flex justify-between space-x-4">
 					<div className="w-2/3">
 						<TopCasts />
+					</div>
+					<div className="w-1/3">
+						<ImpactFollowers />
 					</div>
 				</div>
 				{/* <div className="flex justify-between">
