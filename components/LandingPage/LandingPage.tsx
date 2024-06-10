@@ -8,8 +8,11 @@ import toast from 'react-hot-toast';
 import toastStyles from '@/utils/toastStyles';
 import { logUser } from '@/lib/backend/logUser';
 import FingerprintSVG from './SVG/FingerprintSVG';
+import { useMediaQuery } from 'react-responsive';
 
 export default function LandingPage() {
+	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+
 	const { ready, authenticated, getAccessToken, logout, linkPasskey, user, unlinkPasskey } = usePrivy();
 
 	const [isPasskeyLinked, setIsPasskeyLinked] = useState(false);
@@ -49,13 +52,13 @@ export default function LandingPage() {
 			<div className="px-12 py-8 m-auto" id="header">
 				<Logo className="w-9 h-9 cursor-pointer" />
 			</div>
-			<div className="max-w-7xl mt-12 m-auto">
+			<div className="max-w-7xl mt-12 m-auto px-4 md:px-0">
 				<div className="text-center">
 					<motion.h1
-						className="text-7xl font-medium cursor-default"
-						initial={{ lineHeight: '110px', opacity: 0, y: 20 }}
-						animate={{ lineHeight: '80px', opacity: 1, y: 0 }}
-						whileHover={{ lineHeight: '85px' }}
+						className="md:text-7xl text-4xl font-medium cursor-default"
+						initial={{ lineHeight: isTabletOrMobile ? '' : '110px', opacity: 0, y: 20 }}
+						animate={{ lineHeight: isTabletOrMobile ? '' : '80px', opacity: 1, y: 0 }}
+						whileHover={{ lineHeight: isTabletOrMobile ? '' : '85px' }}
 						transition={{ type: 'spring', stiffness: 250 }}
 					>
 						<motion.span
@@ -73,7 +76,7 @@ export default function LandingPage() {
 						>
 							Intelligent
 						</motion.span>
-						ly engage and form <br /> deeper connections with your audience on{' '}
+						ly engage and form <br className="md:block hidden" /> deeper connections with your audience on{' '}
 						<motion.img
 							initial={{ scale: 0.2, opacity: 0 }}
 							drag
@@ -103,7 +106,7 @@ export default function LandingPage() {
 							}}
 							whileHover={{ scale: 0.8, rotate: -6 }}
 							src="/farcaster_icon.svg"
-							className="w-24 inline-block border-8 rounded-3xl border-white drop-shadow-sm"
+							className="w-10 md:w-24 inline-block border-2 rounded-lg md:border-8 md:rounded-3xl border-white drop-shadow-sm"
 							alt="Farcaster Badge"
 						/>
 						<motion.span
@@ -122,12 +125,12 @@ export default function LandingPage() {
 							Farcaster.
 						</motion.span>
 					</motion.h1>
-					<div className="flex justify-center items-center space-x-2">
-						<div className="mt-12">{authenticated && !isPasskeyLinked && <LinkPasskeyButton />}</div>
-						<div className="mt-12">{authenticated && isPasskeyLinked && <UnlinkPasskeyButton id={passkeyAccount.credentialId} />}</div>
-						<div className="mt-12">{authenticated && <AccessDashboardButton />}</div>
+					<div className="flex flex-col md:flex-row justify-center items-center md:space-x-2">
+						<div className="mt-4 md:mt-12">{authenticated && !isPasskeyLinked && <LinkPasskeyButton />}</div>
+						<div className="mt-4 md:mt-12">{authenticated && isPasskeyLinked && <UnlinkPasskeyButton id={passkeyAccount.credentialId} />}</div>
+						<div className="mt-4 md:mt-12">{authenticated && <AccessDashboardButton />}</div>
 					</div>
-					<div className="mt-8">
+					<div className="mt-0">
 						{!authenticated && (
 							<motion.button
 								initial={{

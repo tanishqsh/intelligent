@@ -25,6 +25,7 @@
 		"react-dom": "^18",
 		"react-hot-toast": "^2.4.1",
 		"react-linkify": "^1.0.0-alpha",
+		"react-responsive": "^10.0.0",
 		"swr": "^2.2.5",
 		"viem": "^2.10.3"
 	},

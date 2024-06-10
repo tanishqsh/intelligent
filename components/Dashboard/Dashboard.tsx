@@ -9,18 +9,23 @@ import { useDuration } from './DurationContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import TopCasts from './TopCasts/TopCasts';
 import ImpactFollowers from './ImpactFollowers/ImpactFollowers';
+import { useSetLastActive } from './hooks/useSetLastActive';
 
 export default function Dashboard() {
 	const { duration } = useDuration();
 	const { ready, user } = usePrivy();
 	const { userStatistics, error: userStatsError } = useUserStatisticsData(user?.farcaster?.fid?.toString() || '', ready);
 
+	const { data: userSync } = useSetLastActive();
+
+	console.log(userSync);
+
 	const { chartData, error: chartError } = useChartData(duration);
 
 	const fid = user?.farcaster?.fid?.toString() || '';
 
 	if (!ready) {
-		return <div>Loading...</div>;
+		return <div>Loading</div>;
 	}
 
 	return (

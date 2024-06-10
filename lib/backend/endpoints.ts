@@ -19,6 +19,10 @@ const endpoints = {
 		path: `${rootUrl}/api/mimir/get-chart1`,
 		type: 'GET',
 	},
+	sync_user_data: {
+		path: `${rootUrl}/api/mimir/sync-user-data`,
+		type: 'POST',
+	},
 };
 
 export { rootUrl, endpoints };
