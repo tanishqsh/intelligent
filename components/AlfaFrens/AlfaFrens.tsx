@@ -113,6 +113,7 @@ export default function AlfaFrens() {
 						let profileHandle = fc_data?.profileHandle;
 						let profileDisplayName = fc_data?.profileDisplayName;
 						let currentStaked = (member?.currentStaked / Math.pow(10, 14)).toFixed(0);
+
 						return (
 							<motion.div
 								key={i}
@@ -126,7 +127,9 @@ export default function AlfaFrens() {
 									<img className="w-[48px] border-4 border-neutral-100 h-[48px] rounded-full shadow-inner" src={profileImage} alt="Profile" />
 									<div className="flex items-center justify-between space-x-4 w-full">
 										<h3 className="text-4xl font-general-sans font-medium text-neutral-700 cursor-default">{profileDisplayName}</h3>
-										<p className="text-xl font-general-sans font-medium text-neutral-700 cursor-default">{currentStaked} $ALFA</p>
+										<div className="flex items-center space-x-2">
+											<p className="text-base font-medium text-neutral-500 cursor-default font-mono">{currentStaked} $ALFA</p>
+										</div>
 									</div>
 								</div>
 							</motion.div>
@@ -149,11 +152,12 @@ const getActiveStakersCount = (subs: any) => {
 };
 
 const getActiveSubs = (subs: any, searchTerm: string) => {
-	return subs.filter((sub: any) => sub.isSubscribed && sub?.fc_data?.profileDisplayName?.toLowerCase()?.includes(searchTerm.toLowerCase()));
+	return subs.filter((sub: any) => sub.isSubscribed);
 };
 
 const getActiveStakers = (subs: any, searchTerm: string) => {
-	return subs.filter((sub: any) => sub.isStaked && sub?.fc_data?.profileDisplayName?.toLowerCase()?.includes(searchTerm.toLowerCase()));
+	const stakers = subs.filter((sub: any) => sub.isStaked);
+	return searchTerm ? stakers.filter((sub: any) => sub.fc_data?.profileDisplayName.toLowerCase().includes(searchTerm.toLowerCase())) : stakers;
 };
 
 const copyAllEthAddresses = (subs: any) => {
