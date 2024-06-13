@@ -18,6 +18,10 @@ const Subheader = () => {
 			name: 'Analyze',
 			route: '/dashboard/cast-analyze',
 		},
+		{
+			name: 'AlfaFrens',
+			route: '/dashboard/alfafrens',
+		},
 	];
 	const [activeTab, setActiveTab] = useState(tabs[0]);
 	const activeIndex = tabs.findIndex((tab) => tab.name === activeTab.name);

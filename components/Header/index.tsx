@@ -48,7 +48,7 @@ const Header = () => {
 						</Link>
 					</motion.div>
 					{/* <Menu /> */}
-					<div className="text-neutral-300">Dashboard</div>
+					{/* <div className="text-neutral-300">Dashboard</div> */}
 					<div className="flex items-center justify-center space-x-4 w-1/3">
 						{/* <div className="px-2 py-1 rounded-full bg-[#f1efff]/10 text-slate-400 shadow-inner text-xs font-medium">Subscribed</div> */}
 						<DegenAllowance />
