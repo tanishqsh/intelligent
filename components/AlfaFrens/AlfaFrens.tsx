@@ -19,7 +19,7 @@ export default function AlfaFrens() {
 	let activeSubs = getActiveSubs(alfafrensMembers, searchTerm);
 	let activeStakers = getActiveStakers(alfafrensMembers, searchStakersTerm);
 
-	if (alfafrensMembers) {
+	if (!alfafrensMembers) {
 		return (
 			<div className="h-screen bg-neutral-100 text-center text-neutral-300 flex items-center justify-center">
 				<p className="mt-[-200px]">No alfafrens subscribers found</p>
