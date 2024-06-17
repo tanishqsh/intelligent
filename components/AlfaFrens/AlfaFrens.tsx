@@ -162,18 +162,11 @@ const getActiveStakersCount = (subs: any) => {
 
 const getActiveSubs = (subs: any, searchTerm: string) => {
 	const activeSubs = subs.filter((sub: any) => sub.isSubscribed);
-	// get active sub handlers
-	const subHandlers = activeSubs.map((sub: any) => sub.fc_data?.profileHandle);
-
-	console.log('Sub handlers', subHandlers);
-
 	return searchTerm ? activeSubs.filter((sub: any) => sub.fc_data?.profileDisplayName.toLowerCase().includes(searchTerm.toLowerCase())) : activeSubs;
 };
 
 const getActiveStakers = (subs: any, searchTerm: string) => {
 	const stakers = subs.filter((sub: any) => sub.isStaked);
-	const stakerHandles = stakers.map((staker: any) => staker.fc_data?.profileHandle);
-	console.log('Staker Handles', stakerHandles);
 	return searchTerm ? stakers.filter((sub: any) => sub.fc_data?.profileDisplayName.toLowerCase().includes(searchTerm.toLowerCase())) : stakers;
 };
 
