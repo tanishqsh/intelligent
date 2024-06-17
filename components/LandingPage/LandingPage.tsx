@@ -9,9 +9,10 @@ import toastStyles from '@/utils/toastStyles';
 import { logUser } from '@/lib/backend/logUser';
 import FingerprintSVG from './SVG/FingerprintSVG';
 import { useMediaQuery } from 'react-responsive';
+import Link from 'next/link';
 
 export default function LandingPage() {
-	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+	const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
 	const { ready, authenticated, getAccessToken, logout, linkPasskey, user, unlinkPasskey } = usePrivy();
 
@@ -52,13 +53,13 @@ export default function LandingPage() {
 			<div className="px-12 py-8 m-auto" id="header">
 				<Logo className="w-9 h-9 cursor-pointer" />
 			</div>
-			<div className="max-w-7xl mt-12 m-auto px-4 md:px-0">
+			<div className="max-w-7xl mt-12 m-auto px-4">
 				<div className="text-center">
 					<motion.h1
 						className="md:text-7xl text-4xl font-medium cursor-default"
-						initial={{ lineHeight: isTabletOrMobile ? '' : '110px', opacity: 0, y: 20 }}
-						animate={{ lineHeight: isTabletOrMobile ? '' : '80px', opacity: 1, y: 0 }}
-						whileHover={{ lineHeight: isTabletOrMobile ? '' : '85px' }}
+						initial={{ lineHeight: isMobile ? '' : '110px', opacity: 0, y: 20 }}
+						animate={{ lineHeight: isMobile ? '' : '80px', opacity: 1, y: 0 }}
+						whileHover={{ lineHeight: isMobile ? '' : '85px' }}
 						transition={{ type: 'spring', stiffness: 250 }}
 					>
 						<motion.span
@@ -76,8 +77,9 @@ export default function LandingPage() {
 						>
 							Intelligent
 						</motion.span>
-						ly engage and form <br className="md:block hidden" /> deeper connections with your audience on{' '}
+						ly engage and form <br className="md:block hidden" /> deeper connections with your audience on <br className="md:hidden block" />
 						<motion.img
+							onClick={() => window.open('https://warpcast.com/~/channel/intelligent', '_blank')}
 							initial={{ scale: 0.2, opacity: 0 }}
 							drag
 							whileTap={{
@@ -106,7 +108,7 @@ export default function LandingPage() {
 							}}
 							whileHover={{ scale: 0.8, rotate: -6 }}
 							src="/farcaster_icon.svg"
-							className="w-10 md:w-24 inline-block border-2 rounded-lg md:border-8 md:rounded-3xl border-white drop-shadow-sm"
+							className="w-12 md:w-24 inline-block border-4 rounded-xl md:border-8 md:rounded-3xl border-white drop-shadow-sm"
 							alt="Farcaster Badge"
 						/>
 						<motion.span
@@ -126,9 +128,17 @@ export default function LandingPage() {
 						</motion.span>
 					</motion.h1>
 					<div className="flex flex-col md:flex-row justify-center items-center md:space-x-2">
-						<div className="mt-4 md:mt-12">{authenticated && !isPasskeyLinked && <LinkPasskeyButton />}</div>
-						<div className="mt-4 md:mt-12">{authenticated && isPasskeyLinked && <UnlinkPasskeyButton id={passkeyAccount.credentialId} />}</div>
-						<div className="mt-4 md:mt-12">{authenticated && <AccessDashboardButton />}</div>
+						<div className="mt-12 w-full md:w-auto">{authenticated && <AccessDashboardButton />}</div>
+						{authenticated && !isPasskeyLinked && (
+							<div className="mt-2 md:mt-12 w-full md:w-auto">
+								<LinkPasskeyButton />
+							</div>
+						)}
+						{authenticated && isPasskeyLinked && (
+							<div className="mt-2 md:mt-12 w-full md:w-auto">
+								<UnlinkPasskeyButton id={passkeyAccount.credentialId} />
+							</div>
+						)}
 					</div>
 					<div className="mt-0">
 						{!authenticated && (
@@ -180,7 +190,7 @@ const UnlinkPasskeyButton = ({ id }: { id: string }) => {
 			whileHover={{ paddingRight: 16, paddingLeft: 16, paddingTop: 5, paddingBottom: 5, opacity: 0.9, fontWeight: 475 }}
 			whileTap={{ scale: 0.9 }}
 			transition={{ type: 'spring', duration: 0.1, stiffness: 200 }}
-			className="text-2xl bg-yellow-400 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-500"
+			className="md:text-2xl bg-yellow-400 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-400 w-full"
 			onClick={() => unlinkPasskey(id)}
 		>
 			<FingerprintSVG />
@@ -202,7 +212,7 @@ const LinkPasskeyButton = () => {
 			whileHover={{ paddingRight: 16, paddingLeft: 16, paddingTop: 5, paddingBottom: 5, opacity: 0.9, fontWeight: 475 }}
 			whileTap={{ scale: 0.9 }}
 			transition={{ type: 'spring', duration: 0.1, stiffness: 200 }}
-			className="text-2xl bg-yellow-400 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-500"
+			className="md:text-2xl bg-yellow-400 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-400 w-full"
 			onClick={linkPasskey}
 		>
 			<FingerprintSVG />
@@ -229,7 +239,7 @@ const AccessDashboardButton = () => {
 			onHoverStart={() => setInTap(true)}
 			onHoverEnd={() => setInTap(false)}
 			transition={{ type: 'spring', duration: 0.1, stiffness: 200 }}
-			className="text-2xl bg-yellow-400 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-500"
+			className="md:text-2xl bg-yellow-400 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-500 w-full"
 			onClick={() => router.push('/dashboard')}
 		>
 			<motion.img
@@ -244,7 +254,7 @@ const AccessDashboardButton = () => {
 				}}
 				src={user?.farcaster?.pfp || 'https://via.placeholder.com/150'}
 				alt="Profile Picture"
-				className="rounded-full w-12 h-12 aspect-square border-2 border-yellow-500"
+				className="rounded-full w-8 h-8 md:w-12 md:h-12 aspect-square border-2 border-yellow-500"
 			></motion.img>
 			<motion.span initial={{ opacity: 1, x: 0 }} animate={{ opacity: 1, x: 0 }}>
 				Access Dashboard

@@ -50,3 +50,19 @@
 .custom-scrollbar::-webkit-scrollbar-track {
 	background-color: #d1d5db; /* Equivalent to bg-neutral-300 */
 }
+
+.no-scrollbar {
+	scrollbar-width: none; /* For Firefox */
+	-ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+	display: none; /* For Webkit browsers (Chrome, Safari) */
+}
+
+/* For Firefox */
+@-moz-document url-prefix() {
+	.no-scrollbar {
+		-ms-overflow-style: none;
+	}
+}

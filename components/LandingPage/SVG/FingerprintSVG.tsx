@@ -1,6 +1,6 @@
 const FingerprintSVG = () => {
 	return (
-		<svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<svg className="w-6 h-6 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M19.25 19.2499V12C19.25 9.409 17.8423 6.96027 15.75 5.74994M4.75 14.7499V19.2499"
 				stroke="currentColor"

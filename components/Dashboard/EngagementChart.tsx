@@ -5,6 +5,7 @@ import timezone from 'dayjs/plugin/timezone';
 import colors from '@/utils/colors';
 import { useDuration } from './DurationContext';
 import Duration from './Overview/Duration';
+import { useMediaQuery } from 'react-responsive';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(require('dayjs/plugin/relativeTime'));
@@ -14,6 +15,8 @@ const customColors = [colors.neutral[500], colors.neutral[400], colors.amber[500
 type Precision = 'hour' | 'day' | 'month';
 
 const EngagementChart = ({ data = [] }: { data: any[] }) => {
+	const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
+
 	const { duration } = useDuration();
 
 	let tickValues = 'every 2 hour';
@@ -101,7 +104,7 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 				},
 			}}
 			data={lineData}
-			margin={{ top: 60, right: 100, bottom: 80, left: 100 }}
+			margin={{ top: 60, right: isMobile ? 10 : 100, bottom: 80, left: isMobile ? 100 : 100 }}
 			xScale={{ type: 'time', format: 'native', precision: precision }}
 			yScale={{ type: 'linear', stacked: false, min: 'auto', max: 'auto' }}
 			yFormat=" >-.2f"

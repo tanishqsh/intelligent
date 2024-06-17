@@ -69,10 +69,10 @@ export default function TotalEngagement() {
 			initial={{ y: 50, opacity: 0 }}
 			animate={{ y: 0, opacity: 1 }}
 			transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-			className="rounded-xl shadow-sm w-full overflow-hidden"
+			className="rounded-xl shadow-sm w-full overflow-hidden min-w-[250px]"
 		>
 			<div className="h-full items-center justify-between">
-				<div className="flex flex-col justify-center p-6 bg-white relative">
+				<div className="flex flex-col justify-center p-3 md:p-6 bg-white relative">
 					<h2 className="text-xs text-neutral-400">
 						{' '}
 						Reactions received <span className="ml-2 rounded-full text-[8px] px-[5px] py-[3px] bg-neutral-100 text-neutral-400">
