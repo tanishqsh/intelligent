@@ -19,15 +19,19 @@ export default function AlfaFrens() {
 	let activeSubs = getActiveSubs(alfafrensMembers, searchTerm);
 	let activeStakers = getActiveStakers(alfafrensMembers, searchStakersTerm);
 
-	if (!alfafrensMembers) {
-		return <div>No subscribers found</div>;
+	if (alfafrensMembers) {
+		return (
+			<div className="h-screen bg-neutral-100 text-center text-neutral-300 flex items-center justify-center">
+				<p className="mt-[-200px]">No alfafrens subscribers found</p>
+			</div>
+		);
 	}
 
 	return (
 		<div className="bg-neutral-100 min-h-screen pb-24">
 			<div className="max-w-7xl m-auto pt-12">
 				<div className="py-6 flex items-center justify-between">
-					<h3 className="text-2xl font-general-sans font-medium text-neutral-700 cursor-default">Active Subscribers ({activeCount})</h3>
+					<h3 className="text-2xl font-general-sans font-medium text-neutral-700 cursor-default">Subscribers ({activeCount})</h3>
 					<div className="space-x-2">
 						<motion.button
 							initial={{ opacity: 0, y: 30 }}
@@ -73,6 +77,7 @@ export default function AlfaFrens() {
 									<img className="w-[48px] border-4 border-neutral-100 h-[48px] rounded-full shadow-inner" src={profileImage} alt="Profile" />
 									<div className="flex items-center justify-between space-x-4 w-full">
 										<h3 className="text-4xl font-general-sans font-medium text-neutral-700 cursor-default">{profileDisplayName}</h3>
+										<h3 className="text-4xl font-general-sans font-medium text-neutral-300 cursor-default">@{profileHandle}</h3>
 									</div>
 								</div>
 							</motion.div>
@@ -80,7 +85,7 @@ export default function AlfaFrens() {
 					})}
 				</div>
 				<div className="py-6 flex items-center justify-between">
-					<h3 className="text-2xl font-general-sans font-medium text-neutral-700 cursor-default">Active Stakers ({activeStakersCount})</h3>
+					<h3 className="text-2xl font-general-sans font-medium text-neutral-700 cursor-default">Stakers ({activeStakersCount})</h3>
 					<div className="space-x-2">
 						<motion.button
 							initial={{ opacity: 0, y: 30 }}
@@ -126,7 +131,11 @@ export default function AlfaFrens() {
 								<div className="flex items-center space-x-4 w-full">
 									<img className="w-[48px] border-4 border-neutral-100 h-[48px] rounded-full shadow-inner" src={profileImage} alt="Profile" />
 									<div className="flex items-center justify-between space-x-4 w-full">
-										<h3 className="text-4xl font-general-sans font-medium text-neutral-700 cursor-default">{profileDisplayName}</h3>
+										<div className="flex space-x-2">
+											<h3 className="text-4xl font-general-sans font-medium text-neutral-700 cursor-default">{profileDisplayName}</h3>
+											<h3 className="text-4xl font-general-sans font-medium text-neutral-300 cursor-default">@{profileHandle}</h3>
+										</div>
+
 										<div className="flex items-center space-x-2">
 											<p className="text-base font-medium text-neutral-500 cursor-default font-mono">{currentStaked} $ALFA</p>
 										</div>
@@ -152,11 +161,19 @@ const getActiveStakersCount = (subs: any) => {
 };
 
 const getActiveSubs = (subs: any, searchTerm: string) => {
-	return subs.filter((sub: any) => sub.isSubscribed);
+	const activeSubs = subs.filter((sub: any) => sub.isSubscribed);
+	// get active sub handlers
+	const subHandlers = activeSubs.map((sub: any) => sub.fc_data?.profileHandle);
+
+	console.log('Sub handlers', subHandlers);
+
+	return searchTerm ? activeSubs.filter((sub: any) => sub.fc_data?.profileDisplayName.toLowerCase().includes(searchTerm.toLowerCase())) : activeSubs;
 };
 
 const getActiveStakers = (subs: any, searchTerm: string) => {
 	const stakers = subs.filter((sub: any) => sub.isStaked);
+	const stakerHandles = stakers.map((staker: any) => staker.fc_data?.profileHandle);
+	console.log('Staker Handles', stakerHandles);
 	return searchTerm ? stakers.filter((sub: any) => sub.fc_data?.profileDisplayName.toLowerCase().includes(searchTerm.toLowerCase())) : stakers;
 };
 
