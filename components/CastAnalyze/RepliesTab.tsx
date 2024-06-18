@@ -12,7 +12,7 @@ export default function RepliesTab({ replies, copyAllAddresses }: { replies: any
 	const repliesCount = replies.length;
 	return (
 		<div>
-			<div className="text-neutral-400 text-xs bg-white shadow-sm border-b border-neutral-100 py-3 rounded-t-md">
+			<div className="text-neutral-400 text-xs bg-white shadow-sm border-b border-neutral-100 py-3 rounded-md">
 				<div className="text-xs py-1 px-2 capitalize flex items-center justify-between">
 					<span className="font-medium text-neutral-600 text-xs font-inter px-3">{repliesCount} Replies</span>
 					<motion.button
@@ -89,7 +89,7 @@ export default function RepliesTab({ replies, copyAllAddresses }: { replies: any
 							animate={{ opacity: 1, paddingTop: 10, paddingBottom: 10, y: 0 }}
 							whileHover={{ opacity: 1, paddingTop: 15, paddingBottom: 15 }}
 							transition={{ type: 'spring', stiffness: 100 }}
-							className="flex items-center space-x-3 bg-neutral-50 hover:bg-neutral-100 px-2 shadow-sm"
+							className="flex items-center space-x-3 bg-neutral-50 hover:bg-neutral-100 px-2 shadow-sm last:rounded-b-md"
 						>
 							<div className="flex justify-between w-full">
 								<div className="">
