@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 export default function ExplainUI({ children, text }: { children: React.ReactNode; text: React.ReactNode }) {
 	return (
-		<Tooltip.Provider delayDuration={0}>
+		<Tooltip.Provider delayDuration={0} skipDelayDuration={0}>
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					<div>{children}</div>
