@@ -24,16 +24,16 @@ const MobileSubheader = () => {
 			svg: <AnalyzeSVG />,
 		},
 		{
-			name: 'Hypersub',
+			name: 'Subscribers',
 			route: '/dashboard/hypersub',
 			svg: <SubscribersSVG />,
 		},
 
-		{
-			name: 'AlfaFrens',
-			route: '/dashboard/alfafrens',
-			svg: <SubscribersSVG />,
-		},
+		// {
+		// 	name: 'AlfaFrens',
+		// 	route: '/dashboard/alfafrens',
+		// 	svg: <SubscribersSVG />,
+		// },
 	];
 	const [activeTab, setActiveTab] = useState(tabs[0]);
 	const activeIndex = tabs.findIndex((tab) => tab.name === activeTab.name);
@@ -42,12 +42,15 @@ const MobileSubheader = () => {
 
 	const setTabAndRoute = (tab: any) => {
 		setActiveTab(tab);
+
 		route.push(tab.route);
+		// scroll to top
+		window.scrollTo(0, 0);
 	};
 
 	return (
 		<div className="md:hidden fixed bottom-0 left-0 right-0">
-			<div className="flex items-center justify-center bg-white/50 z-[9999] shadow-sm relative backdrop-blur-md rounded-t-2xl text-center p-[2px]">
+			<div className="flex items-center justify-center bg-white/90 z-[9999] shadow-sm relative backdrop-blur-md rounded-t-2xl text-center p-[2px]">
 				{tabs.map((tab, index) => (
 					<div
 						key={index}

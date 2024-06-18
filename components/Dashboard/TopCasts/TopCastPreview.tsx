@@ -38,10 +38,10 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 			>
 				<div className="flex space-x-4 items-start">
 					<div className="flex flex-col space-y-2 items-center justify-center">
-						<img src={pfp} className="w-10 h-10 rounded-full" />
+						{!isQuoteCast && <img src={pfp} className="w-10 h-10 rounded-full" />}
 						<EngagementFlair count={engagement_count} />
 					</div>
-					<div className="space-y-4">
+					<div className="space-y-4 flex flex-col justify-between">
 						{!isQuoteCast && (
 							<div>
 								<ReactLinkify>

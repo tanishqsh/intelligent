@@ -36,6 +36,7 @@ const Subheader = () => {
 	const setTabAndRoute = (tab: any) => {
 		setActiveTab(tab);
 		route.push(tab.route);
+		window.scrollTo(0, 0);
 	};
 
 	return (
