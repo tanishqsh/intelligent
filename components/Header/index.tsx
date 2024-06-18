@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import colors from '@/utils/colors';
 import HoverHighlightedText from '../ui/HoverHighlightText/HoverHighlightedText';
 import DegenAllowance from './DegenAllowance/DegenAllowance';
+import ExplainUI from '../ui/ExplainUI/ExplainUI';
 
 const Header = () => {
 	const router = useRouter();
@@ -52,8 +53,11 @@ const Header = () => {
 					<div className="flex items-center justify-center space-x-4 md:w-1/3">
 						{/* <div className="px-2 py-1 rounded-full bg-[#f1efff]/10 text-slate-400 shadow-inner text-xs font-medium">Subscribed</div> */}
 						<div className="md:block hidden">
-							<DegenAllowance />
+							<ExplainUI text={'Daily $DEGEN allowance'}>
+								<DegenAllowance />
+							</ExplainUI>
 						</div>
+
 						<div className="px-1 py-1 rounded-full bg-neutral-100 shadow-inner">
 							<img src={user?.farcaster?.pfp || 'https://via.placeholder.com/150'} alt="Profile Picture" className="rounded-full w-8 h-8"></img>
 						</div>
