@@ -146,7 +146,7 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 				const follows = slice.points.find((point) => point.serieId === 'Followers')?.data.y || 0;
 
 				return (
-					<div className="bg-white/20 backdrop-blur-md px-4 py-2 shadow-sm border border-[#ededed]/30 rounded-md">
+					<div className="bg-white/50 backdrop-blur-md z-50 px-4 py-2 shadow-sm border border-[#ededed]/30 rounded-md">
 						<div className="text-xs text-black/50">
 							{dayjs(slice.points[0].data.x).format('dddd, MMMM D, h:mm A')} ({dayjs(slice.points[0].data.x).fromNow()}){' '}
 						</div>
