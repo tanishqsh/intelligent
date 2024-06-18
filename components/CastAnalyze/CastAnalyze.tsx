@@ -53,6 +53,7 @@ export default function CastAnalyze() {
 	const { members } = useAlfaFrensData(listenerActive, String(user?.farcaster?.fid || ''), isLoaded);
 
 	const beginFetchCast = async (): Promise<void> => {
+		console.log('fetching cast');
 		const accessToken = (await getAccessToken()) || '';
 		const data = await fetchCast(castUrl, accessToken);
 		if (data.success) {
@@ -169,13 +170,13 @@ export default function CastAnalyze() {
 
 	return (
 		<div className="bg-neutral-100 min-h-screen pb-[100px]">
-			<div className="max-w-5xl m-auto">
+			<div className="max-w-5xl m-auto px-4 md:px-0">
 				<div className="pt-4">
 					<SearchBar setIsLoading={setIsLoading} isLoaded={isLoaded} castUrl={castUrl} setCastUrl={setCastUrl} beginFetchCast={beginFetchCast} />
 				</div>
 				{isLoaded && (
-					<div className="w-full md:flex items-start md:space-x-4">
-						<div className="mt-4 w-full md:w-2/6 space-y-4">
+					<div className="w-full flex flex-col md:flex-row items-start md:space-x-4">
+						<div id="priority2" className="mt-4 w-full md:w-2/6 space-y-4 order-2 md:order-1">
 							<CastStatsTab castStats={castStats} />
 							<CastActions
 								useDegenTipsFiltering={useDegenTipsFiltering}
@@ -183,12 +184,18 @@ export default function CastAnalyze() {
 								useAlfaFrensFiltering={useAlfaFrensFiltering}
 								setUseAlfaFrensFiltering={setUseAlfaFrensFiltering}
 							/>
+							<div className="mt-4 md:hidden block">
+								<RepliesTab
+									replies={useAlfaFrensFiltering || useDegenTipsFiltering ? filteredReplies : replies}
+									copyAllAddresses={copyAllAddresses}
+								/>
+							</div>
 							<RecastsTab recasts={useAlfaFrensFiltering ? filteredRecasts : recasts} copyAllAddresses={copyAllAddresses} />
 							<LikesTab likes={useAlfaFrensFiltering ? filteredLikes : likes} copyAllAddresses={copyAllAddresses} />
 						</div>
-						<div className="w-full md:w-4/6">
+						<div id="priority1" className="w-full md:w-4/6 order-1 md:order-2">
 							<CastPreview pfp={pfp} display_name={display_name} username={username} text={text} embeds={embeds} />
-							<div className="mt-4">
+							<div className="mt-4 md:block hidden">
 								<RepliesTab
 									replies={useAlfaFrensFiltering || useDegenTipsFiltering ? filteredReplies : replies}
 									copyAllAddresses={copyAllAddresses}

@@ -5,6 +5,7 @@ import { formatTimestamp, getDurationString, getRelativeTime } from '../TopCasts
 import { usePrivy } from '@privy-io/react-auth';
 import useImpactFollowers from '../hooks/useImpactFollowers';
 import colors from '@/utils/colors';
+import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 
 export default function ImpactFollowers() {
 	const { duration } = useDuration();
@@ -52,8 +53,6 @@ export default function ImpactFollowers() {
 
 					const relativeTime = getRelativeTime(follow_timestamp);
 					const formattedTimestamp = formatTimestamp(follow_timestamp);
-					const durationString = relativeTime ? getDurationString(duration) : '';
-
 					// how many times did this follower follow you
 
 					const followedTimes = follower?.count;
@@ -76,7 +75,7 @@ export default function ImpactFollowers() {
 									className="px-4 cursor-pointer"
 									key={follower_fid}
 								>
-									<div className="flex space-x-4 items-center">
+									<div className="flex space-x-4 items-start">
 										<img src={follower?.pfp} className="w-10 h-10 rounded-full" />
 										<div>
 											<div className="text-neutral-600 text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
@@ -89,9 +88,14 @@ export default function ImpactFollowers() {
 												followed you {relativeTime}
 											</div>
 											{followedMoreThanOnce && (
-												<div className="mt-2 text-amber-700 text-[12px] font-sans whitespace-pre-wrap possible-link break-words">
-													@{username} has followed you {followedTimes} times in the {durationString}
-												</div>
+												<ExplainUI
+													text="
+												This usually happens when a user follows you, unfollows you, and then follows you again."
+												>
+													<div className="mt-2 text-amber-700 text-[12px] font-sans whitespace-pre-wrap possible-link break-words">
+														@{username} followed you {followedTimes} times.
+													</div>
+												</ExplainUI>
 											)}
 										</div>
 									</div>
