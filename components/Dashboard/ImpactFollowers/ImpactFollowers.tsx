@@ -15,6 +15,19 @@ export default function ImpactFollowers() {
 
 	// console.log(impactFollowers);
 
+	// remove duplicates from impactFollowers
+
+	const uniqueImpactFollowers = impactFollowers.reduce((acc: any, follower: any) => {
+		const foundIndex = acc.findIndex((t: any) => t.follower_fid === follower.follower_fid);
+		if (foundIndex === -1) {
+			follower.count = 1;
+			acc.push(follower);
+		} else {
+			acc[foundIndex].count += 1;
+		}
+		return acc;
+	}, []);
+
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 30 }}
@@ -27,8 +40,8 @@ export default function ImpactFollowers() {
 				<DurationSelector placement="impactfollowers" />
 			</div>
 			<div className="space-y-0 flex flex-col max-h-[600px] overflow-scroll divide-y divide-dotted shadow-sm">
-				{impactFollowers.length == 0 && <span className="px-4 py-4 text-sm text-neutral-500/50 m-auto"> No new impact followers </span>}
-				{impactFollowers.map((follower: any, i: number) => {
+				{uniqueImpactFollowers.length == 0 && <span className="px-4 py-4 text-sm text-neutral-500/50 m-auto"> No new impact followers </span>}
+				{uniqueImpactFollowers.map((follower: any, i: number) => {
 					let display_name = follower?.display_name;
 					let follower_count = follower?.follower_count;
 					let follower_fid = follower?.follower_fid;
@@ -39,6 +52,12 @@ export default function ImpactFollowers() {
 
 					const relativeTime = getRelativeTime(follow_timestamp);
 					const formattedTimestamp = formatTimestamp(follow_timestamp);
+					const durationString = relativeTime ? getDurationString(duration) : '';
+
+					// how many times did this follower follow you
+
+					const followedTimes = follower?.count;
+					const followedMoreThanOnce = followedTimes > 1;
 
 					return (
 						<div key={i}>
@@ -64,11 +83,16 @@ export default function ImpactFollowers() {
 												{follower?.display_name}
 											</div>
 											<div className="text-neutral-400 text-[12px] font-sans whitespace-pre-wrap possible-link break-words">
-												{follower?.follower_count} followers
+												{follower_count} followers
 											</div>
 											<div className="text-neutral-400 text-[12px] font-sans whitespace-pre-wrap possible-link break-words">
 												followed you {relativeTime}
 											</div>
+											{followedMoreThanOnce && (
+												<div className="mt-2 text-amber-700 text-[12px] font-sans whitespace-pre-wrap possible-link break-words">
+													@{username} has followed you {followedTimes} times in the {durationString}
+												</div>
+											)}
 										</div>
 									</div>
 								</motion.div>
