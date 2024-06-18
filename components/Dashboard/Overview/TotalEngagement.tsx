@@ -80,7 +80,7 @@ export default function TotalEngagement() {
 						</span>{' '}
 					</h2>
 					<AnimatePresence mode="wait">
-						<motion.p key={statsByDuration.reactionsGain} {...numberAnimationProps} className="text-2xl mt-1 text-neutral-500">
+						<motion.p key={statsByDuration.reactionsGain} {...numberAnimationProps} className="text-xl md:text-2xl mt-1 text-neutral-500">
 							{new Intl.NumberFormat().format(statsByDuration.reactionsGain)}
 						</motion.p>
 					</AnimatePresence>
@@ -121,7 +121,7 @@ export default function TotalEngagement() {
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: 20 }}
 						key={duration}
-						className="h-[80px] pt-3 flex items-center bg-neutral-100"
+						className="h-[40px] md:h-[80px] pt-3 flex items-center bg-neutral-100"
 					>
 						<ReactionsMiniChart data={chartData} />
 					</motion.div>

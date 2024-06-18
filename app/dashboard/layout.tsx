@@ -1,3 +1,4 @@
+import MobileSubheader from '@/components/Dashboard/Subheader/MobileSubheader';
 import Subheader from '@/components/Dashboard/Subheader/Subheader';
 import Header from '@/components/Header';
 
@@ -7,6 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 			<Header />
 			<div>{children}</div>
 			<Subheader />
+			<MobileSubheader />
 		</div>
 	);
 }

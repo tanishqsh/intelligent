@@ -3,21 +3,26 @@
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { Drawer } from 'vaul';
 
 const Subheader = () => {
+	const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+
 	const tabs = [
 		{
 			name: 'Overview',
 			route: '/dashboard',
 		},
 		{
-			name: 'Hypersub',
-			route: '/dashboard/hypersub',
-		},
-		{
 			name: 'Analyze',
 			route: '/dashboard/cast-analyze',
 		},
+		{
+			name: 'Hypersub',
+			route: '/dashboard/hypersub',
+		},
+
 		{
 			name: 'AlfaFrens',
 			route: '/dashboard/alfafrens',
@@ -34,7 +39,7 @@ const Subheader = () => {
 	};
 
 	return (
-		<div className="fixed bottom-8 left-0 right-0">
+		<div className="hidden md:block fixed bottom-8 left-0 right-0">
 			<div className="flex items-center justify-center">
 				<div className="bg-neutral-200/10 z-[9999] relative backdrop-blur-md inline-block rounded-full text-center p-1 border-2 border-neutral-400/10">
 					<div className="relative flex items-center justify-center">

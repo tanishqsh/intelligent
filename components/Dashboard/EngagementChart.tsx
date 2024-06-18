@@ -19,23 +19,23 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 
 	const { duration } = useDuration();
 
-	let tickValues = 'every 2 hour';
+	let tickValues = isMobile ? 'every 12 hours' : 'every 2 hour';
 	let precision: Precision = 'hour';
 	let format = '%I:%M %p';
 
 	switch (duration) {
 		case Duration.DAYS_7:
-			tickValues = 'every 24 hours';
+			tickValues = isMobile ? 'every 3 days' : 'every 24 hours';
 			precision = 'hour';
 			format = '%a, %d %b';
 			break;
 		case Duration.DAYS_30:
-			tickValues = 'every 2 days';
+			tickValues = isMobile ? 'every 10 days' : 'every 2 days';
 			precision = 'hour';
 			format = '%e %b';
 			break;
 		case Duration.DAYS_180:
-			tickValues = 'every 7 days';
+			tickValues = isMobile ? 'every 30 days' : 'every 7 days';
 			precision = 'hour';
 			format = '%m/%y';
 			break;
@@ -104,14 +104,14 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 				},
 			}}
 			data={lineData}
-			margin={{ top: 60, right: isMobile ? 10 : 100, bottom: 80, left: isMobile ? 100 : 100 }}
+			margin={{ top: 60, right: isMobile ? 50 : 60, bottom: isMobile ? 60 : 80, left: isMobile ? 100 : 100 }}
 			xScale={{ type: 'time', format: 'native', precision: precision }}
 			yScale={{ type: 'linear', stacked: false, min: 'auto', max: 'auto' }}
 			yFormat=" >-.2f"
 			curve="step"
 			axisLeft={{
 				tickSize: 15,
-				tickPadding: 10,
+				tickPadding: isMobile ? 2 : 10,
 				tickRotation: 0,
 				legend: 'Engagement',
 				legendOffset: -65,
@@ -132,7 +132,7 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 			enableGridX={true}
 			enableGridY={true}
 			lineWidth={0}
-			pointSize={6.5}
+			pointSize={isMobile ? 0.25 : 6.5}
 			colors={customColors}
 			pointColor={{ theme: 'background' }}
 			pointBorderWidth={8}
