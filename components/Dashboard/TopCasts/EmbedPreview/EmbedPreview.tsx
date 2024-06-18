@@ -7,7 +7,7 @@ const EmbedPreview = ({ embeds }: { embeds: any }) => {
 			{embeds?.map((embed: any, index: number) => {
 				if (embed?.url?.endsWith('.m3u8')) {
 					return (
-						<div className="rounded-md w-[300px] aspect-video border-[10px] border-white shadow-md" key={index}>
+						<div className="rounded-md aspect-video max-w-[300px] border-[10px] border-white shadow-md" key={index}>
 							<VideoPlayer src={embed?.url} />
 						</div>
 					);
