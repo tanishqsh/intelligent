@@ -37,18 +37,24 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 				key={hash}
 			>
 				<div className="flex space-x-4 items-start">
-					<img src={pfp} className="w-10 h-10 rounded-full" />
-					<div>
-						<ReactLinkify>
-							<div className="text-neutral-600 text-[14px] font-sans whitespace-pre-wrap possible-link break-words">{text}</div>
-						</ReactLinkify>
-						<EmbedPreview embeds={embeds} />
-						<div id="flairs" className="flex space-x-2">
+					<div className="flex flex-col space-y-2 items-center justify-center">
+						<img src={pfp} className="w-10 h-10 rounded-full" />
+						<EngagementFlair count={engagement_count} />
+					</div>
+					<div className="space-y-4">
+						{!isQuoteCast && (
+							<div>
+								<ReactLinkify>
+									<div className="text-neutral-900 text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">{text}</div>
+								</ReactLinkify>
+								<EmbedPreview embeds={embeds} />
+							</div>
+						)}
+						<div id="flairs" className="flex space-x-2 overflow-scroll no-scrollbar">
 							{i == 0 && <MostEngagedFlair />}
-							<EngagementFlair count={engagement_count} />
-							<TimeFlair time={time} />
 							{parent_cast_hash && <ReplyFlair />}
 							{isQuoteCast && <QuoteCastFlair />}
+							<TimeFlair time={time} />
 						</div>
 					</div>
 				</div>

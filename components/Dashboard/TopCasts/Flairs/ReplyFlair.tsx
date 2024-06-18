@@ -1,6 +1,6 @@
 const ReplyFlair = () => {
 	return (
-		<div className="mt-4 font-medium text-amber-700 inline-flex items-center space-x-2 rounded-full bg-amber-700/5 px-2 py-1">
+		<div className="font-medium text-amber-700 inline-flex items-center space-x-2 rounded-md bg-amber-700/5 px-2 py-1">
 			<p className="text-xs">Reply</p>
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
 				<path

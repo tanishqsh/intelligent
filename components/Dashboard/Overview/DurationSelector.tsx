@@ -18,7 +18,7 @@ const DurationSelector = ({ placement = '' }: { placement?: string }) => {
 				>
 					<motion.p
 						className={`text-xs`}
-						animate={{ color: duration === interval ? colors.neutral[500] : colors.neutral[300] }}
+						animate={{ color: duration === interval ? colors.neutral[500] : colors.neutral[500] }}
 						whileHover={{ color: colors.neutral[400] }}
 					>
 						{interval}

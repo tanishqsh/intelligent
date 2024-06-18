@@ -1,6 +1,6 @@
 const MostEngagedFlair = () => {
 	return (
-		<div className="mt-4 font-medium text-amber-700 inline-flex items-center space-x-2 rounded-full bg-amber-500/5 px-2 py-1">
+		<div className="font-medium flex-none text-amber-700 inline-flex items-center space-x-2 rounded-md bg-amber-500/5 px-2 py-1">
 			<p className="text-xs">Most engaged</p>
 			<svg className="size-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path
