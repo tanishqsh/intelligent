@@ -164,6 +164,11 @@ export default function LandingPage() {
 							</motion.button>
 						)}
 					</div>
+					<Link href={'https://hypersub.withfabric.xyz/collection/intelligent-rn9uheyt8idc'} target="_blank">
+						<div className="fixed bottom-8 left-8 text-sm font-medium text-yellow-700 bg-yellow-500/10 rounded-full inline-block px-3 py-1">
+							Get Early Access
+						</div>
+					</Link>
 					{/* <div className="mt-24">
 						<div className="max-w-7xl m-auto">
 							<motion.div
