@@ -17,7 +17,22 @@ const space_mono = Space_Mono({ weight: ['400', '700'], variable: '--font-spaceM
 
 export const metadata: Metadata = {
 	title: 'Intelligent',
-	description: 'Deeper connections with your audience',
+	description: 'Hyper-growth platform for Farcaster – Deep analytics combined with creator tools to manage your audience across multiple ecosystems.',
+	openGraph: {
+		title: 'Intelligent',
+		description: 'Hyper-growth platform – Deep analytics combined with creator tools to manage your audience across multiple ecosystems.',
+		url: 'https://intelligent.wtf',
+		siteName: 'Intelligent – Farcaster',
+		images: [
+			{
+				url: 'https://intelligent.wtf/og.png', // Must be an absolute URL
+				width: 1200,
+				height: 640,
+			},
+		],
+		locale: 'en_US',
+		type: 'website',
+	},
 };
 
 export default function RootLayout({
