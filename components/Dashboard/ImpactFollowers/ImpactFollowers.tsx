@@ -37,7 +37,9 @@ export default function ImpactFollowers() {
 			className="bg-white rounded-lg shadow-xs"
 		>
 			<div className="text-xs py-4 px-4 border-b border-neutral-100 flex items-center justify-between">
-				<span className="px-1 text-neutral-400 text-sm font-inter">Impact followers </span>
+				<ExplainUI text="People with over 10,000 followers">
+					<span className="px-1 text-neutral-400 text-sm font-inter">Impact followers </span>
+				</ExplainUI>
 				<DurationSelector placement="impactfollowers" />
 			</div>
 			<div className="space-y-0 flex flex-col max-h-[600px] overflow-scroll divide-y divide-dotted shadow-sm">
