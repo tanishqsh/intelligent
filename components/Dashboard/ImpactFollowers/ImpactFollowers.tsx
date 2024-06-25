@@ -34,12 +34,14 @@ export default function ImpactFollowers() {
 			initial={{ opacity: 0, y: 30 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ type: 'spring', stiffness: 100 }}
-			className="bg-white rounded-lg shadow-xs"
+			className="rounded-xl shadow-xs"
 		>
-			<div className="text-xs py-4 px-4 border-b border-neutral-100 flex items-center justify-between">
+			<div className="text-xs py-4 border-b border-neutral-100 flex items-center justify-between">
 				<ExplainUI text="People with over 10,000 followers">
 					<div className="flex space-x-1">
-						<span className="px-1 text-neutral-400 hover:text-neutral-500 text-sm font-inter">Impact followers </span>
+						<span className="px-1 text-neutral-400 hover:text-neutral-500 text-sm font-inter">
+							{impactFollowers?.length} Impact follower{impactFollowers?.length === 1 ? '' : 's'}
+						</span>
 						<svg className="size-5 text-neutral-400 hover:text-neutral-500" fill="none" viewBox="0 0 24 24">
 							<path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13V15"></path>
 							<circle cx="12" cy="9" r="1" fill="currentColor"></circle>
@@ -49,7 +51,7 @@ export default function ImpactFollowers() {
 				</ExplainUI>
 				<DurationSelector placement="impactfollowers" />
 			</div>
-			<div className="space-y-0 flex flex-col max-h-[600px] overflow-scroll divide-y divide-dotted shadow-sm">
+			<div className="space-y-1 flex flex-col max-h-[600px] no-scrollbar overflow-scroll rounded-xl">
 				{uniqueImpactFollowers.length == 0 && <span className="px-4 py-4 text-sm text-neutral-500/50 m-auto"> No new impact followers </span>}
 				{uniqueImpactFollowers.map((follower: any, i: number) => {
 					let display_name = follower?.display_name;
@@ -72,16 +74,17 @@ export default function ImpactFollowers() {
 							<AnimatePresence mode="wait">
 								<motion.div
 									onClick={() => window.open(warpcast_URL, '_blank')}
-									initial={{ opacity: 0, y: 30, paddingTop: 16, paddingBottom: 16, backgroundColor: colors.neutral[50] }}
-									animate={{ opacity: 1, y: 0, paddingTop: 16, paddingBottom: 16, backgroundColor: colors.neutral[50] }}
-									exit={{ opacity: 0, y: 30, paddingTop: 16, paddingBottom: 16, backgroundColor: colors.neutral[50] }}
+									initial={{ opacity: 0, y: 30, paddingTop: 16, paddingBottom: 16, backgroundColor: '#ffffff' }}
+									animate={{ opacity: 1, y: 0, paddingTop: 16, paddingBottom: 16, backgroundColor: '#ffffff' }}
+									exit={{ opacity: 0, y: 30, paddingTop: 16, paddingBottom: 16, backgroundColor: '#ffffff' }}
 									whileHover={{
 										paddingTop: 24,
 										paddingBottom: 24,
-										backgroundColor: colors.neutral[100],
+										backgroundColor: colors.neutral[50],
 									}}
+									layoutId={follower_fid}
 									transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-									className="px-4 cursor-pointer"
+									className="px-4 cursor-pointer rounded-xl shadow-sm"
 									key={follower_fid}
 								>
 									<div className="flex space-x-4 items-start">

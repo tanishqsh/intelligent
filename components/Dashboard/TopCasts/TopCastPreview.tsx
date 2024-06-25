@@ -30,19 +30,19 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	return (
 		<AnimatePresence mode="wait">
 			<motion.div
-				initial={{ opacity: 0, y: 30, paddingTop: 16, paddingBottom: 16, backgroundColor: colors.neutral[50] }}
-				animate={{ opacity: 1, y: 0, paddingTop: 16, paddingBottom: 16, backgroundColor: colors.neutral[50] }}
-				exit={{ opacity: 0, y: 30, paddingTop: 16, paddingBottom: 16, backgroundColor: colors.neutral[50] }}
+				initial={{ opacity: 0, y: 100, paddingTop: 16, paddingBottom: 16, backgroundColor: '#ffffff' }}
+				whileInView={{ opacity: 1, y: 0, paddingTop: 16, paddingBottom: 16, backgroundColor: '#ffffff' }}
+				exit={{ opacity: 0, y: 100, paddingTop: 16, paddingBottom: 16, backgroundColor: '#ffffff' }}
 				whileHover={{
 					paddingTop: 24,
 					paddingBottom: 24,
-					backgroundColor: colors.neutral[100],
+					backgroundColor: colors.neutral[50],
 				}}
 				transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-				className="px-4 cursor-default"
+				className="px-4 cursor-default rounded-xl shadow-sm"
 				key={hash}
 			>
-				<div className="flex space-x-4 items-start">
+				<div className="flex space-x-8 items-start">
 					<div className="flex flex-col space-y-2 items-center justify-center">
 						<img src={pfp} className="w-10 h-10 rounded-full" />
 						<EngagementFlair count={engagement_count} />

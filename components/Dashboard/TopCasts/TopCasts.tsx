@@ -25,13 +25,13 @@ export default function TopCasts() {
 			initial={{ opacity: 0, y: 30 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ type: 'spring', stiffness: 100 }}
-			className="bg-white rounded-xl shadow-xs"
+			className="rounded-xl shadow-xs"
 		>
 			<div className="text-xs py-4 px-4 border-b border-neutral-100 flex items-center justify-between">
-				<span className="px-1 text-neutral-400 text-sm font-inter">Top performing casts</span>
+				<span className="px-1 text-neutral-400 text-sm font-inter">Top {data?.length} performing casts</span>
 				<DurationSelector placement="topcasts" />
 			</div>
-			<div className="space-y-0 flex flex-col max-h-[600px] overflow-scroll divide-y divide-dotted shadow-sm">
+			<div className="space-y-2 flex flex-col max-h-[600px] overflow-scroll no-scrollbar rounded-xl">
 				{data?.map((cast: any, i: number) => {
 					return (
 						<div key={i}>
