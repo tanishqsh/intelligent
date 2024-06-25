@@ -14,13 +14,8 @@ import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 export default function Dashboard() {
-	const { duration } = useDuration();
 	const { ready, user } = usePrivy();
-	const { userStatistics, error: userStatsError } = useUserStatisticsData(user?.farcaster?.fid?.toString() || '', ready);
-
 	const { data: userSync } = useSetLastActive();
-
-	console.log(userSync);
 
 	const fid = user?.farcaster?.fid?.toString() || '';
 
