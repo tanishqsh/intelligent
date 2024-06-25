@@ -8,6 +8,8 @@ import TimeFlair from './Flairs/TimeFlair';
 import ReplyFlair from './Flairs/ReplyFlair';
 import EngagementFlair from './Flairs/EngagementFlair';
 import EmbedPreview from './EmbedPreview/EmbedPreview';
+import Link from 'next/link';
+import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 
 const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let parent_cast_fid = cast?.parent_cast_fid;
@@ -18,6 +20,10 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let hash = cast?.cast_hash;
 	let time = cast?.cast_time;
 	let embeds = cast?.embeds;
+
+	let url = cast?.meta?.url;
+
+	console.log('cast ', cast);
 
 	let isQuoteCast = embeds?.some((embed: any) => embed?.castId);
 
@@ -38,23 +44,32 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 			>
 				<div className="flex space-x-4 items-start">
 					<div className="flex flex-col space-y-2 items-center justify-center">
-						{!isQuoteCast && <img src={pfp} className="w-10 h-10 rounded-full" />}
+						<img src={pfp} className="w-10 h-10 rounded-full" />
 						<EngagementFlair count={engagement_count} />
 					</div>
 					<div className="space-y-4">
-						{!isQuoteCast && (
-							<div>
-								<ReactLinkify>
-									<div className="text-neutral-900 text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">{text}</div>
-								</ReactLinkify>
-								<EmbedPreview embeds={embeds} />
-							</div>
-						)}
+						<div>
+							<ReactLinkify>
+								<div className="text-neutral-900 text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">{text}</div>
+							</ReactLinkify>
+							<EmbedPreview embeds={embeds} />
+						</div>
 						<div id="flairs" className="flex space-x-2 overflow-scroll no-scrollbar">
 							{i == 0 && <MostEngagedFlair />}
 							{parent_cast_hash && <ReplyFlair />}
 							{isQuoteCast && <QuoteCastFlair />}
 							<TimeFlair time={time} />
+						</div>
+						<div id="action-panel">
+							{url && (
+								<ExplainUI text={'View on Warpcast'}>
+									<div>
+										<Link target="_blank" href={url}>
+											<img className="size-5" src="/warpcast.svg" />
+										</Link>
+									</div>
+								</ExplainUI>
+							)}
 						</div>
 					</div>
 				</div>
