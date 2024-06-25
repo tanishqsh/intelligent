@@ -38,7 +38,14 @@ export default function ImpactFollowers() {
 		>
 			<div className="text-xs py-4 px-4 border-b border-neutral-100 flex items-center justify-between">
 				<ExplainUI text="People with over 10,000 followers">
-					<span className="px-1 text-neutral-400 text-sm font-inter">Impact followers </span>
+					<div className="flex space-x-1">
+						<span className="px-1 text-neutral-400 hover:text-neutral-500 text-sm font-inter">Impact followers </span>
+						<svg className="size-5 text-neutral-400 hover:text-neutral-500" fill="none" viewBox="0 0 24 24">
+							<path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13V15"></path>
+							<circle cx="12" cy="9" r="1" fill="currentColor"></circle>
+							<circle cx="12" cy="12" r="7.25" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"></circle>
+						</svg>
+					</div>
 				</ExplainUI>
 				<DurationSelector placement="impactfollowers" />
 			</div>
