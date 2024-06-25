@@ -15,7 +15,9 @@ import { useMediaQuery } from 'react-responsive';
 
 export default function Dashboard() {
 	const { ready, user } = usePrivy();
-	const { data: userSync } = useSetLastActive();
+
+	// Fetches the last activity for the user, and sends the request to sync the data
+	useSetLastActive();
 
 	const fid = user?.farcaster?.fid?.toString() || '';
 
@@ -41,10 +43,6 @@ export default function Dashboard() {
 				{/* <div className="flex justify-between">
 					<div className="bg-white p-10 text-neutral-400">Top Mentions</div>
 					<div className="bg-white p-10 text-neutral-400">Top 10 most engaged people with you in last [duration] </div>
-				</div>
-				<div className="flex justify-between">
-					<div className="bg-white p-10 text-neutral-400">Impactful Followers - top 10 followers in last [duration] with over 10K followers</div>
-					<div className="bg-white p-10 text-neutral-400">Impactful Unfollowers - top 10 unfollowers in last [duration] with over 10K followers</div>
 				</div> */}
 			</div>
 		</div>

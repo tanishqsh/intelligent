@@ -34,7 +34,7 @@ const Header = () => {
 	return (
 		<header className="bg-neutral-100">
 			<div className="py-4" id="surroundings">
-				<div className="flex items-center justify-between max-w-7xl m-auto">
+				<div className="flex items-center justify-between max-w-7xl m-auto px-4 md:px-0">
 					<div>
 						<motion.div
 							className="md:w-1/3"
