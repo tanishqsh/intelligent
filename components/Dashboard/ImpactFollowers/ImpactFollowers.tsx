@@ -88,7 +88,7 @@ export default function ImpactFollowers() {
 									key={follower_fid}
 								>
 									<div className="flex space-x-4 items-start">
-										<img src={follower?.pfp} className="w-10 h-10 rounded-full" />
+										<img src={follower?.pfp} className="w-10 h-10 rounded-full ring-2 ring-black/10" />
 										<div>
 											<div className="text-neutral-600 text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
 												{follower?.display_name}

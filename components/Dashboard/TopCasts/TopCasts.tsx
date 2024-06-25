@@ -27,8 +27,8 @@ export default function TopCasts() {
 			transition={{ type: 'spring', stiffness: 100 }}
 			className="rounded-xl shadow-xs"
 		>
-			<div className="text-xs py-4 px-4 border-b border-neutral-100 flex items-center justify-between">
-				<span className="px-1 text-neutral-400 text-sm font-inter">Top {data?.length} performing casts</span>
+			<div className="text-xs py-4 border-b border-neutral-100 flex items-center justify-between">
+				<span className="text-neutral-400 text-sm font-inter">Top {data?.length} performing casts</span>
 				<DurationSelector placement="topcasts" />
 			</div>
 			<div className="space-y-2 flex flex-col max-h-[600px] overflow-scroll no-scrollbar rounded-xl">

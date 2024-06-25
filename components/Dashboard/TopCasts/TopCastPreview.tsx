@@ -39,12 +39,13 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 					backgroundColor: colors.neutral[50],
 				}}
 				transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-				className="px-4 cursor-default rounded-xl shadow-sm"
+				className="px-4 cursor-default rounded-xl shadow-sm relative"
 				key={hash}
 			>
 				<div className="flex space-x-8 items-start">
 					<div className="flex flex-col space-y-2 items-center justify-center">
-						<img src={pfp} className="w-10 h-10 rounded-full" />
+						<img src={pfp} className="w-10 h-10 rounded-full ring-2 ring-black/10" />
+
 						<EngagementFlair count={engagement_count} />
 					</div>
 					<div className="space-y-4">
