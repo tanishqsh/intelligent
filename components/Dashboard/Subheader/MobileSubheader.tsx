@@ -1,10 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { Drawer } from 'vaul';
 import OverviewSVG from './SVG/OverviewSVG';
 import SubscribersSVG from './SVG/SubscribersSVG';
 import AnalyzeSVG from './SVG/AnalyzeSVG';
