@@ -65,7 +65,7 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 						<div className="">
 							<ReactLinkify>
 								<div className="text-neutral-900 mt-2 text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
-									{isQuoteCast ? RemoveWarpcastURL(text) : text}
+									{isQuoteCast ? text : text}
 								</div>
 							</ReactLinkify>
 							{isQuoteCast && (
@@ -74,7 +74,7 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 										<img src={quote_profileImage} className="w-6 h-6 aspect-square rounded-full ring-2 ring-black/10" />
 										<ReactLinkify>
 											<div className="bg-clip-text bg-gradient-to-b from-black via-black/50 to-transparent text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
-												{isQuoteCast ? RemoveWarpcastURL(quote_text) : quote_text}
+												{isQuoteCast ? quote_text : quote_text}
 											</div>
 										</ReactLinkify>
 									</div>
@@ -120,7 +120,4 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	);
 };
 
-const RemoveWarpcastURL = (text: string) => {
-	return text?.replace(/https?:\/\/warpcast\.com[^\s]*/g, '') || text;
-};
 export default TopCastPreview;
