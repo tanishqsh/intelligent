@@ -83,7 +83,7 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 						<div id="flairs" className="flex space-x-2 overflow-scroll no-scrollbar">
 							{i == 0 && <MostEngagedFlair />}
 							{parent_cast_hash && <ReplyFlair />}
-							{isQuoteCast && <QuoteCastFlair />}
+							{/* {isQuoteCast && <QuoteCastFlair />} */}
 							<TimeFlair time={time} />
 						</div>
 						<div className="" id="action-panel">
