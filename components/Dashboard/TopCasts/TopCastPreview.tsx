@@ -10,6 +10,7 @@ import EngagementFlair from './Flairs/EngagementFlair';
 import EmbedPreview from './EmbedPreview/EmbedPreview';
 import Link from 'next/link';
 import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
+import ChannelFlair from './Flairs/ChannelFlair';
 
 const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let parent_cast_fid = cast?.parent_cast_fid;
@@ -22,6 +23,10 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let embeds = cast?.embeds;
 
 	let url = cast?.meta?.url;
+	let channelName = cast?.meta?.channel?.name;
+	let channelId = cast?.meta?.channel?.channelId;
+	let imageURL = cast?.meta?.channel?.imageUrl;
+	let channelURL = 'https://warpcast.com/~/channel/' + channelId;
 
 	console.log('cast ', cast);
 
@@ -42,10 +47,9 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 				className="px-4 cursor-default rounded-xl shadow-sm relative"
 				key={hash}
 			>
-				<div className="flex space-x-8 items-start">
-					<div className="flex flex-col space-y-2 items-center justify-center">
+				<div className="md:flex md:space-x-8 items-start">
+					<div className="flex mb-4 md:mb-0 space-x-2 md:space-x-0 md:flex-col md:space-y-2 items-center justify-between md:justify-center">
 						<img src={pfp} className="w-10 h-10 rounded-full ring-2 ring-black/10" />
-
 						<EngagementFlair count={engagement_count} />
 					</div>
 					<div className="space-y-4">
@@ -57,18 +61,33 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 						</div>
 						<div id="flairs" className="flex space-x-2 overflow-scroll no-scrollbar">
 							{i == 0 && <MostEngagedFlair />}
+
 							{parent_cast_hash && <ReplyFlair />}
 							{isQuoteCast && <QuoteCastFlair />}
 							<TimeFlair time={time} />
 						</div>
-						<div id="action-panel">
+						<div className="" id="action-panel">
 							{url && (
-								<ExplainUI text={'View on Warpcast'}>
-									<div>
+								<div className="absolute right-4 bottom-2 opacity-15 hover:opacity-85 transition-all duration-300">
+									<ExplainUI text={'View on Warpcast'}>
 										<Link target="_blank" href={url}>
 											<img className="size-5" src="/warpcast.svg" />
 										</Link>
-									</div>
+									</ExplainUI>
+								</div>
+							)}
+
+							{channelId && channelName && (
+								<ExplainUI text="View channel">
+									<Link target="_blank" href={channelURL}>
+										<ChannelFlair
+											channel={{
+												channelId,
+												channelName,
+												imageURL,
+											}}
+										/>
+									</Link>
 								</ExplainUI>
 							)}
 						</div>
