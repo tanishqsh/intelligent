@@ -32,6 +32,15 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 
 	let isQuoteCast = embeds?.some((embed: any) => embed?.castId);
 
+	let quote_profileImage = (isQuoteCast && cast?.meta?.quotedCast[0]?.castedBy?.profileImage) || '';
+	let quote_profileHandle = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.profileHandle : null;
+	let quote_profileDisplayName = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.profileDisplayName : null;
+	let quote_isPowerUser = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.isFarcasterPowerUser : null;
+	let quote_text = isQuoteCast ? cast?.meta?.quotedCast[0]?.text : null;
+	let quote_url = isQuoteCast ? cast?.meta?.quotedCast[0]?.url : null;
+
+	console.log('quote_profileImage', quote_profileDisplayName);
+
 	return (
 		<AnimatePresence mode="wait">
 			<motion.div
@@ -53,15 +62,28 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 						<EngagementFlair count={engagement_count} />
 					</div>
 					<div className="space-y-4">
-						<div>
+						<div className="">
 							<ReactLinkify>
-								<div className="text-neutral-900 text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">{text}</div>
+								<div className="text-neutral-900 mt-2 text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
+									{isQuoteCast ? RemoveWarpcastURL(text) : text}
+								</div>
 							</ReactLinkify>
+							{isQuoteCast && (
+								<Link target="_ blank" href={quote_url}>
+									<div className="shadow-sm w-full border-black/10 rounded-xl mt-2 p-4 flex space-x-4 h-[70px] overflow-hidden bg-gradient-to-b from-white to-transparent text-transparent">
+										<img src={quote_profileImage} className="w-6 h-6 aspect-square rounded-full ring-2 ring-black/10" />
+										<ReactLinkify>
+											<div className="bg-clip-text bg-gradient-to-b from-black via-black/50 to-transparent text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
+												{isQuoteCast ? RemoveWarpcastURL(quote_text) : quote_text}
+											</div>
+										</ReactLinkify>
+									</div>
+								</Link>
+							)}
 							<EmbedPreview embeds={embeds} />
 						</div>
 						<div id="flairs" className="flex space-x-2 overflow-scroll no-scrollbar">
 							{i == 0 && <MostEngagedFlair />}
-
 							{parent_cast_hash && <ReplyFlair />}
 							{isQuoteCast && <QuoteCastFlair />}
 							<TimeFlair time={time} />
@@ -98,4 +120,7 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	);
 };
 
+const RemoveWarpcastURL = (text: string) => {
+	return text.replace(/https?:\/\/warpcast\.com[^\s]*/g, '');
+};
 export default TopCastPreview;

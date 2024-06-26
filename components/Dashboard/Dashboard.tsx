@@ -12,6 +12,7 @@ import ImpactFollowers from './ImpactFollowers/ImpactFollowers';
 import { useSetLastActive } from './hooks/useSetLastActive';
 import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
+import ImpactUnfollowers from './ImpactUnfollowers/ImpactUnfollowers';
 
 export default function Dashboard() {
 	const { ready, user } = usePrivy();
@@ -22,7 +23,7 @@ export default function Dashboard() {
 	const fid = user?.farcaster?.fid?.toString() || '';
 
 	if (!ready) {
-		return <div>Loading</div>;
+		return null;
 	}
 
 	return (
@@ -36,10 +37,12 @@ export default function Dashboard() {
 					<div className="w-full md:w-2/3">
 						<TopCasts />
 					</div>
-					<div className="w-full md:w-1/3">
+					<div className="w-full md:w-1/3 space-y-4">
 						<ImpactFollowers />
+						<ImpactUnfollowers />
 					</div>
 				</div>
+				<div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-4  px-4 md:px-0"></div>
 				{/* <div className="flex justify-between">
 					<div className="bg-white p-10 text-neutral-400">Top Mentions</div>
 					<div className="bg-white p-10 text-neutral-400">Top 10 most engaged people with you in last [duration] </div>

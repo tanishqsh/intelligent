@@ -2,12 +2,12 @@ import dayjs from 'dayjs';
 import Duration from '../Overview/Duration';
 
 export const getRelativeTime = (timestamp: { seconds: number; nanoseconds: number }) => {
-	const date = new Date(timestamp.seconds * 1000);
+	const date = new Date(timestamp?.seconds * 1000);
 	return dayjs(date).fromNow();
 };
 
 export const formatTimestamp = (timestamp: { seconds: number; nanoseconds: number }) => {
-	const date = dayjs.unix(timestamp.seconds);
+	const date = dayjs.unix(timestamp?.seconds);
 	return date.format('ddd, D MMMM YY hh:mm:ss A');
 };
 
