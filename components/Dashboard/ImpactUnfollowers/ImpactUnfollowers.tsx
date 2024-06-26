@@ -98,7 +98,7 @@ export default function ImpactUnfollowers() {
 													{follower_count} followers
 												</div>
 												<div className="text-neutral-400 text-[12px] font-sans whitespace-pre-wrap possible-link break-words">
-													followed you {relativeTime}
+													unfollowed you {relativeTime}
 												</div>
 												{followedMoreThanOnce && (
 													<ExplainUI
