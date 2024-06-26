@@ -140,6 +140,7 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 			pointLabel="data.yFormatted"
 			pointLabelYOffset={0}
 			enableSlices="x"
+			animate={false}
 			sliceTooltip={({ slice }) => {
 				const likes = slice.points.find((point) => point.serieId === 'Likes')?.data.y || 0;
 				const recasts = slice.points.find((point) => point.serieId === 'Recasts')?.data.y || 0;

@@ -87,7 +87,7 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 							<TimeFlair time={time} />
 						</div>
 						<div className="" id="action-panel">
-							{url && (
+							{url && url != '#' && (
 								<div className="absolute right-4 bottom-2 opacity-15 hover:opacity-85 transition-all duration-300">
 									<ExplainUI text={'View on Warpcast'}>
 										<Link target="_blank" href={url}>
