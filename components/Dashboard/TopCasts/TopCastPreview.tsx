@@ -121,6 +121,6 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 };
 
 const RemoveWarpcastURL = (text: string) => {
-	return text.replace(/https?:\/\/warpcast\.com[^\s]*/g, '');
+	return text?.replace(/https?:\/\/warpcast\.com[^\s]*/g, '') || text;
 };
 export default TopCastPreview;
