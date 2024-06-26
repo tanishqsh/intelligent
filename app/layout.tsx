@@ -4,6 +4,7 @@ import './globals.css';
 import Providers from '@/utils/providers';
 import localFont from 'next/font/local';
 import { Toaster } from 'react-hot-toast';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -45,6 +46,7 @@ export default function RootLayout({
 			<body>
 				<Toaster position="top-right" reverseOrder={false} />
 				<Providers>{children}</Providers>
+				<Analytics />
 			</body>
 		</html>
 	);

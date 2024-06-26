@@ -22,7 +22,7 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let time = cast?.cast_time;
 	let embeds = cast?.embeds;
 
-	let url = cast?.meta?.url;
+	let url = cast?.meta?.url || '';
 	let channelName = cast?.meta?.channel?.name;
 	let channelId = cast?.meta?.channel?.channelId;
 	let imageURL = cast?.meta?.channel?.imageUrl;
@@ -33,11 +33,11 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let isQuoteCast = embeds?.some((embed: any) => embed?.castId);
 
 	let quote_profileImage = (isQuoteCast && cast?.meta?.quotedCast[0]?.castedBy?.profileImage) || '';
-	let quote_profileHandle = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.profileHandle : null;
-	let quote_profileDisplayName = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.profileDisplayName : null;
-	let quote_isPowerUser = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.isFarcasterPowerUser : null;
-	let quote_text = isQuoteCast ? cast?.meta?.quotedCast[0]?.text : null;
-	let quote_url = isQuoteCast ? cast?.meta?.quotedCast[0]?.url : null;
+	let quote_profileHandle = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.profileHandle : '';
+	let quote_profileDisplayName = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.profileDisplayName : '';
+	let quote_isPowerUser = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.isFarcasterPowerUser : '';
+	let quote_text = isQuoteCast ? cast?.meta?.quotedCast[0]?.text : '';
+	let quote_url = isQuoteCast ? cast?.meta?.quotedCast[0]?.url : '';
 
 	console.log('quote_profileImage', quote_profileDisplayName);
 
@@ -69,16 +69,14 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 								</div>
 							</ReactLinkify>
 							{isQuoteCast && (
-								<Link target="_ blank" href={quote_url}>
-									<div className="shadow-sm w-full border-black/10 rounded-xl mt-2 p-4 flex space-x-4 h-[70px] overflow-hidden bg-gradient-to-b from-white to-transparent text-transparent">
-										<img src={quote_profileImage} className="w-6 h-6 aspect-square rounded-full ring-2 ring-black/10" />
-										<ReactLinkify>
-											<div className="bg-clip-text bg-gradient-to-b from-black via-black/50 to-transparent text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
-												{isQuoteCast ? quote_text : quote_text}
-											</div>
-										</ReactLinkify>
-									</div>
-								</Link>
+								<div className="shadow-sm w-full border-black/10 rounded-xl mt-2 p-4 flex space-x-4 h-[70px] overflow-hidden bg-gradient-to-b from-white to-transparent text-transparent">
+									<img src={quote_profileImage} className="w-6 h-6 aspect-square rounded-full ring-2 ring-black/10" />
+									<ReactLinkify>
+										<div className="bg-clip-text bg-gradient-to-b from-black via-black/50 to-transparent text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
+											{isQuoteCast ? quote_text : quote_text}
+										</div>
+									</ReactLinkify>
+								</div>
 							)}
 							<EmbedPreview embeds={embeds} />
 						</div>
