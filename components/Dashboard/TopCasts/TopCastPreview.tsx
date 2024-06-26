@@ -22,7 +22,7 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let time = cast?.cast_time;
 	let embeds = cast?.embeds;
 
-	let url = cast?.meta?.url || '';
+	let url = cast?.meta?.url || '#';
 	let channelName = cast?.meta?.channel?.name;
 	let channelId = cast?.meta?.channel?.channelId;
 	let imageURL = cast?.meta?.channel?.imageUrl;
@@ -37,7 +37,7 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let quote_profileDisplayName = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.profileDisplayName : '';
 	let quote_isPowerUser = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.isFarcasterPowerUser : '';
 	let quote_text = isQuoteCast ? cast?.meta?.quotedCast[0]?.text : '';
-	let quote_url = isQuoteCast ? cast?.meta?.quotedCast[0]?.url : '';
+	let quote_url = isQuoteCast ? cast?.meta?.quotedCast[0]?.url : '#';
 
 	console.log('quote_profileImage', quote_profileDisplayName);
 
