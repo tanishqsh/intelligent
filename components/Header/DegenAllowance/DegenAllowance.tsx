@@ -1,8 +1,10 @@
 'use client';
 
+import toastStyles from '@/utils/toastStyles';
 import { usePrivy } from '@privy-io/react-auth';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 const fetchAllowanceData = async (url: string) => {
@@ -24,6 +26,14 @@ const AllowanceDisplay = ({ fid }: { fid: string }) => {
 	let remainingAllowance = allowance?.remaining_allowance || 0;
 	let remainingAllowanceUSD = remainingAllowance * degenRate;
 
+	const copyPendingAllowanceToClipboard = () => {
+		const string = remainingAllowance.toString();
+		const suffix = ' $DEGEN';
+
+		navigator.clipboard.writeText(string + suffix);
+		toast.success('Allowance copied to clipboard', toastStyles.success);
+	};
+
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 2 }}
@@ -42,6 +52,7 @@ const AllowanceDisplay = ({ fid }: { fid: string }) => {
 			</span>
 			{allowance ? (
 				<motion.span
+					onClick={copyPendingAllowanceToClipboard}
 					initial={{ opacity: 0, y: 2 }}
 					animate={{
 						opacity: 1,
@@ -51,7 +62,7 @@ const AllowanceDisplay = ({ fid }: { fid: string }) => {
 							stiffness: 200,
 						},
 					}}
-					className="text-neutral-500"
+					className="text-neutral-500 cursor-pointer"
 				>
 					{new Intl.NumberFormat().format(remainingAllowance)} (
 					{new Intl.NumberFormat('en-US', {
