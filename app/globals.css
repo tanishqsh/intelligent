@@ -33,18 +33,18 @@
 }
 .custom-scrollbar {
 	scrollbar-width: thin; /* For Firefox */
-	scrollbar-color: #374151 #d1d5db; /* For Firefox */
+	scrollbar-color: #ccc #d1d5db; /* For Firefox */
 }
 
 /* For Webkit browsers (Chrome, Safari) */
 .custom-scrollbar::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+	width: 2px;
+	height: 2px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-	background-color: #374151; /* Equivalent to bg-neutral-700 */
-	border-radius: 9999px; /* Equivalent to rounded-full */
+	background-color: #ccc; /* Equivalent to bg-neutral-700 */
+	border-radius: 0px; /* Equivalent to rounded-full */
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {

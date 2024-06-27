@@ -104,7 +104,7 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 							)}
 
 							{channelId && channelName && (
-								<ExplainUI text="View channel">
+								<ExplainUI text={`View /${channelId} on Warpcast`}>
 									<Link target="_blank" href={channelURL}>
 										<ChannelFlair
 											channel={{
