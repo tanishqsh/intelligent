@@ -49,7 +49,7 @@ export default function ImpactFollowers() {
 						</svg>
 					</div>
 				</ExplainUI>
-				{/* <DurationSelector placement="impactfollowers" /> */}
+				<DurationSelector placement="impactfollowers" />
 			</div>
 			<div className="space-y-1 flex flex-col max-h-[600px] no-scrollbar overflow-scroll rounded-xl">
 				{uniqueImpactFollowers.length == 0 && <span className="px-4 py-4 text-sm text-neutral-500/50 m-auto"> No new impact followers </span>}

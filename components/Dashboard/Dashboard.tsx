@@ -33,22 +33,15 @@ export default function Dashboard() {
 				<div className="px-4 overflow-scroll md:overflow-auto md:px-0 no-scrollbar">
 					<EngagementChartComponent />
 				</div>
-				<div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-4  px-4 md:px-0">
-					<div className="w-full md:w-2/4">
+				<div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-4 px-4 md:px-0">
+					<div className="w-full md:w-2/3">
 						<TopCasts />
 					</div>
-					<div className="w-full md:w-1/4">
+					<div className="w-full md:w-1/3 space-y-4">
 						<ImpactFollowers />
-					</div>
-					<div className="w-full md:w-1/4">
 						<ImpactUnfollowers />
 					</div>
 				</div>
-				<div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-4  px-4 md:px-0"></div>
-				{/* <div className="flex justify-between">
-					<div className="bg-white p-10 text-neutral-400">Top Mentions</div>
-					<div className="bg-white p-10 text-neutral-400">Top 10 most engaged people with you in last [duration] </div>
-				</div> */}
 			</div>
 		</div>
 	);

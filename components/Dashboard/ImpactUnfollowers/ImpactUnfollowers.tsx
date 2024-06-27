@@ -14,6 +14,8 @@ export default function ImpactUnfollowers() {
 	const fid = user?.farcaster?.fid?.toString() || '';
 	const { impactUnfollowers } = useImpactUnfollowers(fid);
 
+	console.log('impactUnfollowers', impactUnfollowers);
+
 	// console.log(impactFollowers);
 
 	// remove duplicates from impactFollowers

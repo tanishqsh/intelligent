@@ -10,6 +10,7 @@ import { logUser } from '@/lib/backend/logUser';
 import FingerprintSVG from './SVG/FingerprintSVG';
 import { useMediaQuery } from 'react-responsive';
 import Link from 'next/link';
+import ExplainUI from '../ui/ExplainUI/ExplainUI';
 
 export default function LandingPage() {
 	const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
@@ -127,18 +128,10 @@ export default function LandingPage() {
 							Farcaster.
 						</motion.span>
 					</motion.h1>
-					<div className="flex flex-col md:flex-row justify-center items-center md:space-x-2">
-						<div className="mt-12 w-full md:w-auto">{authenticated && <AccessDashboardButton />}</div>
-						{authenticated && !isPasskeyLinked && (
-							<div className="mt-2 md:mt-12 w-full md:w-auto">
-								<LinkPasskeyButton />
-							</div>
-						)}
-						{authenticated && isPasskeyLinked && (
-							<div className="mt-2 md:mt-12 w-full md:w-auto">
-								<UnlinkPasskeyButton id={passkeyAccount.credentialId} />
-							</div>
-						)}
+					<div className="flex flex-col mt-12 space-y-4">
+						{authenticated && <AccessDashboardButton />}
+						{authenticated && !isPasskeyLinked && <LinkPasskeyButton />}
+						{authenticated && isPasskeyLinked && <UnlinkPasskeyButton id={passkeyAccount.credentialId} />}
 					</div>
 					<div className="mt-0">
 						{!authenticated && (
@@ -185,6 +178,29 @@ export default function LandingPage() {
 	);
 }
 
+const LinkPasskeyButton = () => {
+	const { linkPasskey } = usePrivy();
+
+	return (
+		<ExplainUI text="(Optional) Connect a passkey for faster login">
+			<motion.button
+				initial={{ paddingRight: 4, paddingLeft: 4, paddingTop: 2, paddingBottom: 2, opacity: 0.6, fontWeight: 500 }}
+				animate={{ paddingRight: 13, paddingLeft: 13, paddingTop: 5, paddingBottom: 5, opacity: 1, fontWeight: 500 }}
+				whileHover={{ paddingRight: 16, paddingLeft: 16, paddingTop: 5, paddingBottom: 5, opacity: 0.9, fontWeight: 475 }}
+				whileTap={{ scale: 0.9 }}
+				transition={{ type: 'spring', duration: 0.1, stiffness: 200 }}
+				className="md:text-xl bg-neutral-200 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-400 w-full md:w-auto"
+				onClick={linkPasskey}
+			>
+				<FingerprintSVG />
+				<motion.span initial={{ opacity: 1, x: 0 }} animate={{ opacity: 1, x: 0 }}>
+					Link Passkey
+				</motion.span>
+			</motion.button>
+		</ExplainUI>
+	);
+};
+
 const UnlinkPasskeyButton = ({ id }: { id: string }) => {
 	const { unlinkPasskey } = usePrivy();
 
@@ -195,34 +211,13 @@ const UnlinkPasskeyButton = ({ id }: { id: string }) => {
 			whileHover={{ paddingRight: 16, paddingLeft: 16, paddingTop: 5, paddingBottom: 5, opacity: 0.9, fontWeight: 475 }}
 			whileTap={{ scale: 0.9 }}
 			transition={{ type: 'spring', duration: 0.1, stiffness: 200 }}
-			className="md:text-2xl bg-yellow-400 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-400 w-full"
+			className="md:text-xl bg-neutral-200 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-400 w-full md:w-auto"
 			onClick={() => unlinkPasskey(id)}
 		>
 			<FingerprintSVG />
 
 			<motion.span initial={{ opacity: 1, x: 0 }} animate={{ opacity: 1, x: 0 }}>
 				Unlink Passkey
-			</motion.span>
-		</motion.button>
-	);
-};
-
-const LinkPasskeyButton = () => {
-	const { linkPasskey } = usePrivy();
-
-	return (
-		<motion.button
-			initial={{ paddingRight: 4, paddingLeft: 4, paddingTop: 2, paddingBottom: 2, opacity: 0.6, fontWeight: 500 }}
-			animate={{ paddingRight: 13, paddingLeft: 13, paddingTop: 5, paddingBottom: 5, opacity: 1, fontWeight: 500 }}
-			whileHover={{ paddingRight: 16, paddingLeft: 16, paddingTop: 5, paddingBottom: 5, opacity: 0.9, fontWeight: 475 }}
-			whileTap={{ scale: 0.9 }}
-			transition={{ type: 'spring', duration: 0.1, stiffness: 200 }}
-			className="md:text-2xl bg-yellow-400 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-400 w-full"
-			onClick={linkPasskey}
-		>
-			<FingerprintSVG />
-			<motion.span initial={{ opacity: 1, x: 0 }} animate={{ opacity: 1, x: 0 }}>
-				Link Passkey
 			</motion.span>
 		</motion.button>
 	);
@@ -244,7 +239,7 @@ const AccessDashboardButton = () => {
 			onHoverStart={() => setInTap(true)}
 			onHoverEnd={() => setInTap(false)}
 			transition={{ type: 'spring', duration: 0.1, stiffness: 200 }}
-			className="md:text-2xl bg-yellow-400 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-500 w-full"
+			className="md:text-2xl bg-yellow-400 px-2 py-2 rounded-md flex m-auto space-x-4 items-center justify-center border-0 border-yellow-500 w-full md:w-auto"
 			onClick={() => router.push('/dashboard')}
 		>
 			<motion.img
