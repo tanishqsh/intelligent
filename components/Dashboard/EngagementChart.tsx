@@ -148,7 +148,7 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 				const follows = slice.points.find((point) => point.serieId === 'Followers')?.data.y || 0;
 
 				return (
-					<div className="bg-white/50 backdrop-blur-md z-50 px-4 py-2 shadow-sm border border-[#ededed]/30 rounded-md">
+					<div className="bg-white/95 backdrop-blur-md z-[999999] relative px-4 py-2 shadow-sm border border-[#ededed]/30 rounded-md">
 						<div className="text-xs text-black/50">
 							{dayjs(slice.points[0].data.x).format('dddd, MMMM D, h:mm A')} ({dayjs(slice.points[0].data.x).fromNow()}){' '}
 						</div>
@@ -159,7 +159,7 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 							<div className="text-xs rounded-full text-amber-600 px-[6px] py-[2px] bg-amber-600/10 font-medium inline-block">
 								{Number(recasts)} recasts
 							</div>
-							<div className="text-xs rounded-full text-amber-500 px-[6px] py-[2px] bg-amber-500/10 font-medium inline-block">
+							<div className="text-xs rounded-full text-rose-500 px-[6px] py-[2px] bg-amber-500/10 font-medium inline-block">
 								{Number(follows)} followers
 							</div>
 						</div>
