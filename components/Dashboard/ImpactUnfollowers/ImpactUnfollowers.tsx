@@ -50,7 +50,16 @@ export default function ImpactUnfollowers() {
 				</ExplainUI>
 			</div>
 			<div className="space-y-1 flex flex-col max-h-[600px] no-scrollbar overflow-scroll rounded-xl">
-				{uniqueImpactUnfollowers.length == 0 && <span className="px-4 py-4 text-sm text-neutral-500/50 m-auto"> No new impact unfollowers </span>}
+				{uniqueImpactUnfollowers.length == 0 && (
+					<motion.div
+						initial={{ opacity: 0, y: 4, paddingTop: 32, paddingBottom: 32 }}
+						animate={{ opacity: 1, y: 0, paddingTop: 32, paddingBottom: 32 }}
+						transition={{ duration: 0.3 }}
+						className="px-4 py-4 bg-neutral-200/50 border-2 border-dotted border-black/10 rounded-xl"
+					>
+						<span className="text-sm text-neutral-500/50 m-auto"> No new impact unfollowers </span>
+					</motion.div>
+				)}
 				{uniqueImpactUnfollowers &&
 					uniqueImpactUnfollowers.length != 0 &&
 					uniqueImpactUnfollowers.map((unfollower: any, i: number) => {
