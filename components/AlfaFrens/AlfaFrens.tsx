@@ -12,8 +12,6 @@ export default function AlfaFrens() {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [searchStakersTerm, setSearchStakersTerm] = useState('');
 
-	console.log(alfafrensMembers);
-
 	let activeCount = getActiveCount(alfafrensMembers);
 	let activeStakersCount = getActiveStakersCount(alfafrensMembers);
 	let activeSubs = getActiveSubs(alfafrensMembers, searchTerm);

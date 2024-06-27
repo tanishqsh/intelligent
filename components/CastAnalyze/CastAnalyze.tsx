@@ -53,7 +53,6 @@ export default function CastAnalyze() {
 	const { members } = useAlfaFrensData(listenerActive, String(user?.farcaster?.fid || ''), isLoaded);
 
 	const beginFetchCast = async (): Promise<void> => {
-		console.log('fetching cast');
 		const accessToken = (await getAccessToken()) || '';
 		const data = await fetchCast(castUrl, accessToken);
 		if (data.success) {
