@@ -10,7 +10,8 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(require('dayjs/plugin/relativeTime'));
 
-const customColors = [colors.neutral[500], colors.neutral[400], colors.amber[500]];
+// likes, recasts, followers
+const customColors = [colors.amber[500], colors.amber[600], colors.rose[600]];
 
 type Precision = 'hour' | 'day' | 'month';
 
@@ -75,7 +76,7 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 		<ResponsiveLine
 			areaBaselineValue={0}
 			enableArea={true}
-			areaOpacity={0.1}
+			areaOpacity={0.3}
 			theme={{
 				axis: {
 					ticks: {
@@ -132,7 +133,7 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 			enableGridX={true}
 			enableGridY={true}
 			lineWidth={0}
-			pointSize={isMobile ? 0.25 : 6.5}
+			pointSize={isMobile ? 0.25 : 4}
 			colors={customColors}
 			pointColor={{ theme: 'background' }}
 			pointBorderWidth={8}
@@ -152,10 +153,10 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 							{dayjs(slice.points[0].data.x).format('dddd, MMMM D, h:mm A')} ({dayjs(slice.points[0].data.x).fromNow()}){' '}
 						</div>
 						<div className="mt-2 space-x-1">
-							<div className="text-xs rounded-full text-neutral-800 px-[6px] py-[2px] bg-neutral-800/10 font-medium inline-block">
+							<div className="text-xs rounded-full text-amber-500 px-[6px] py-[2px] bg-amber-500/10 font-medium inline-block">
 								{Number(likes)} likes
 							</div>
-							<div className="text-xs rounded-full text-neutral-600 px-[6px] py-[2px] bg-neutral-500/10 font-medium inline-block">
+							<div className="text-xs rounded-full text-amber-600 px-[6px] py-[2px] bg-amber-600/10 font-medium inline-block">
 								{Number(recasts)} recasts
 							</div>
 							<div className="text-xs rounded-full text-amber-500 px-[6px] py-[2px] bg-amber-500/10 font-medium inline-block">
