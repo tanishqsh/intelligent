@@ -98,9 +98,9 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 				},
 				crosshair: {
 					line: {
-						stroke: '#cccccc', // Customize the crosshair line color
+						stroke: '#fbbf24', // Customize the crosshair line color
 						strokeWidth: 1, // Customize the crosshair line width
-						strokeDasharray: '8 8', // Customize the crosshair line style (dashed)
+						strokeDasharray: '8', // Customize the crosshair line style (dashed)
 					},
 				},
 			}}

@@ -2,7 +2,7 @@ import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 
 const EngagementFlair = ({ count }: { count: number }) => {
 	return (
-		<ExplainUI text={`${count} unique users engaged with this cast`}>
+		<ExplainUI text={`Total engagement ${count} (Likes + Recasts)`}>
 			<div className="font-medium text-emerald-600 inline-flex items-center space-x-2 rounded-md bg-emerald-600/5 px-2 py-1">
 				<p className="text-xs">{count}</p>
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-3">
