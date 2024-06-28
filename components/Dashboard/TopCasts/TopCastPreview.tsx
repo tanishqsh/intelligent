@@ -28,8 +28,6 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let imageURL = cast?.meta?.channel?.imageUrl;
 	let channelURL = 'https://warpcast.com/~/channel/' + channelId;
 
-	console.log('cast ', cast);
-
 	let isQuoteCast = embeds?.some((embed: any) => embed?.castId);
 
 	let quote_profileImage = (isQuoteCast && cast?.meta?.quotedCast[0]?.castedBy?.profileImage) || '';
@@ -38,8 +36,6 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let quote_isPowerUser = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.isFarcasterPowerUser : '';
 	let quote_text = isQuoteCast ? cast?.meta?.quotedCast[0]?.text : '';
 	let quote_url = isQuoteCast ? cast?.meta?.quotedCast[0]?.url : '';
-
-	console.log('quote_profileImage', quote_profileDisplayName);
 
 	return (
 		<AnimatePresence mode="wait">

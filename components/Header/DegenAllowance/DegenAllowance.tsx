@@ -4,6 +4,7 @@ import toastStyles from '@/utils/toastStyles';
 import { usePrivy } from '@privy-io/react-auth';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
@@ -13,6 +14,7 @@ const fetchAllowanceData = async (url: string) => {
 };
 
 const AllowanceDisplay = ({ fid }: { fid: string }) => {
+	const [showDollarAmount, setShowDollarAmount] = useState(false);
 	const { data, error } = useSWR(`/api/degen?fid=${fid}`, fetchAllowanceData);
 
 	const allowance = data?.allowance;
@@ -51,7 +53,9 @@ const AllowanceDisplay = ({ fid }: { fid: string }) => {
 				<img className="w-[12px] opacity-50 " src="/degen.svg" />
 			</span>
 			{allowance ? (
-				<motion.span
+				<motion.div
+					onMouseEnter={() => setShowDollarAmount(true)}
+					onMouseLeave={() => setShowDollarAmount(false)}
 					onClick={copyPendingAllowanceToClipboard}
 					initial={{ opacity: 0, y: 2 }}
 					animate={{
@@ -64,22 +68,37 @@ const AllowanceDisplay = ({ fid }: { fid: string }) => {
 					}}
 					className="text-neutral-500 cursor-pointer"
 				>
-					{new Intl.NumberFormat().format(remainingAllowance)} (
-					{new Intl.NumberFormat('en-US', {
-						style: 'currency',
-						currency: 'USD',
-					}).format(remainingAllowanceUSD)}
-					)
-					<span className="text-neutral-400">
+					<div className="flex items-center justify-center">
+						<motion.div className="px-1">{new Intl.NumberFormat().format(remainingAllowance)}</motion.div>
+						<motion.div
+							initial={{ opacity: 0, width: 0 }}
+							animate={{
+								opacity: showDollarAmount ? 1 : 0,
+								width: showDollarAmount ? 'auto' : 0,
+								transition: {
+									duration: 0.1,
+								},
+							}}
+							className="px-1 bg-neutral-300 rounded-full"
+						>
+							{new Intl.NumberFormat('en-US', {
+								style: 'currency',
+								currency: 'USD',
+							}).format(remainingAllowanceUSD)}
+						</motion.div>
+					</div>
+
+					{/* <span className="text-neutral-400">
 						{' '}
-						/ {new Intl.NumberFormat().format(tipAllowance)} (
-						{new Intl.NumberFormat('en-US', {
-							style: 'currency',
-							currency: 'USD',
-						}).format(tipAllowanceUSD)}
-						){' '}
-					</span>
-				</motion.span>
+						out of {new Intl.NumberFormat().format(tipAllowance)}
+						<span className="px-2 py-1 bg-neutral-200 rounded-full m-1">
+							{new Intl.NumberFormat('en-US', {
+								style: 'currency',
+								currency: 'USD',
+							}).format(tipAllowanceUSD)}
+						</span>{' '}
+					</span> */}
+				</motion.div>
 			) : (
 				<span className="text-xs font-medium text-[#8B5CF6]">No allowance</span>
 			)}

@@ -53,7 +53,7 @@ const Header = () => {
 
 					<div className="flex items-center justify-end space-x-4 md:w-1/3">
 						<div className="md:block hidden">
-							<ExplainUI text={'Daily $DEGEN allowance'}>
+							<ExplainUI text={'Remaining $DEGEN allowance'}>
 								<DegenAllowance />
 							</ExplainUI>
 						</div>
