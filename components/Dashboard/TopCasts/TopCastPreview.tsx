@@ -30,12 +30,14 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 
 	let isQuoteCast = embeds?.some((embed: any) => embed?.castId);
 
-	let quote_profileImage = (isQuoteCast && cast?.meta?.quotedCast[0]?.castedBy?.profileImage) || '';
-	let quote_profileHandle = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.profileHandle : '';
-	let quote_profileDisplayName = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.profileDisplayName : '';
-	let quote_isPowerUser = isQuoteCast ? cast?.meta?.quotedCast[0]?.castedBy?.isFarcasterPowerUser : '';
-	let quote_text = isQuoteCast ? cast?.meta?.quotedCast[0]?.text : '';
-	let quote_url = isQuoteCast ? cast?.meta?.quotedCast[0]?.url : '';
+	const quoteProperties = getQuoteProperties(cast, isQuoteCast);
+
+	let quote_profileImage = quoteProperties.quote_profileImage;
+	let quote_profileHandle = quoteProperties.quote_profileHandle;
+	let quote_profileDisplayName = quoteProperties.quote_profileDisplayName;
+	let quote_isPowerUser = quoteProperties.quote_isPowerUser;
+	let quote_text = quoteProperties.quote_text;
+	let quote_url = quoteProperties.quote_url;
 
 	return (
 		<AnimatePresence mode="wait">
@@ -65,20 +67,18 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 								</div>
 							</ReactLinkify>
 							{isQuoteCast && (
-								<Link target="_blank" href={quote_url ? quote_url : ''}>
-									<div className="shadow-sm w-full border-black/10 rounded-xl mt-2 p-4 flex space-x-4 h-[70px] overflow-hidden bg-gradient-to-b from-white to-transparent text-transparent">
-										<ExplainUI text={'@' + quote_profileHandle}>
-											<div className="space-y-2 flex flex-col items-center">
-												<img src={quote_profileImage} className="w-6 h-6 aspect-square rounded-full ring-2 ring-black/10" />
-											</div>
-										</ExplainUI>
-										<ReactLinkify>
-											<div className="bg-clip-text bg-gradient-to-b from-black via-black/50 to-transparent text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
-												{isQuoteCast ? quote_text : quote_text}
-											</div>
-										</ReactLinkify>
-									</div>
-								</Link>
+								<div className="shadow-sm w-full border-black/10 rounded-xl mt-2 p-4 flex space-x-4 h-[70px] overflow-hidden bg-gradient-to-b from-white to-transparent text-transparent">
+									<ExplainUI text={'@' + quote_profileHandle}>
+										<div className="space-y-2 flex flex-col items-center">
+											<img src={quote_profileImage} className="w-6 h-6 aspect-square rounded-full ring-2 ring-black/10" />
+										</div>
+									</ExplainUI>
+									<ReactLinkify>
+										<div className="bg-clip-text bg-gradient-to-b from-black via-black/50 to-transparent text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
+											{isQuoteCast ? quote_text : quote_text}
+										</div>
+									</ReactLinkify>
+								</div>
 							)}
 							<EmbedPreview embeds={embeds} />
 						</div>
@@ -121,3 +121,27 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 };
 
 export default TopCastPreview;
+
+const getQuoteProperties = (cast: any, isQuoteCast: any) => {
+	if (!isQuoteCast || !cast?.meta?.quotedCast || !cast.meta.quotedCast[0]) {
+		return {
+			quote_profileImage: '',
+			quote_profileHandle: '',
+			quote_profileDisplayName: '',
+			quote_isPowerUser: '',
+			quote_text: '',
+			quote_url: '',
+		};
+	}
+
+	const quotedCast = cast.meta.quotedCast[0];
+
+	return {
+		quote_profileImage: quotedCast.castedBy?.profileImage || '',
+		quote_profileHandle: quotedCast.castedBy?.profileHandle || '',
+		quote_profileDisplayName: quotedCast.castedBy?.profileDisplayName || '',
+		quote_isPowerUser: quotedCast.castedBy?.isFarcasterPowerUser || '',
+		quote_text: quotedCast.text || '',
+		quote_url: quotedCast.url || '',
+	};
+};

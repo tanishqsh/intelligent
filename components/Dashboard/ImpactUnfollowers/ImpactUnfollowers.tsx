@@ -14,14 +14,14 @@ export default function ImpactUnfollowers() {
 	const fid = user?.farcaster?.fid?.toString() || '';
 	const { impactUnfollowers } = useImpactUnfollowers(fid);
 
-	// console.log(impactFollowers);
+	console.log(impactUnfollowers);
 	// remove duplicates from impactFollowers
 
-	const uniqueImpactUnfollowers = impactUnfollowers.reduce((acc: any, follower: any) => {
-		const foundIndex = acc.findIndex((t: any) => t.follower_fid === follower.follower_fid);
+	const uniqueImpactUnfollowers = impactUnfollowers.reduce((acc: any, unfollower: any) => {
+		const foundIndex = acc.findIndex((t: any) => t.unfollower_fid === unfollower.unfollower_fid);
 		if (foundIndex === -1) {
-			follower.count = 1;
-			acc.push(follower);
+			unfollower.count = 1;
+			acc.push(unfollower);
 		} else {
 			acc[foundIndex].count += 1;
 		}

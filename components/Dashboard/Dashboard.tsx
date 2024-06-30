@@ -13,6 +13,7 @@ import { useSetLastActive } from './hooks/useSetLastActive';
 import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import ImpactUnfollowers from './ImpactUnfollowers/ImpactUnfollowers';
+import TopMentions from './TopMentions/TopMentions';
 
 export default function Dashboard() {
 	const { ready, user } = usePrivy();
@@ -34,8 +35,9 @@ export default function Dashboard() {
 					<EngagementChartComponent />
 				</div>
 				<div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-4 px-4 md:px-0">
-					<div className="w-full md:w-2/3">
+					<div className="w-full md:w-2/3 space-y-4">
 						<TopCasts />
+						{/* <TopMentions /> */}
 					</div>
 					<div className="w-full md:w-1/3 space-y-4">
 						<ImpactFollowers />
