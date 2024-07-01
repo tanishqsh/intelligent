@@ -64,15 +64,15 @@ const TopMentionPreview = ({ cast, i }: { cast: any; i: number }) => {
 				</div>
 				{showMention && (
 					<AnimatePresence>
-						<div className="flex space-x-2 items-center p-4">
+						{/* <div className="flex space-x-2 items-center p-4">
 							<img src={profile_picture} className="size-5 rounded-full ring-2 ring-black/10" />
 							<span className="text-sm"> {displayName}: </span>
-						</div>
+						</div> */}
 						<motion.div
 							initial={{ opacity: 0, y: 10 }}
 							animate={{ opacity: 1, y: 0 }}
 							exit={{ opacity: 0, y: 10 }}
-							className="rounded-md shadow-sm px-4 space-y-4 relative"
+							className="rounded-md shadow-sm px-4 space-y-4 relative pt-4"
 						>
 							<ReactLinkify>
 								<p className="whitespace-pre-wrap possible-link">
