@@ -6,12 +6,13 @@ import EmbedPreview from '../TopCasts/EmbedPreview/EmbedPreview';
 import EngagementFlair from '../TopCasts/Flairs/EngagementFlair';
 import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDuration } from '../DurationContext';
 
 const TopMentionPreview = ({ cast, i }: { cast: any; i: number }) => {
-	console.log(cast);
-
 	const [showMention, setShowMention] = useState(false);
+
+	const { duration } = useDuration();
 
 	let displayName = cast?.display;
 	let profile_picture = cast?.profile_picture;
@@ -28,6 +29,10 @@ const TopMentionPreview = ({ cast, i }: { cast: any; i: number }) => {
 
 	let url = cast?.meta?.url || '#';
 
+	useEffect(() => {
+		setShowMention(false);
+	}, [duration]);
+
 	return (
 		<AnimatePresence mode="wait">
 			<motion.div
@@ -38,11 +43,14 @@ const TopMentionPreview = ({ cast, i }: { cast: any; i: number }) => {
 				transition={{ type: 'spring', stiffness: 200, damping: 20 }}
 				className="text-sm text-neutral-600 bg-white space-y-2 rounded-xl shadow-sm px-4 py-4"
 			>
-				<div className="flex space-x-2">
-					<EngagementFlair count={reaction_count} />
-					<p>
-						<span className="text-yellow-700"> {username ? '@' + username : 'Someone'}</span> <span>mentioned you {relativeTime}</span>{' '}
-					</p>
+				<div className="flex space-x-2 justify-between items-center">
+					<div className="flex items-center justify-start space-x-2">
+						<EngagementFlair count={reaction_count} />
+						<p className="flex space-x-2">
+							<img src={profile_picture} className="size-5 rounded-full ring-2 ring-black/10" />
+							<span className="text-yellow-700"> {username ? '@' + username : 'Someone'}</span> <span>mentioned you {relativeTime}</span>{' '}
+						</p>
+					</div>
 					<svg
 						className={`cursor-pointer ${showMention ? 'rotate-180' : ''}`}
 						onClick={() => setShowMention((prevState) => !prevState)}
