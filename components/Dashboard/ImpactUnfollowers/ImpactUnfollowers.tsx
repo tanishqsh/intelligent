@@ -14,9 +14,7 @@ export default function ImpactUnfollowers() {
 	const fid = user?.farcaster?.fid?.toString() || '';
 	const { impactUnfollowers } = useImpactUnfollowers(fid);
 
-	console.log(impactUnfollowers);
 	// remove duplicates from impactFollowers
-
 	const uniqueImpactUnfollowers = impactUnfollowers.reduce((acc: any, unfollower: any) => {
 		const foundIndex = acc.findIndex((t: any) => t.unfollower_fid === unfollower.unfollower_fid);
 		if (foundIndex === -1) {
@@ -65,7 +63,7 @@ export default function ImpactUnfollowers() {
 					uniqueImpactUnfollowers.map((unfollower: any, i: number) => {
 						let display_name = unfollower?.display_name;
 						let follower_count = unfollower?.follower_count;
-						let follower_fid = unfollower?.follower_fid;
+						let unfollower_fid = unfollower?.unfollower_fid;
 						let username = unfollower?.username;
 						let warpcast_URL = 'https://warpcast.com/' + username;
 						let pfp = unfollower?.pfp;
@@ -79,7 +77,7 @@ export default function ImpactUnfollowers() {
 						const followedMoreThanOnce = followedTimes > 1;
 
 						return (
-							<div key={'impact_unfollower_' + follower_fid}>
+							<div key={'impact_unfollower_' + unfollower.fid}>
 								<AnimatePresence mode="wait">
 									<motion.div
 										onClick={() => window.open(warpcast_URL, '_blank')}
@@ -91,10 +89,10 @@ export default function ImpactUnfollowers() {
 											paddingBottom: 24,
 											backgroundColor: colors.neutral[50],
 										}}
-										layoutId={'impact_unfollower_' + follower_fid}
+										layoutId={'impact_unfollower_' + unfollower_fid}
 										transition={{ type: 'spring', stiffness: 200, damping: 20 }}
 										className="px-4 cursor-pointer rounded-xl shadow-sm"
-										key={follower_fid}
+										key={unfollower_fid}
 									>
 										<div className="flex space-x-4 items-start">
 											<img src={unfollower?.pfp} className="w-10 h-10 rounded-full ring-2 ring-black/10" />
