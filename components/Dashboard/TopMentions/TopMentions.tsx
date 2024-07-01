@@ -14,8 +14,6 @@ const TopMentions = () => {
 
 	const pfp = user?.farcaster?.pfp || 'https://placehold.co/48x48';
 
-	console.log(data);
-
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 30 }}

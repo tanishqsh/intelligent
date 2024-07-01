@@ -38,7 +38,7 @@ const TopMentionPreview = ({ cast, i }: { cast: any; i: number }) => {
 			<motion.div
 				key={i + username}
 				initial={{ opacity: 0, y: 10 }}
-				animate={{ opacity: 1, y: 0 }}
+				whileInView={{ opacity: 1, y: 0 }}
 				exit={{ opacity: 0, y: 10 }}
 				transition={{ type: 'spring', stiffness: 200, damping: 20 }}
 				className="text-sm text-neutral-600 bg-white space-y-2 rounded-xl shadow-sm px-4 py-4"
@@ -46,9 +46,11 @@ const TopMentionPreview = ({ cast, i }: { cast: any; i: number }) => {
 				<div className="flex space-x-2 justify-between items-center">
 					<div className="flex items-center justify-start space-x-2">
 						<EngagementFlair count={reaction_count} />
-						<p className="flex space-x-2">
+						<p className="flex flex-col md:flex-row space-y-1 md:space-y-0 md:space-x-2">
 							<img src={profile_picture} className="size-5 rounded-full ring-2 ring-black/10" />
-							<span className="text-yellow-700"> {username ? '@' + username : 'Someone'}</span> <span>mentioned you {relativeTime}</span>{' '}
+							<div>
+								<span className="text-yellow-700"> {username ? '@' + username : 'Someone'}</span> <span>mentioned you {relativeTime}</span>{' '}
+							</div>
 						</p>
 					</div>
 					<svg
@@ -74,11 +76,10 @@ const TopMentionPreview = ({ cast, i }: { cast: any; i: number }) => {
 							exit={{ opacity: 0, y: 10 }}
 							className="rounded-md shadow-sm px-4 space-y-4 relative pt-4"
 						>
-							<ReactLinkify>
-								<p className="whitespace-pre-wrap possible-link">
-									<TextWithMention text={text} mentions={mentions} />
-								</p>
-							</ReactLinkify>
+							<p className="whitespace-pre-wrap possible-link">
+								<TextWithMention text={text} mentions={mentions} />
+							</p>
+
 							<EmbedPreview embeds={embeds} />
 							{url !== '#' && (
 								<Link target="_blank" href={url}>
@@ -96,7 +97,12 @@ const TopMentionPreview = ({ cast, i }: { cast: any; i: number }) => {
 };
 
 const TextWithMention = ({ text, mentions }: { text: string; mentions: Array<{ position: number; profile: { profileHandle: string } }> }) => {
-	if (!mentions || mentions.length === 0) return <p>{text}</p>;
+	if (!mentions || mentions.length === 0)
+		return (
+			<ReactLinkify>
+				<p>{text}</p>
+			</ReactLinkify>
+		);
 
 	const sortedMentions = mentions.sort((a, b) => a.position - b.position);
 	const parts: Array<string> = [];
@@ -110,6 +116,10 @@ const TextWithMention = ({ text, mentions }: { text: string; mentions: Array<{ p
 
 	parts.push(text.slice(lastIndex));
 
-	return <span dangerouslySetInnerHTML={{ __html: parts.join('') }} />;
+	return (
+		<ReactLinkify>
+			<span className="possible-link" dangerouslySetInnerHTML={{ __html: parts.join('') }} />
+		</ReactLinkify>
+	);
 };
 export default TopMentionPreview;
