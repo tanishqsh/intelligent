@@ -31,7 +31,7 @@ export default function TopCasts() {
 				<span className="text-neutral-400 text-sm font-inter">Top {data?.length} performing casts</span>
 				<DurationSelector placement="topcasts" />
 			</div>
-			<div className="space-y-2 flex flex-col max-h-[1000px] custom-scrollbar overflow-scroll rounded-xl">
+			<div className="space-y-2 flex flex-col max-h-[600px] custom-scrollbar overflow-scroll rounded-xl">
 				{data?.map((cast: any, i: number) => {
 					return (
 						<div key={i}>

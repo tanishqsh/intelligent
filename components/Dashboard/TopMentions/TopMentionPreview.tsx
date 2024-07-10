@@ -8,6 +8,7 @@ import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useDuration } from '../DurationContext';
+import TextWithMention from './TextWithMention';
 
 const TopMentionPreview = ({ cast, i }: { cast: any; i: number }) => {
 	const [showMention, setShowMention] = useState(false);
@@ -96,30 +97,4 @@ const TopMentionPreview = ({ cast, i }: { cast: any; i: number }) => {
 	);
 };
 
-const TextWithMention = ({ text, mentions }: { text: string; mentions: Array<{ position: number; profile: { profileHandle: string } }> }) => {
-	if (!mentions || mentions.length === 0)
-		return (
-			<ReactLinkify>
-				<p>{text}</p>
-			</ReactLinkify>
-		);
-
-	const sortedMentions = mentions.sort((a, b) => a.position - b.position);
-	const parts: Array<string> = [];
-	let lastIndex = 0;
-
-	sortedMentions.forEach(({ position, profile: { profileHandle } }) => {
-		const link = `<a href="https://warpcast.com/${profileHandle}" target="_blank" rel="noopener noreferrer">@${profileHandle}</a>`;
-		parts.push(text.slice(lastIndex, position), link);
-		lastIndex = position;
-	});
-
-	parts.push(text.slice(lastIndex));
-
-	return (
-		<ReactLinkify>
-			<span className="possible-link" dangerouslySetInnerHTML={{ __html: parts.join('') }} />
-		</ReactLinkify>
-	);
-};
 export default TopMentionPreview;

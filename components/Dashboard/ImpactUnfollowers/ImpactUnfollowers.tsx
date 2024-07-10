@@ -37,7 +37,8 @@ export default function ImpactUnfollowers() {
 				<ExplainUI text="People with over 10,000 followers who unfollowed you in last 6 months">
 					<div className="flex space-x-1">
 						<span className="px-1 text-neutral-400 hover:text-neutral-500 text-sm font-inter">
-							{uniqueImpactUnfollowers?.length} Impact unfollower{uniqueImpactUnfollowers?.length === 1 ? '' : 's'}
+							{uniqueImpactUnfollowers?.length > 9 && <span>Top</span>} {uniqueImpactUnfollowers?.length} Impact unfollower
+							{uniqueImpactUnfollowers?.length === 1 ? '' : 's'} over 180 days
 						</span>
 						<svg className="size-5 text-neutral-400 hover:text-neutral-500" fill="none" viewBox="0 0 24 24">
 							<path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13V15"></path>

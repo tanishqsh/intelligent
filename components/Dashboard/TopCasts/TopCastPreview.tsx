@@ -11,6 +11,7 @@ import EmbedPreview from './EmbedPreview/EmbedPreview';
 import Link from 'next/link';
 import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 import ChannelFlair from './Flairs/ChannelFlair';
+import TextWithMention from '../TopMentions/TextWithMention';
 
 const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let parent_cast_fid = cast?.parent_cast_fid;
@@ -28,15 +29,19 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let imageURL = cast?.meta?.channel?.imageUrl;
 	let channelURL = 'https://warpcast.com/~/channel/' + channelId;
 
+	let mentions = cast?.meta?.mentions || [];
+
 	let isQuoteCast = embeds?.some((embed: any) => embed?.castId);
 
 	const quoteProperties = getQuoteProperties(cast, isQuoteCast);
 
-	let quote_profileImage = quoteProperties.quote_profileImage;
-	let quote_profileHandle = quoteProperties.quote_profileHandle;
-	let quote_profileDisplayName = quoteProperties.quote_profileDisplayName;
+	console.log(cast);
+
+	let quote_profileImage = quoteProperties.quote_profileImage || 'https://placehold.co/1000x1000?text=I';
+	let quote_profileHandle = quoteProperties.quote_profileHandle || '';
+	let quote_profileDisplayName = quoteProperties.quote_profileDisplayName || '';
 	let quote_isPowerUser = quoteProperties.quote_isPowerUser;
-	let quote_text = quoteProperties.quote_text;
+	let quote_text = quoteProperties.quote_text || '';
 	let quote_url = quoteProperties.quote_url;
 
 	return (
@@ -63,22 +68,34 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 						<div className="">
 							<ReactLinkify>
 								<div className="text-neutral-900 mt-2 text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
-									{isQuoteCast ? text : text}
+									<TextWithMention mentions={mentions} text={text} />
 								</div>
 							</ReactLinkify>
 							{isQuoteCast && (
-								<div className="shadow-sm w-full border-black/10 rounded-xl mt-2 p-4 flex space-x-4 h-[70px] overflow-hidden bg-gradient-to-b from-white to-transparent text-transparent">
-									<ExplainUI text={'@' + quote_profileHandle}>
-										<div className="space-y-2 flex flex-col items-center">
-											<img src={quote_profileImage} className="w-6 h-6 aspect-square rounded-full ring-2 ring-black/10" />
+								<a href={quote_url} target="_blank" className="text-neutral-500 text-xs">
+									<motion.div
+										initial={{ y: 0 }}
+										animate={{ backgroundColor: '#fdfdfd' }}
+										whileHover={{
+											y: -5,
+										}}
+										transition={{
+											type: 'spring',
+											stiffness: 200,
+											damping: 20,
+										}}
+										className="shadow w-full border-black/10 rounded-xl mt-2 p-4 flex space-x-4 overflow-hidden"
+									>
+										<div className="shrink-0 justify-center items-center">
+											<ExplainUI text={'@' + quote_profileHandle}>
+												<img src={quote_profileImage} className="w-6 h-6 aspect-square rounded-full ring-2 ring-black/10" />
+											</ExplainUI>
 										</div>
-									</ExplainUI>
-									<ReactLinkify>
-										<div className="bg-clip-text bg-gradient-to-b from-black via-black/50 to-transparent text-sm text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
-											{isQuoteCast ? quote_text : quote_text}
+										<div className="w-full text-sm font-sans whitespace-pre-wrap possible-link break-words">
+											<ReactLinkify>{isQuoteCast ? quote_text : quote_text}</ReactLinkify>
 										</div>
-									</ReactLinkify>
-								</div>
+									</motion.div>
+								</a>
 							)}
 							<EmbedPreview embeds={embeds} />
 						</div>

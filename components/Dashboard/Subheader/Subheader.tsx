@@ -19,13 +19,8 @@ const Subheader = () => {
 			route: '/dashboard/cast-analyze',
 		},
 		{
-			name: 'Hypersub',
+			name: 'Apps',
 			route: '/dashboard/hypersub',
-		},
-
-		{
-			name: 'AlfaFrens',
-			route: '/dashboard/alfafrens',
 		},
 	];
 	const [activeTab, setActiveTab] = useState(tabs[0]);
@@ -42,7 +37,7 @@ const Subheader = () => {
 	return (
 		<div className="hidden md:block fixed bottom-8 left-0 right-0">
 			<div className="flex items-center justify-center">
-				<div className="bg-neutral-200/10 z-[9999] relative backdrop-blur-md inline-block rounded-full text-center p-1 border-2 border-neutral-400/10">
+				<div className="bg-white z-[9999] relative backdrop-blur-md inline-block rounded-full text-center p-1 border-2 border-neutral-400/10">
 					<div className="relative flex items-center justify-center">
 						<motion.div
 							className="absolute bg-intelligent-yellow/50 rounded-full"
