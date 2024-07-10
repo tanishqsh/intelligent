@@ -14,10 +14,10 @@ export default function Overview() {
 				<DurationSelector />
 			</div>
 			<div className="flex w-full overflow-scroll no-scrollbar md:overflow-auto items-center space-x-4 pt-2">
-				<div className="md:w-full">
+				<div className="pl-4 md:pl-0 md:w-full">
 					<TotalCasts />
 				</div>
-				<div className="pl-4 md:pl-0 md:w-full">
+				<div className="md:w-full">
 					<FollowersGained />
 				</div>
 				<div className="md:w-full">
