@@ -119,6 +119,41 @@ const extractReactionStats = (reactions_stat: any) => {
 	};
 };
 
+const extractCastsStats = (casts_stat: any) => {
+	if (!casts_stat)
+		return {
+			casts_7d: 0,
+			casts_30d: 0,
+			casts_180d: 0,
+			casts_24h: 0,
+			casts_prev_7d: 0,
+			casts_prev_30d: 0,
+			casts_prev_180d: 0,
+			casts_prev_24h: 0,
+			casts_percentage_change_24h: 'N/A',
+			casts_percentage_change_7d: 'N/A',
+			casts_percentage_change_30d: 'N/A',
+			casts_percentage_change_180d: 'N/A',
+		};
+
+	const { casts_7d, casts_30d, casts_180d, casts_24h, casts_prev_7d, casts_prev_30d, casts_prev_180d, casts_prev_24h } = casts_stat;
+
+	return {
+		casts_7d,
+		casts_30d,
+		casts_180d,
+		casts_24h,
+		casts_prev_7d,
+		casts_prev_30d,
+		casts_prev_180d,
+		casts_prev_24h,
+		casts_percentage_change_24h: formatChange(calculatePercentageChange(casts_24h, casts_prev_24h)),
+		casts_percentage_change_7d: formatChange(calculatePercentageChange(casts_7d, casts_prev_7d)),
+		casts_percentage_change_30d: formatChange(calculatePercentageChange(casts_30d, casts_prev_30d)),
+		casts_percentage_change_180d: formatChange(calculatePercentageChange(casts_180d, casts_prev_180d)),
+	};
+};
+
 export const useDashboardStats = () => {
 	const { ready, user } = usePrivy();
 
@@ -127,13 +162,14 @@ export const useDashboardStats = () => {
 	const stats = useMemo(() => {
 		if (!userStatistics) return null;
 
-		const { followers, followers_stat, mentions_stat, reactions_stat, lastSynched } = userStatistics;
+		const { followers, followers_stat, mentions_stat, reactions_stat, total_casts_stat, lastSynched } = userStatistics;
 
 		return {
 			followers,
 			...extractFollowerStats(followers_stat),
 			...extractMentionStats(mentions_stat),
 			...extractReactionStats(reactions_stat),
+			...extractCastsStats(total_casts_stat),
 			lastSynched,
 		};
 	}, [userStatistics]);

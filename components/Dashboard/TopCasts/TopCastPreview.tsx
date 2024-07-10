@@ -35,8 +35,6 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 
 	const quoteProperties = getQuoteProperties(cast, isQuoteCast);
 
-	console.log(cast);
-
 	let quote_profileImage = quoteProperties.quote_profileImage || 'https://placehold.co/1000x1000?text=I';
 	let quote_profileHandle = quoteProperties.quote_profileHandle || '';
 	let quote_profileDisplayName = quoteProperties.quote_profileDisplayName || '';

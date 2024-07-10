@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import ReactLinkify from 'react-linkify';
 
 const TextWithMention = ({
@@ -37,14 +38,19 @@ const TextWithMention = ({
 export default TextWithMention;
 
 const MiniMention = ({ profileHandle, profileImage }: { profileHandle: string; profileImage: string }) => {
+	const [hovered, setHovered] = useState(false);
 	return (
 		<motion.div
 			initial={{ y: 10, opacity: 0 }}
 			animate={{ y: 0, opacity: 1 }}
+			onHoverStart={() => setHovered(true)}
+			onHoverEnd={() => setHovered(false)}
 			transition={{ duration: 0.25 }}
-			className="inline-flex items-center space-x-1 cursor-pointer px-1 my-1 py-[2px] shadow rounded-md"
+			className="inline-flex items-center space-x-1 px-1 py-1 my-1 cursor-pointer shadow rounded-md"
 		>
-			<img src={profileImage} alt={profileHandle} className="w-4 h-4 rounded-full" />
+			<div className="rounded-md">
+				<motion.img src={profileImage} alt={profileHandle} className="w-4 h-4 rounded-full" />
+			</div>
 			<div onClick={() => window.open(`https://warpcast.com/${profileHandle}`, '_blank', 'noopener,noreferrer')} className="text-yellow-950">
 				{profileHandle}
 			</div>

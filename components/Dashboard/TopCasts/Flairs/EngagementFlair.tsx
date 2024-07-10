@@ -3,11 +3,16 @@ import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 const EngagementFlair = ({ count }: { count: number }) => {
 	return (
 		<ExplainUI text={`Total engagement ${count} (Likes + Recasts)`}>
-			<div className="font-medium text-emerald-600 inline-flex items-center space-x-2 rounded-md bg-emerald-600/5 px-2 py-1">
-				<p className="text-xs">{count}</p>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-3">
-					<path d="M7 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM14.5 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM1.615 16.428a1.224 1.224 0 0 1-.569-1.175 6.002 6.002 0 0 1 11.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 0 1 7 18a9.953 9.953 0 0 1-5.385-1.572ZM14.5 16h-.106c.07-.297.088-.611.048-.933a7.47 7.47 0 0 0-1.588-3.755 4.502 4.502 0 0 1 5.874 2.636.818.818 0 0 1-.36.98A7.465 7.465 0 0 1 14.5 16Z" />
+			<div className="font-medium text-emerald-600 inline-flex items-center justify-center space-x-2 rounded-md bg-emerald-600/5 px-2 py-1">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">
+					<path
+						fillRule="evenodd"
+						d="M9.808 4.057a.75.75 0 0 1 .92-.527l3.116.849a.75.75 0 0 1 .528.915l-.823 3.121a.75.75 0 0 1-1.45-.382l.337-1.281a23.484 23.484 0 0 0-3.609 3.056.75.75 0 0 1-1.07.01L6 8.06l-3.72 3.72a.75.75 0 1 1-1.06-1.061l4.25-4.25a.75.75 0 0 1 1.06 0l1.756 1.755a25.015 25.015 0 0 1 3.508-2.85l-1.46-.398a.75.75 0 0 1-.526-.92Z"
+						clipRule="evenodd"
+					/>
 				</svg>
+
+				<p className="text-xs">{count}</p>
 			</div>
 		</ExplainUI>
 	);

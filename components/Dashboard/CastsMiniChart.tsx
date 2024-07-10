@@ -8,14 +8,11 @@ dayjs.extend(require('dayjs/plugin/relativeTime'));
 
 const customColors = ['#cccccc'];
 
-const ReactionsMiniChart = ({ data = [] }: { data: any[] }) => {
+const CastsMiniChart = ({ data = [] }: { data: any[] }) => {
 	// find the range of the values dynamically
 	let max = 0;
 	let min = Infinity;
 	const xValues = new Set();
-
-	// Filter out the object with id "Followers" from the data array
-	data = data.filter((item) => item.id !== 'Followers');
 
 	data.forEach((d: any) => {
 		d.data.forEach((p: any) => {
@@ -93,15 +90,14 @@ const ReactionsMiniChart = ({ data = [] }: { data: any[] }) => {
 			pointLabelYOffset={0}
 			enableSlices="x"
 			sliceTooltip={({ slice }) => {
-				const likes = slice.points.find((point) => point.serieId === 'Likes')?.data.y || 0;
-				const recasts = slice.points.find((point) => point.serieId === 'Recasts')?.data.y || 0;
-				const total = Number(likes) + Number(recasts);
+				const casts = slice.points.find((point) => point.serieId === 'Casts')?.data.y || 0;
+				const total = Number(casts);
 
 				return (
 					<div className="bg-white/10 backdrop-blur-sm px-4 py-1 shadow-sm border border-[#ededed]/30 rounded-md">
 						<div className="space-x-1">
 							<div className="text-xs rounded-full text-[#a5a5a5] px-[6px] py-[2px] bg-[#AAAAAA]/2 font-medium inline-block">
-								{Number(total)} reactions <span className="opacity-50"> {dayjs(slice.points[0].data.x).fromNow()}</span>
+								{Number(total)} casts <span className="opacity-50"> {dayjs(slice.points[0].data.x).fromNow()}</span>
 							</div>
 						</div>
 					</div>
@@ -111,4 +107,4 @@ const ReactionsMiniChart = ({ data = [] }: { data: any[] }) => {
 	);
 };
 
-export default ReactionsMiniChart;
+export default CastsMiniChart;

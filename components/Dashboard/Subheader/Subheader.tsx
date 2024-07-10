@@ -18,10 +18,6 @@ const Subheader = () => {
 			name: 'Analyze',
 			route: '/dashboard/cast-analyze',
 		},
-		{
-			name: 'Apps',
-			route: '/dashboard/hypersub',
-		},
 	];
 	const [activeTab, setActiveTab] = useState(tabs[0]);
 	const activeIndex = tabs.findIndex((tab) => tab.name === activeTab.name);

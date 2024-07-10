@@ -1,6 +1,7 @@
 import DurationSelector from './DurationSelector';
 import FollowersGained from './FollowersGained';
 import PlatformMentions from './PlatformMentions';
+import TotalCasts from './TotalCasts';
 import TotalEngagement from './TotalEngagement';
 
 export default function Overview() {
@@ -12,7 +13,10 @@ export default function Overview() {
 				</div>
 				<DurationSelector />
 			</div>
-			<div className="flex w-full overflow-scroll no-scrollbar items-center space-x-4 pt-2">
+			<div className="flex w-full overflow-scroll no-scrollbar md:overflow-auto items-center space-x-4 pt-2">
+				<div className="md:w-full">
+					<TotalCasts />
+				</div>
 				<div className="pl-4 md:pl-0 md:w-full">
 					<FollowersGained />
 				</div>
