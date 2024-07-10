@@ -157,11 +157,20 @@ export default function LandingPage() {
 							</motion.button>
 						)}
 					</div>
-					<Link href={'https://hypersub.withfabric.xyz/collection/intelligent'} target="_blank">
-						<div className="fixed bottom-8 left-8 text-sm font-medium text-yellow-700 bg-yellow-500/10 rounded-full inline-block px-3 py-1">
-							Get Early Access
-						</div>
-					</Link>
+
+					<div className="fixed bottom-8 left-8 flex space-x-2">
+						<Link href={'https://hypersub.withfabric.xyz/collection/intelligent'} target="_blank">
+							<div className="text-sm font-medium text-yellow-700 bg-yellow-500/10 rounded-full inline-block px-3 py-1">
+								<span>Get Early Access</span>
+							</div>
+						</Link>
+						<Link href={'https://t.me/+LTWysRnp8942ODk1'} target="_blank">
+							<div className="text-sm font-medium text-blue-700 bg-blue-500/10 rounded-full inline-block px-3 py-1">
+								<span>Join Telegram</span>
+							</div>
+						</Link>
+					</div>
+
 					{/* <div className="mt-24">
 						<div className="max-w-7xl m-auto">
 							<motion.div
