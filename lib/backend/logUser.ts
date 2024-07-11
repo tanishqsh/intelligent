@@ -17,7 +17,7 @@ const logUser = async (userFromPrivy: any, accessToken: string, toast: any, logo
 		if (error.response.status === 403) {
 			toast.error('Sorry! This account is not in the allowlist. Get early access by subscribing to Hypersub (bottom left), and DM @tanishq for access.', {
 				...toastStyles.error,
-				duration: 5000,
+				duration: 10000,
 			});
 		} else {
 			console.error('Failed to log user, please try again later');
