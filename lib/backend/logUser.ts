@@ -15,7 +15,7 @@ const logUser = async (userFromPrivy: any, accessToken: string, toast: any, logo
 		await axios.post(endpoints.log_user.path, { user: userFromPrivy });
 	} catch (error: any) {
 		if (error.response.status === 403) {
-			toast.error('Sorry! This account is not in the allowlist. Please DM @tanishq for access.', {
+			toast.error('Sorry! This account is not in the allowlist. Get early access by subscribing to Hypersub (bottom left), and DM @tanishq for access.', {
 				...toastStyles.error,
 				duration: 5000,
 			});
