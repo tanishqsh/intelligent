@@ -6,12 +6,13 @@ import colors from '@/utils/colors';
 import { useDuration } from './DurationContext';
 import Duration from './Overview/Duration';
 import { useMediaQuery } from 'react-responsive';
+import { motion } from 'framer-motion';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(require('dayjs/plugin/relativeTime'));
 
 // likes, recasts, followers
-const customColors = [colors.amber[500], colors.amber[600], colors.rose[600]];
+const customColors = [colors.amber[500], colors.amber[950], colors.rose[600]];
 
 type Precision = 'hour' | 'day' | 'month';
 
@@ -76,7 +77,7 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 		<ResponsiveLine
 			areaBaselineValue={0}
 			enableArea={true}
-			areaOpacity={0.3}
+			areaOpacity={0.35}
 			theme={{
 				axis: {
 					ticks: {
@@ -133,7 +134,7 @@ const EngagementChart = ({ data = [] }: { data: any[] }) => {
 			enableGridX={true}
 			enableGridY={true}
 			lineWidth={0}
-			pointSize={isMobile ? 0.25 : 4}
+			pointSize={isMobile ? 0.25 : 0.35}
 			colors={customColors}
 			pointColor={{ theme: 'background' }}
 			pointBorderWidth={8}

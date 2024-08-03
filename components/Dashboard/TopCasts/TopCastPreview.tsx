@@ -12,6 +12,7 @@ import Link from 'next/link';
 import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 import ChannelFlair from './Flairs/ChannelFlair';
 import TextWithMention from '../TopMentions/TextWithMention';
+import MoxieEarnedFlair from './Flairs/MoxieEarnedFlair';
 
 const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let parent_cast_fid = cast?.parent_cast_fid;
@@ -41,6 +42,8 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 	let quote_isPowerUser = quoteProperties.quote_isPowerUser;
 	let quote_text = quoteProperties.quote_text || '';
 	let quote_url = quoteProperties.quote_url;
+
+	let moxieEarned = cast?.meta?.socialCapitalValue?.formattedValue || 0;
 
 	return (
 		<AnimatePresence mode="wait">
@@ -90,7 +93,7 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 											</ExplainUI>
 										</div>
 										<div className="w-full text-sm font-sans whitespace-pre-wrap possible-link break-words">
-											<ReactLinkify>{isQuoteCast ? quote_text : quote_text}</ReactLinkify>
+											{isQuoteCast ? quote_text : quote_text}
 										</div>
 									</motion.div>
 								</a>
@@ -98,6 +101,7 @@ const TopCastPreview = ({ cast, i, pfp }: { cast: any; i: any; pfp: any }) => {
 							<EmbedPreview embeds={embeds} />
 						</div>
 						<div id="flairs" className="flex space-x-2 overflow-scroll no-scrollbar">
+							{moxieEarned > 0 && <MoxieEarnedFlair moxieEarned={moxieEarned} />}
 							{i == 0 && <MostEngagedFlair />}
 							{parent_cast_hash && <ReplyFlair />}
 							{/* {isQuoteCast && <QuoteCastFlair />} */}

@@ -14,10 +14,7 @@ export default function ImpactFollowers() {
 	const fid = user?.farcaster?.fid?.toString() || '';
 	const { impactFollowers } = useImpactFollowers(fid, duration);
 
-	// console.log(impactFollowers);
-
 	// remove duplicates from impactFollowers
-
 	const uniqueImpactFollowers = impactFollowers.reduce((acc: any, follower: any) => {
 		const foundIndex = acc.findIndex((t: any) => t.follower_fid === follower.follower_fid);
 		if (foundIndex === -1) {
@@ -64,12 +61,13 @@ export default function ImpactFollowers() {
 					</motion.div>
 				)}
 				{uniqueImpactFollowers.map((follower: any, i: number) => {
-					let display_name = follower?.display_name;
 					let follower_count = follower?.follower_count;
 					let follower_fid = follower?.follower_fid;
+					let display_name = follower?.display_name || 'FID ' + follower_fid + '';
 					let username = follower?.username;
-					let warpcast_URL = 'https://warpcast.com/' + username;
-					let pfp = follower?.pfp;
+					let warpcast_URL = username ? 'https://warpcast.com/' + username : '/warpcast/' + follower_fid;
+					username = username || 'someone';
+					let pfp = follower?.pfp || 'https://avatar.iran.liara.run/public?id=' + follower_fid;
 					let follow_timestamp = follower?.follow_timestamp;
 
 					const relativeTime = getRelativeTime(follow_timestamp);
@@ -80,7 +78,7 @@ export default function ImpactFollowers() {
 					const followedMoreThanOnce = followedTimes > 1;
 
 					return (
-						<div key={'impact_follower_' + follower_fid}>
+						<div key={'impact_follower_' + i}>
 							<AnimatePresence mode="wait">
 								<motion.div
 									onClick={() => window.open(warpcast_URL, '_blank')}
@@ -98,10 +96,18 @@ export default function ImpactFollowers() {
 									key={follower_fid}
 								>
 									<div className="flex space-x-4 items-start">
-										<img src={follower?.pfp} className="w-10 h-10 rounded-full ring-2 ring-black/10" />
+										<img
+											src={pfp}
+											alt="Follower Profile Picture"
+											style={{
+												objectFit: 'cover',
+												objectPosition: 'center',
+											}}
+											className="w-10 h-10 rounded-full ring-2 ring-black/10"
+										/>
 										<div>
 											<div className="text-neutral-600 text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
-												{follower?.display_name}
+												{display_name}
 											</div>
 											<div className="text-neutral-400 text-[12px] font-sans whitespace-pre-wrap possible-link break-words">
 												{follower_count} followers

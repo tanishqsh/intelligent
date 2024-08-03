@@ -47,12 +47,12 @@ const TopMentionPreview = ({ cast, i }: { cast: any; i: number }) => {
 				<div className="flex space-x-2 justify-between items-center">
 					<div className="flex items-center justify-start space-x-2">
 						<EngagementFlair count={reaction_count} />
-						<p className="flex flex-col md:flex-row space-y-1 md:space-y-0 md:space-x-2">
+						<div className="flex flex-col md:flex-row space-y-1 md:space-y-0 md:space-x-2">
 							<img src={profile_picture} className="size-5 rounded-full ring-2 ring-black/10" />
 							<div>
 								<span className="text-yellow-700"> {username ? '@' + username : 'Someone'}</span> <span>mentioned you {relativeTime}</span>{' '}
 							</div>
-						</p>
+						</div>
 					</div>
 					<svg
 						className={`cursor-pointer ${showMention ? 'rotate-180' : ''}`}

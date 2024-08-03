@@ -29,7 +29,7 @@ export default function Dashboard() {
 
 	return (
 		<div className="min-h-screen bg-neutral-100 pb-24">
-			<div className="max-w-7xl m-auto space-y-4 pt-6 md:pt-12 lg:px-0">
+			<div className="max-w-7xl m-auto space-y-4 pt-6 md:pt-12">
 				<Overview />
 				<div className="px-4 overflow-scroll md:overflow-auto lg:px-0 no-scrollbar">
 					<EngagementChartComponent />
@@ -59,7 +59,7 @@ const EngagementChartComponent = () => {
 		<motion.div
 			initial={{ y: 50, opacity: 0 }}
 			animate={{ y: 0, opacity: 1 }}
-			transition={{ duration: 0.5 }}
+			transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 0.2 }}
 			className={`flex flex-col ${isExpanded ? 'w-[1000px]' : 'w-[500px]'} md:w-full rounded-2xl m-auto bg-white/50 shadow-sm items-start justify-start`}
 		>
 			<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, filter: isExpanded ? 'blur(0px)' : 'blur(0px)' }} className="w-full relative">

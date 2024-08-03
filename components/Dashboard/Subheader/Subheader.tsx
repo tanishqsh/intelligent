@@ -4,19 +4,21 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { Drawer } from 'vaul';
+import AppsSVG from './SVG/AppsSVG';
 
 const Subheader = () => {
 	const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
 	const tabs = [
 		{
-			name: 'Overview',
+			name: 'Dashboard',
 			route: '/dashboard',
 		},
 		{
-			name: 'Analyze',
-			route: '/dashboard/cast-analyze',
+			name: 'Apps',
+			isIcon: true,
+			route: '/dashboard/apps',
+			icon: <AppsSVG />,
 		},
 	];
 	const [activeTab, setActiveTab] = useState(tabs[0]);
@@ -31,12 +33,12 @@ const Subheader = () => {
 	};
 
 	return (
-		<div className="hidden md:block fixed bottom-8 left-0 right-0">
-			<div className="flex items-center justify-center">
-				<div className="bg-white z-[9999] relative backdrop-blur-md inline-block rounded-full text-center p-1 border-2 border-neutral-400/10">
+		<div className="hidden md:block fixed bottom-0 left-0 right-0">
+			<div className="flex items-center justify-center py-8">
+				<motion.div className="bg-white z-[9999] shadow-2xl relative inline-block rounded-full text-center p-1">
 					<div className="relative flex items-center justify-center">
 						<motion.div
-							className="absolute bg-intelligent-yellow/50 rounded-full"
+							className="absolute bg-intelligent-yellow/50 z-1 rounded-full"
 							layout
 							layoutId="tab"
 							initial={false}
@@ -48,16 +50,16 @@ const Subheader = () => {
 							<div
 								key={index}
 								onClick={() => setTabAndRoute(tab)}
-								className={`text-sm font-medium rounded-full px-4 min-w-[100px] py-3 cursor-pointer ${
-									activeTab.name === tab.name ? 'text-neutral-500' : 'text-neutral-400'
+								className={`text-sm font-medium rounded-full px-4 min-w-[100px] py-3 cursor-pointer flex items-center justify-center space-x-2 z-10 ${
+									activeTab.name === tab.name ? 'text-black/60' : 'text-black/50'
 								}`}
 								style={{ width: `${100 / tabs.length}%`, textAlign: 'center' }}
 							>
-								{tab.name}
+								{tab.isIcon && <span> {tab.icon}</span>} <span>{tab.name}</span>
 							</div>
 						))}
 					</div>
-				</div>
+				</motion.div>
 			</div>
 		</div>
 	);

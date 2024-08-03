@@ -2,7 +2,7 @@ import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 
 const MostEngagedFlair = () => {
 	return (
-		<div className="font-medium flex-none text-amber-600 inline-flex items-center space-x-2 rounded-md bg-amber-500/5 px-2 py-1">
+		<div className="font-medium flex-none text-yellow-600 inline-flex items-center space-x-2 rounded-md bg-yellow-500/5 px-2 py-1">
 			<ExplainUI text="Most engaged cast in selected time period">
 				<div className="flex space-x-2">
 					<p className="text-xs">Most engaged</p>

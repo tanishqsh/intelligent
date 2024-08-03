@@ -10,8 +10,6 @@ export default function TotalCasts() {
 
 	const { castChartData } = useCastsChartData(duration);
 
-	console.log('Total Casts Chart', castChartData);
-
 	const { stats, error } = useDashboardStats();
 
 	if (!stats) {

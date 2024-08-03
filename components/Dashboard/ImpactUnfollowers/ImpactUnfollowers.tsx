@@ -62,23 +62,25 @@ export default function ImpactUnfollowers() {
 				{uniqueImpactUnfollowers &&
 					uniqueImpactUnfollowers.length != 0 &&
 					uniqueImpactUnfollowers.map((unfollower: any, i: number) => {
-						let display_name = unfollower?.display_name;
-						let follower_count = unfollower?.follower_count;
+						let follower_count = Number(unfollower?.follower_count)?.toLocaleString() || 0;
 						let unfollower_fid = unfollower?.unfollower_fid;
+
+						let display_name = unfollower?.display_name || 'FID ' + unfollower_fid + '';
 						let username = unfollower?.username;
-						let warpcast_URL = 'https://warpcast.com/' + username;
-						let pfp = unfollower?.pfp;
+						let warpcast_URL = username ? 'https://warpcast.com/' + username : '/warpcast/' + unfollower_fid;
+						username = username || 'someone';
+						let pfp = unfollower?.pfp || 'https://avatar.iran.liara.run/public?id=' + unfollower_fid;
 						let follow_timestamp = unfollower?.follow_timestamp;
 
 						const relativeTime = getRelativeTime(follow_timestamp);
 						const formattedTimestamp = formatTimestamp(follow_timestamp);
 						// how many times did this unfollower follow you
 
-						const followedTimes = unfollower?.count;
+						const followedTimes = unfollower?.count?.toLocaleString();
 						const followedMoreThanOnce = followedTimes > 1;
 
 						return (
-							<div key={'impact_unfollower_' + unfollower.fid}>
+							<div key={'impact_unfollower_' + i}>
 								<AnimatePresence mode="wait">
 									<motion.div
 										onClick={() => window.open(warpcast_URL, '_blank')}
@@ -96,10 +98,10 @@ export default function ImpactUnfollowers() {
 										key={unfollower_fid}
 									>
 										<div className="flex space-x-4 items-start">
-											<img src={unfollower?.pfp} className="w-10 h-10 rounded-full ring-2 ring-black/10" />
+											<img src={pfp} className="w-10 h-10 rounded-full ring-2 ring-black/10" />
 											<div>
 												<div className="text-neutral-600 text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
-													{unfollower?.display_name}
+													{display_name}
 												</div>
 												<div className="text-neutral-400 text-[12px] font-sans whitespace-pre-wrap possible-link break-words">
 													{follower_count} followers
