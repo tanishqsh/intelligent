@@ -46,13 +46,22 @@ const Apps = () => {
 			description: 'Create allowlists by easily extracting wallets from a cast',
 			color: '#33FF57',
 		},
+		{
+			logo: '/based_games.jpg',
+			name: 'Based Games by FBI',
+			url: '/dashboard/based-games',
+			isURL: true,
+			isInstalled: true,
+			description: 'Only the based will survive. A team-based game of survival!',
+			color: '#33FF57',
+		},
 	];
 
 	return (
 		<div className="min-h-screen bg-neutral-100 pb-24">
 			<div className="max-w-7xl m-auto space-y-4 pt-6 md:pt-12">
 				<div>
-					<h2 className="text-sm text-neutral-400 font-medium">Available apps</h2>
+					<h2 className="text-sm text-neutral-400 font-medium">Upcoming apps</h2>
 				</div>
 				<div className="flex justify-start w-full flex-wrap">
 					{availableApps.map((app, index) => {
@@ -69,7 +78,7 @@ const Apps = () => {
 					})}
 				</div>
 				<div>
-					<h2 className="text-sm text-neutral-400 font-medium">Installed apps</h2>
+					<h2 className="text-sm text-neutral-400 font-medium">Available apps</h2>
 				</div>
 				<div className="flex justify-start w-full flex-wrap">
 					{installedApps.map((app, index) => {
