@@ -184,6 +184,7 @@ const PlayerCard = ({ player }: { player: Player }) => {
 	const handleClick = () => {
 		if (tokenId) {
 			window.open(warpcast_URL, '_blank');
+			console.log('Opening warpcast URL:', warpcast_URL);
 		}
 	};
 
