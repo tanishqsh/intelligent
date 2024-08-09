@@ -6,6 +6,7 @@ import { useState, useMemo } from 'react';
 import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 import colors from '@/utils/colors';
 import SearchBar from './SearchBar';
+import HighlightedText from '@/components/ui/HighlightedText/HighlightedText';
 
 type Player = {
 	attributes: { value: string }[];
@@ -80,12 +81,14 @@ export default function BasedGames() {
 			counts[clan] = (counts[clan] || 0) + 1;
 		});
 		return counts;
-	}, [sortedData]);
+	}, [sortedData, filteredData]);
 
 	return (
 		<div className="min-h-screen bg-neutral-100 pb-24 px-4 md:px-0">
 			<div className="max-w-7xl m-auto space-y-4 pt-6 md:pt-12">
-				{/* <h1 className="text-2xl font-medium text-gray-700 mb-4">All players</h1> */}
+				{/* <h3 className="text-lg font-medium text-black/30 mb-4">
+					<span className="text-black/50 bg-black/10 px-2 py-1 rounded-md">{filteredData.length}</span> players registered
+				</h3> */}
 				<SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 				<div className="mb-4">
 					<div className="flex flex-wrap gap-2">
