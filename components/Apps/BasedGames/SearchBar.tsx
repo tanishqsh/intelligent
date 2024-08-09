@@ -24,7 +24,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, setSearchQuery }) =>
 						className="px-3 py-2 focus:outline-none text-sm text-black w-full bg-neutral-50 cursor-text"
 						type="text"
 						value={searchQuery}
-						placeholder="Search Display name"
+						placeholder="Search members"
 						onChange={(e) => setSearchQuery(e.target.value)}
 					/>
 				</motion.div>

@@ -164,7 +164,7 @@ const getClanSymbol = (clanName: string): string => {
 		Alpha: 'α',
 		Beta: 'β',
 		Gamma: 'Γ',
-		Delta: 'δ',
+		Delta: 'Δ',
 		Theta: 'θ',
 		Sigma: 'Σ',
 		Kappa: 'κ',
@@ -209,11 +209,7 @@ const PlayerCard = ({ player }: { player: Player }) => {
 
 	const isUnknownPlayer = !player?.user?.profileHandle;
 
-	let warpcast_URL = player?.user?.profileHandle
-		? `https://warpcast.com/${player?.user?.profileHandle}`
-		: player?.tokenId
-		? `https://api.intelligent.xyz/warpcast/${player?.tokenId}`
-		: 'https://api.intelligent.xyz/warpcast/unknown';
+	let warpcast_URL = player?.user?.profileHandle && `https://warpcast.com/${player?.user?.profileHandle.replace('@', '')}`;
 
 	const handleClick = () => {
 		if (tokenId) {
@@ -250,7 +246,7 @@ const PlayerCard = ({ player }: { player: Player }) => {
 							/>
 						)}
 					</div>
-					<h3 className="font-medium text-xl text-black cursor-default">
+					<h3 className="font-medium text-lg text-black cursor-default text-balance">
 						{profileDisplayName}
 						<span className="ml-2 text-xs text-gray-500 rounded-full">#{tokenId}</span>
 					</h3>
