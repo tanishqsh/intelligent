@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState, useMemo } from 'react';
 import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 import colors from '@/utils/colors';
+import SearchBar from './SearchBar';
 
 type Player = {
 	attributes: { value: string }[];
@@ -25,12 +26,22 @@ type Player = {
 export default function BasedGames() {
 	const { data } = usePlayerData();
 	const [selectedClans, setSelectedClans] = useState<string[]>([]);
+	const [searchQuery, setSearchQuery] = useState<string>('');
 
 	// Sort the data using a dedicated function
 	const sortedData = sortPlayers(data);
 
-	// Filter the data based on the selected clans
-	const filteredData = selectedClans.length > 0 ? sortedData?.filter((player: Player) => selectedClans.includes(player?.attributes[0]?.value)) : sortedData;
+	// Filter the data based on the selected clans and search query
+	const filteredData = useMemo(() => {
+		let result = sortedData;
+		if (selectedClans.length > 0) {
+			result = result.filter((player: Player) => selectedClans.includes(player?.attributes[0]?.value));
+		}
+		if (searchQuery) {
+			result = result.filter((player: Player) => player.user.profileDisplayName?.toLowerCase().includes(searchQuery.toLowerCase()));
+		}
+		return result;
+	}, [sortedData, selectedClans, searchQuery]);
 
 	const toggleClanSelection = (clan: string) => {
 		setSelectedClans((prevSelectedClans) =>
@@ -54,6 +65,7 @@ export default function BasedGames() {
 		<div className="min-h-screen bg-neutral-100 pb-24 px-4 md:px-0">
 			<div className="max-w-7xl m-auto space-y-4 pt-6 md:pt-12">
 				<h1 className="text-xl font-bold mb-4">All players</h1>
+				<SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 				<div className="mb-4">
 					<div className="flex flex-wrap gap-2">
 						{clans.map((clan: string, index: number) => (
@@ -129,9 +141,6 @@ const getClanSymbol = (clanName: string): string => {
 		Beta: 'β',
 		Gamma: 'γ',
 		Delta: 'δ',
-		Epsilon: 'ε',
-		Zeta: 'ζ',
-		Eta: 'η',
 		Theta: 'θ',
 		Sigma: 'σ',
 		Kappa: 'κ',
@@ -217,10 +226,9 @@ const PlayerCard = ({ player }: { player: Player }) => {
 						<span className="ml-2 text-sm text-gray-500">#{tokenId}</span>
 					</h3>
 					<p className="text-sm text-neutral-400 cursor-default">{profileHandle.startsWith('@') ? profileHandle : `@${profileHandle}`}</p>
-
 					<p className="mt-2 text-neutral-400 absolute top-2 right-2 text-base cursor-default">
 						<ExplainUI text={clan}>
-							<span className={`inline-block ${clanStyles.color} text-base font-semibold mr-2 px-2.5 py-0.5 rounded-full`}>({clanSymbol})</span>
+							<span className={`inline-block ${clanStyles.color} text-base font-semibold mr-2 px-2.5 py-0.5 rounded-full`}>{clanSymbol}</span>
 						</ExplainUI>
 					</p>
 				</div>
