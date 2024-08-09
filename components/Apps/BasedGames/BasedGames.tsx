@@ -163,10 +163,10 @@ const getClanSymbol = (clanName: string): string => {
 	const clanSymbols: { [key: string]: string } = {
 		Alpha: 'α',
 		Beta: 'β',
-		Gamma: 'γ',
+		Gamma: 'Γ',
 		Delta: 'δ',
 		Theta: 'θ',
-		Sigma: 'σ',
+		Sigma: 'Σ',
 		Kappa: 'κ',
 		Omega: 'Ω',
 	};
