@@ -7,7 +7,6 @@ const usePlayerData = () => {
 
 	useEffect(() => {
 		const collectionRef = collection(firestore, 'based_games');
-
 		const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
 			const docs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 			setData(docs);
