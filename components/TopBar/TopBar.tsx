@@ -16,6 +16,10 @@ export default function TopBar() {
 		return () => clearInterval(interval);
 	}, []);
 
+	const escapeHtml = (unsafe: string) => {
+		return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+	};
+
 	return (
 		<div className="py-2 bg-yellow-400 px-4 md:px-12">
 			<div className="max-w-7xl m-auto flex items-center justify-between flex-col md:flex-row text-center">
@@ -27,16 +31,15 @@ export default function TopBar() {
 								index === currentTestimonial && (
 									<motion.div
 										key={index}
-										className="text-black/70 flex space-x-2 text-sm cursor-default"
+										className="text-black/70 flex space-x-2 text-sm cursor-default items-center"
 										initial={{ opacity: 0, y: 5 }}
 										animate={{ opacity: 1, y: 0 }}
 										exit={{ opacity: 0, y: -5 }}
 										transition={{ type: 'spring', stiffness: 100 }}
 									>
-										<span className="quote">"{testimonial.quote}" –</span>
-										<span className="author">{testimonial.author}</span>
-										{testimonial.position && <p className="position">{testimonial.position}</p>}
-										<img src={testimonial.image} alt={testimonial.author} className="size-6 rounded-full" />
+										<span className="quote">&quot;{escapeHtml(testimonial.quote)}&quot; –</span>
+										<img src={testimonial.image} alt={escapeHtml(testimonial.author)} className="size-6 rounded-full" />
+										<span className="author">{escapeHtml(testimonial.author)}</span>
 									</motion.div>
 								)
 						)}

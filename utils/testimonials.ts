@@ -1,4 +1,11 @@
-const testimonials = [
+export type TestimonialType = {
+	quote: string;
+	author: string;
+	position: string;
+	image: string;
+};
+
+const testimonials: TestimonialType[] = [
 	{
 		quote: 'I’m impressed!',
 		author: 'Mike, Founder, Rainbow',
