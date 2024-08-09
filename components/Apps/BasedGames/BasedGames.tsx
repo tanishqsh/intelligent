@@ -42,7 +42,7 @@ export default function BasedGames() {
 	// Update the display name in the object itself
 	const updatedData = useMemo(() => {
 		return data?.map((player: Player) => {
-			if (!player.user.profileDisplayName) {
+			if (!player?.user?.profileDisplayName) {
 				player.user.profileDisplayName = 'Player ' + player.tokenId;
 			}
 			return player;
@@ -59,7 +59,7 @@ export default function BasedGames() {
 			result = result.filter((player: Player) => selectedClans.includes(player?.attributes[0]?.value));
 		}
 		if (searchQuery) {
-			result = result.filter((player: Player) => player.user.profileDisplayName?.toLowerCase().includes(searchQuery.toLowerCase()));
+			result = result.filter((player: Player) => player?.user?.profileDisplayName?.toLowerCase().includes(searchQuery.toLowerCase()));
 		}
 		return result;
 	}, [sortedData, selectedClans, searchQuery]);
@@ -142,8 +142,8 @@ const sortPlayers = (data: Player[] | undefined): Player[] => {
 	return data.slice().sort((a: Player, b: Player) => {
 		const aTokenId = a?.tokenId ?? '';
 		const bTokenId = b?.tokenId ?? '';
-		const aProfileDisplayName = a?.user ? a.user.profileDisplayName : '';
-		const bProfileDisplayName = b?.user ? b.user.profileDisplayName : '';
+		const aProfileDisplayName = a?.user ? a.user?.profileDisplayName : '';
+		const bProfileDisplayName = b?.user ? b.user?.profileDisplayName : '';
 
 		// Push players with profileDisplayName to the end
 		if (aProfileDisplayName && !bProfileDisplayName) return -1;
