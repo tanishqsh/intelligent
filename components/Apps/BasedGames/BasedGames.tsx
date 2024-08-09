@@ -199,12 +199,13 @@ const PlayerCard = ({ player }: { player: Player }) => {
 
 	return (
 		<motion.div
+			layout
 			initial={{ y: 50, opacity: 0 }}
 			animate={{ y: 0, opacity: isUnknownPlayer ? 0.5 : 1 }}
 			whileHover={{ y: -2, backgroundColor: 'rgba(255, 255, 255, 1)' }}
 			onMouseEnter={() => setIsHover(true)}
 			onMouseLeave={() => setIsHover(false)}
-			transition={{ type: 'spring', stiffness: 250, damping: 10 }}
+			transition={{ type: 'spring', stiffness: 200, damping: 35 }}
 			className={`relative bg-white/70 w-full md:w-[300px] h-auto mb-4 mr-4 rounded-xl p-6 overflow-clip shadow-sm antialiased ${
 				tokenId ? 'cursor-pointer' : 'cursor-default'
 			}`}
