@@ -1,4 +1,5 @@
 import LandingPage from '@/components/LandingPage/LandingPage';
+import TopBar from '@/components/TopBar/TopBar';
 
 export async function generateMetadata() {
 	return {

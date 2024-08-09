@@ -5,8 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import Logo from './Logo';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import colors from '@/utils/colors';
-import HoverHighlightedText from '../ui/HoverHighlightText/HoverHighlightedText';
 import DegenAllowance from './DegenAllowance/DegenAllowance';
 import ExplainUI from '../ui/ExplainUI/ExplainUI';
 

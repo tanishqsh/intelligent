@@ -9,19 +9,18 @@ import toastStyles from '@/utils/toastStyles';
 import { logUser } from '@/lib/backend/logUser';
 import FingerprintSVG from './SVG/FingerprintSVG';
 import { useMediaQuery } from 'react-responsive';
-import Link from 'next/link';
 import ExplainUI from '../ui/ExplainUI/ExplainUI';
+import GetAccessButton from './GetAccessButton';
 
 export default function LandingPage() {
 	const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
-
 	const { ready, authenticated, getAccessToken, logout, linkPasskey, user, unlinkPasskey } = usePrivy();
-
 	const [isPasskeyLinked, setIsPasskeyLinked] = useState(false);
 	const [passkeyAccount, setPasskeyAccount] = useState<any>(null);
+	const router = useRouter();
 
 	const { login } = useLogin({
-		onComplete: async (user, isNewUser, wasAlreadyAuthenticated, loginMethod, linkedAccount) => {
+		onComplete: async (user) => {
 			const accessToken = await getAccessToken();
 			if (!accessToken) return;
 			await logUser(user, accessToken, toast, logout);
@@ -35,7 +34,6 @@ export default function LandingPage() {
 	useEffect(() => {
 		// get the linkedAccounts
 		const linkedAccounts = user?.linkedAccounts || [];
-
 		// retrieve account
 		const passkeyAccount = linkedAccounts.find((account) => account.type === 'passkey');
 
@@ -51,8 +49,9 @@ export default function LandingPage() {
 
 	return (
 		<div className="bg-neutral-100 min-h-screen font-general-sans">
-			<div className="px-12 py-8 m-auto" id="header">
+			<div className="px-4 md:px-12 py-4 md:py-8 m-auto flex justify-between items-center" id="header">
 				<Logo className="w-9 h-9 cursor-pointer" />
+				{!authenticated && <GetAccessButton />}
 			</div>
 			<div className="max-w-7xl mt-12 m-auto px-4">
 				<div className="text-center">
@@ -158,29 +157,19 @@ export default function LandingPage() {
 						)}
 					</div>
 
-					<div className="fixed bottom-8 left-8 flex space-x-2">
-						<Link href={'https://hypersub.withfabric.xyz/collection/intelligent'} target="_blank">
-							<div className="text-sm font-medium text-yellow-700 bg-yellow-500/10 rounded-full inline-block px-3 py-1">
-								<span>Get Early Access</span>
-							</div>
-						</Link>
-						<Link href={'https://t.me/+LTWysRnp8942ODk1'} target="_blank">
-							<div className="text-sm font-medium text-blue-700 bg-blue-500/10 rounded-full inline-block px-3 py-1">
-								<span>Join Telegram</span>
-							</div>
-						</Link>
+					<div className="mt-12 m-auto bottom-10 absolute left-0 right-0">
+						<p className="font-medium font-inter text-2xl text-neutral-300"> Partner Dashboards </p>
+						<motion.button
+							initial={{ y: 20, opacity: 0 }}
+							animate={{ y: 0, opacity: 1 }}
+							transition={{ type: 'spring', stiffness: 250 }}
+							onClick={() => router.push('/public/based-games')}
+							className="inline-flex items-center justify-center space-x-2 mt-5 px-2 py-2 rounded-xl"
+						>
+							<img src="/fbi_emblem.svg" className="size-5" alt="FBI Emblem" />
+							<span className="font-medium">Based Games</span>
+						</motion.button>
 					</div>
-
-					{/* <div className="mt-24">
-						<div className="max-w-7xl m-auto">
-							<motion.div
-								initial={{ opacity: 0, y: 200 }}
-								animate={{ opacity: 1, y: 0 }}
-								transition={{ type: 'spring', stiffness: 50 }}
-								className="w-full min-h-[500px] border-sm bg-[#E8E7F6] rounded-2xl"
-							></motion.div>
-						</div>
-					</div> */}
 				</div>
 			</div>
 		</div>
@@ -233,8 +222,7 @@ const UnlinkPasskeyButton = ({ id }: { id: string }) => {
 };
 
 const AccessDashboardButton = () => {
-	const { ready, user, logout } = usePrivy();
-
+	const { user } = usePrivy();
 	const [inTap, setInTap] = useState(false);
 
 	const router = useRouter();
