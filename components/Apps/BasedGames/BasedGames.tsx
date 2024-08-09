@@ -9,6 +9,8 @@ import SearchBar from './SearchBar';
 
 type Player = {
 	attributes: { value: string }[];
+	image: string;
+	ownerAddress: string;
 	user: {
 		userId: string;
 		profileImage: string;
@@ -23,13 +25,32 @@ type Player = {
 	tokenId: string;
 };
 
+const AddressTag = ({ ownerAddress }: { ownerAddress: string }) => {
+	const trimmedAddress = `${ownerAddress.slice(0, 5)}...${ownerAddress.slice(-3)}`;
+	return (
+		<ExplainUI text={ownerAddress}>
+			<span className="bg-gray-100 text-gray-700 font-medium px-2 py-1 rounded-full text-xs">{trimmedAddress}</span>
+		</ExplainUI>
+	);
+};
+
 export default function BasedGames() {
 	const { data } = usePlayerData();
 	const [selectedClans, setSelectedClans] = useState<string[]>([]);
 	const [searchQuery, setSearchQuery] = useState<string>('');
 
+	// Update the display name in the object itself
+	const updatedData = useMemo(() => {
+		return data?.map((player: Player) => {
+			if (!player.user.profileDisplayName) {
+				player.user.profileDisplayName = 'Player ' + player.tokenId;
+			}
+			return player;
+		});
+	}, [data]);
+
 	// Sort the data using a dedicated function
-	const sortedData = sortPlayers(data);
+	const sortedData = sortPlayers(updatedData);
 
 	// Filter the data based on the selected clans and search query
 	const filteredData = useMemo(() => {
@@ -64,7 +85,7 @@ export default function BasedGames() {
 	return (
 		<div className="min-h-screen bg-neutral-100 pb-24 px-4 md:px-0">
 			<div className="max-w-7xl m-auto space-y-4 pt-6 md:pt-12">
-				<h1 className="text-xl font-bold mb-4">All players</h1>
+				{/* <h1 className="text-2xl font-medium text-gray-700 mb-4">All players</h1> */}
 				<SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 				<div className="mb-4">
 					<div className="flex flex-wrap gap-2">
@@ -101,7 +122,7 @@ export default function BasedGames() {
 									initial={{ y: 10, opacity: 0 }}
 									whileInView={{ y: 0, opacity: 1 }}
 									exit={{ y: 10, opacity: 0 }}
-									transition={{ type: 'spring', stiffness: 300, damping: 50, ease: 'easeInOut' }}
+									transition={{ type: 'spring', stiffness: 300, damping: 50 }}
 									key={player.tokenId}
 									className="flex-grow"
 								>
@@ -168,8 +189,8 @@ const PlayerCard = ({ player }: { player: Player }) => {
 
 	const isFarcasterConnected = player?.user != null;
 	const profileImage = player?.user?.profileImage?.startsWith('ipfs://')
-		? `https://avatar.iran.liara.run/public?id=${player?.tokenId}`
-		: player?.user?.profileImage || `https://avatar.iran.liara.run/public?id=${player?.tokenId}`;
+		? `/avatars/${Math.floor(Math.random() * 8) + 1}.png`
+		: player?.user?.profileImage || `/avatars/${Math.floor(Math.random() * 8) + 1}.png`;
 	const profileDisplayName = player?.user?.profileDisplayName || 'NFT #' + player?.tokenId;
 	const profileHandle = player?.user?.profileHandle || 'N/A';
 	const farRank = player?.user?.farRank ?? 'N/A';
@@ -181,8 +202,9 @@ const PlayerCard = ({ player }: { player: Player }) => {
 	const clanSymbol = getClanSymbol(clan);
 	const clanStyles = getClanStyles(clan);
 	const tokenId = player?.tokenId;
+	const ownerAddress = player?.ownerAddress;
 
-	const isUnknownPlayer = !player?.user;
+	const isUnknownPlayer = !player?.user?.profileHandle;
 
 	let warpcast_URL = player?.user?.profileHandle
 		? `https://warpcast.com/${player?.user?.profileHandle}`
@@ -201,8 +223,8 @@ const PlayerCard = ({ player }: { player: Player }) => {
 		<motion.div
 			layout
 			initial={{ y: 50, opacity: 0 }}
-			animate={{ y: 0, opacity: isUnknownPlayer ? 0.5 : 1 }}
-			whileHover={{ y: -2, backgroundColor: 'rgba(255, 255, 255, 1)' }}
+			animate={{ y: 0, opacity: isUnknownPlayer ? 0.65 : 0.9 }}
+			whileHover={{ y: -2, backgroundColor: 'rgba(255, 255, 255, 1)', opacity: 1 }}
 			onMouseEnter={() => setIsHover(true)}
 			onMouseLeave={() => setIsHover(false)}
 			transition={{ type: 'spring', stiffness: 200, damping: 35 }}
@@ -213,20 +235,31 @@ const PlayerCard = ({ player }: { player: Player }) => {
 		>
 			<div className="space-y-4">
 				<div className="space-y-2">
-					<span>
+					<div>
 						{profileImage && (
-							<img
-								src={profileImage}
-								className="w-14 h-14 rounded-full border-intelligent-yellow border-2"
-								alt={`${profileDisplayName}'s profile`}
+							<div
+								className="w-14 h-14 rounded-full border-intelligent-yellow border-2 aspect-square"
+								style={{
+									backgroundImage: `url(${profileImage})`,
+									backgroundSize: 'cover',
+									backgroundPosition: 'center',
+								}}
 							/>
 						)}
-					</span>
+					</div>
 					<h3 className="font-medium text-xl text-black cursor-default">
 						{profileDisplayName}
-						<span className="ml-2 text-sm text-gray-500">#{tokenId}</span>
+						<span className="ml-2 text-xs text-gray-500 rounded-full">#{tokenId}</span>
 					</h3>
-					<p className="text-sm text-neutral-400 cursor-default">{profileHandle.startsWith('@') ? profileHandle : `@${profileHandle}`}</p>
+					<p className="text-sm text-neutral-400 cursor-default">
+						{profileHandle === 'N/A' ? (
+							<AddressTag ownerAddress={ownerAddress} />
+						) : profileHandle.startsWith('@') ? (
+							profileHandle
+						) : (
+							`@${profileHandle}`
+						)}
+					</p>
 					<p className="mt-2 text-neutral-400 absolute top-2 right-2 text-base cursor-default">
 						<ExplainUI text={clan}>
 							<span className={`inline-block ${clanStyles.color} text-base font-semibold mr-2 px-2.5 py-0.5 rounded-full`}>{clanSymbol}</span>
