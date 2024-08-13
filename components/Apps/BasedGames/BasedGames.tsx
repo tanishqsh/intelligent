@@ -24,6 +24,8 @@ type Player = {
 		profileBio: string;
 	};
 	tokenId: string;
+	votes: number;
+	is_alive: boolean;
 };
 
 const AddressTag = ({ ownerAddress }: { ownerAddress: string }) => {
@@ -39,6 +41,7 @@ export default function BasedGames() {
 	const { data } = usePlayerData();
 	const [selectedClans, setSelectedClans] = useState<string[]>([]);
 	const [searchQuery, setSearchQuery] = useState<string>('');
+	const [selectedStatus, setSelectedStatus] = useState<string>('All');
 
 	// Update the display name in the object itself
 	const updatedData = useMemo(() => {
@@ -53,7 +56,7 @@ export default function BasedGames() {
 	// Sort the data using a dedicated function
 	const sortedData = sortPlayers(updatedData);
 
-	// Filter the data based on the selected clans and search query
+	// Filter the data based on the selected clans, search query, and status
 	const filteredData = useMemo(() => {
 		let result = sortedData;
 		if (selectedClans.length > 0) {
@@ -62,8 +65,11 @@ export default function BasedGames() {
 		if (searchQuery) {
 			result = result.filter((player: Player) => player?.user?.profileDisplayName?.toLowerCase().includes(searchQuery.toLowerCase()));
 		}
+		if (selectedStatus !== 'All') {
+			result = result.filter((player: Player) => (selectedStatus === 'Alive' ? player.is_alive : !player.is_alive));
+		}
 		return result;
-	}, [sortedData, selectedClans, searchQuery]);
+	}, [sortedData, selectedClans, searchQuery, selectedStatus]);
 
 	const toggleClanSelection = (clan: string) => {
 		setSelectedClans((prevSelectedClans) =>
@@ -72,6 +78,7 @@ export default function BasedGames() {
 	};
 
 	const clans = ['Alpha', 'Beta', 'Gamma', 'Delta', 'Theta', 'Sigma', 'Kappa', 'Omega'];
+	const statuses = ['All', 'Alive', 'Dead'];
 
 	// Count the number of players in each clan
 	const clanCounts = useMemo(() => {
@@ -83,6 +90,19 @@ export default function BasedGames() {
 		return counts;
 	}, [sortedData, filteredData]);
 
+	// Count the number of players in each status
+	const statusCounts = useMemo(() => {
+		const counts: { [key: string]: number } = { Alive: 0, Dead: 0 };
+		sortedData?.forEach((player: Player) => {
+			if (player.is_alive) {
+				counts['Alive'] += 1;
+			} else {
+				counts['Dead'] += 1;
+			}
+		});
+		return counts;
+	}, [sortedData]);
+
 	return (
 		<div className="min-h-screen bg-neutral-100 pb-24 px-4 md:px-0">
 			<div className="max-w-7xl m-auto space-y-4 pt-6 md:pt-12">
@@ -92,6 +112,13 @@ export default function BasedGames() {
 				<SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 				<div className="mb-4">
 					<div className="flex flex-wrap gap-2">
+						<motion.p
+							className={`text-xs px-2 py-1 font-bold`}
+							animate={{ color: colors.neutral[500] }}
+							whileHover={{ color: colors.neutral[400] }}
+						>
+							Clans
+						</motion.p>
 						{clans.map((clan: string, index: number) => (
 							<div
 								key={index}
@@ -109,6 +136,40 @@ export default function BasedGames() {
 									<motion.div
 										className="absolute inset-0 bg-intelligent-yellow/30 rounded-lg"
 										layoutId={'clanSelector' + index}
+										initial={false}
+										transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+									/>
+								)}
+							</div>
+						))}
+					</div>
+				</div>
+				<div className="mb-4">
+					<div className="flex flex-wrap gap-2">
+						<motion.p
+							className={`text-xs px-2 py-1 font-bold`}
+							animate={{ color: colors.neutral[500] }}
+							whileHover={{ color: colors.neutral[400] }}
+						>
+							Status
+						</motion.p>
+						{statuses.map((status: string, index: number) => (
+							<div
+								key={index}
+								className={`relative px-2 py-1 rounded-sm cursor-pointer ${selectedStatus === status ? 'z-0' : ''}`}
+								onClick={() => setSelectedStatus(status)}
+							>
+								<motion.p
+									className={`text-xs`}
+									animate={{ color: selectedStatus === status ? colors.neutral[500] : colors.neutral[500] }}
+									whileHover={{ color: colors.neutral[400] }}
+								>
+									{status} {(statusCounts[status] && '(' + statusCounts[status] + ')') || ''}
+								</motion.p>
+								{selectedStatus === status && (
+									<motion.div
+										className="absolute inset-0 bg-intelligent-yellow/30 rounded-lg"
+										layoutId={'statusSelector' + index}
 										initial={false}
 										transition={{ type: 'spring', stiffness: 200, damping: 20 }}
 									/>
@@ -206,6 +267,7 @@ const PlayerCard = ({ player }: { player: Player }) => {
 	const clanStyles = getClanStyles(clan);
 	const tokenId = player?.tokenId;
 	const ownerAddress = player?.ownerAddress;
+	const isAlive = player?.is_alive;
 
 	const isUnknownPlayer = !player?.user?.profileHandle;
 
@@ -222,8 +284,8 @@ const PlayerCard = ({ player }: { player: Player }) => {
 		<motion.div
 			layout
 			initial={{ y: 50, opacity: 0 }}
-			animate={{ y: 0, opacity: isUnknownPlayer ? 0.65 : 0.9 }}
-			whileHover={{ y: -2, backgroundColor: 'rgba(255, 255, 255, 1)', opacity: 1 }}
+			animate={{ y: 0, opacity: isAlive ? (isUnknownPlayer ? 0.65 : 0.9) : 0.35, backgroundColor: isAlive ? 'white' : 'rgba(255, 0, 0, 0.1)' }}
+			whileHover={isAlive ? { y: -2, backgroundColor: 'rgba(255, 255, 255, 1)', opacity: 1 } : {}}
 			onMouseEnter={() => setIsHover(true)}
 			onMouseLeave={() => setIsHover(false)}
 			transition={{ type: 'spring', stiffness: 200, damping: 35 }}
