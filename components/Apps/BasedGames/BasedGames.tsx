@@ -26,6 +26,7 @@ type Player = {
 	tokenId: string;
 	votes: number;
 	is_alive: boolean;
+	buildScore: string;
 };
 
 const AddressTag = ({ ownerAddress }: { ownerAddress: string }) => {
@@ -277,6 +278,8 @@ const PlayerCard = ({ player }: { player: Player }) => {
 	const tokenId = player?.tokenId;
 	const ownerAddress = player?.ownerAddress;
 	const isAlive = player?.is_alive;
+	const buildScore = player?.buildScore;
+	const isBuildScore = buildScore === 'N/A' ? false : true;
 
 	const isUnknownPlayer = !player?.user?.profileHandle;
 
@@ -319,7 +322,14 @@ const PlayerCard = ({ player }: { player: Player }) => {
 					</div>
 					<h3 className="font-medium text-lg text-black cursor-default text-balance">
 						{profileDisplayName}
-						<span className="ml-2 text-xs text-gray-500 rounded-full">#{tokenId}</span>
+						<span className="ml-2 text-xs text-gray-500 rounded-full">#{tokenId}</span>{' '}
+						{isBuildScore && (
+							<ExplainUI text="Build.top Score">
+								<span className="ml-2 px-2 py-1 inline-flex rounded-full items-center justify-center space-x-2 bg-[#0042F5]">
+									<img className="size-3" src="/build.svg" /> <span className="text-white text-xs"> {buildScore}</span>
+								</span>
+							</ExplainUI>
+						)}
 					</h3>
 					<p className="text-sm text-neutral-400 cursor-default">
 						{profileHandle === 'N/A' ? (
