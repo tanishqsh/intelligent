@@ -104,14 +104,14 @@ export default function BasedGames() {
 		return counts;
 	}, [sortedData]);
 
-	// return (
-	// 	<div className="min-h-screen bg-yellow-400 flex items-center justify-center">
-	// 		<div className="flex items-center justify-center font-sans space-x-2">
-	// 			<h1 className="text-3xl font-medium text-black text-center">Preparing Round 2 Results</h1>
-	// 			<div className="h-8 w-8 border-4 bg-yellow-400 border-black border-dotted rounded-full animate-spin"></div>
-	// 		</div>
-	// 	</div>
-	// );
+	return (
+		<div className="min-h-screen bg-yellow-400 flex items-center justify-center">
+			<div className="flex items-center justify-center font-sans space-x-2">
+				<h1 className="text-3xl font-medium text-black text-center">Preparing Round 3 Results</h1>
+				<div className="h-8 w-8 border-4 bg-yellow-400 border-black border-dotted rounded-full animate-spin"></div>
+			</div>
+		</div>
+	);
 
 	return (
 		<div className="min-h-screen bg-neutral-100 pb-24 px-4 md:px-0">
