@@ -6,7 +6,6 @@ import { useState, useMemo } from 'react';
 import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 import colors from '@/utils/colors';
 import SearchBar from './SearchBar';
-import HighlightedText from '@/components/ui/HighlightedText/HighlightedText';
 
 type Player = {
 	attributes: { value: string }[];
