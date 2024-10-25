@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 	}
 
 	// return a success response
-	const url = 'https://degentipme-3f9959094869.herokuapp.com/api/get_allowance?fid=' + fid;
+	const url = `https://api.degen.tips/airdrop2/tips?fid=${fid}&limit=1`;
 
 	try {
 		const response = await axios.get(url);

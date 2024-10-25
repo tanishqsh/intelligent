@@ -2,6 +2,7 @@ import axios from 'axios';
 import useSWR from 'swr';
 import { usePrivy } from '@privy-io/react-auth';
 import { endpoints } from '@/lib/backend/endpoints';
+import useGetFid from './useGetFid';
 
 const fetcher = async (url: string, token: string) => {
 	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -10,9 +11,10 @@ const fetcher = async (url: string, token: string) => {
 };
 
 export const useCastsChartData = (interval = '24 hours') => {
-	const { ready, user, getAccessToken } = usePrivy();
+	const { ready, getAccessToken } = usePrivy();
+	const { fid } = useGetFid({});
 
-	const swrKey = ready && user?.farcaster?.fid ? `${endpoints.get_cast_chart.path}?fid=${user.farcaster.fid}&duration=${interval}` : null;
+	const swrKey = ready && fid ? `${endpoints.get_cast_chart.path}?fid=${fid}&duration=${interval}` : null;
 
 	const { data, error } = useSWR(
 		swrKey,

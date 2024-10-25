@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 const HighlightedText = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<motion.span
-			className="bg-yellow-400 inline-block rounded-md"
+			className='bg-yellow-400 inline-block rounded-md'
 			initial={{ paddingRight: 0 }}
 			animate={{ paddingRight: 4, paddingLeft: 4, paddingTop: 4, paddingBottom: 4 }}
 			whileHover={{

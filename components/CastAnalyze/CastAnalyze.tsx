@@ -28,9 +28,11 @@ import copyAllAddresses from './utils/copyAddressArray';
 import useRepliesData from './hooks/useRepliesData';
 import useReactionData from './hooks/useReactionData';
 import useAlfaFrensData from './hooks/useAlfaFrensData';
+import useGetFid from '../Dashboard/hooks/useGetFid';
 
 export default function CastAnalyze() {
-	const { ready, authenticated, user, getAccessToken } = usePrivy();
+	const { ready, getAccessToken } = usePrivy();
+	const { fid } = useGetFid({});
 
 	const [cast, setCast] = useState<any>();
 	const [castUrl, setCastUrl] = useState('');
@@ -50,7 +52,7 @@ export default function CastAnalyze() {
 	// call replies and reactions hook
 	const { replies } = useRepliesData(listenerActive, cast, isLoaded);
 	const { likes, recasts } = useReactionData(listenerActive, cast, isLoaded);
-	const { members } = useAlfaFrensData(listenerActive, String(user?.farcaster?.fid || ''), isLoaded);
+	const { members } = useAlfaFrensData(listenerActive, fid, isLoaded);
 
 	const beginFetchCast = async (): Promise<void> => {
 		const accessToken = (await getAccessToken()) || '';
@@ -130,37 +132,37 @@ export default function CastAnalyze() {
 
 	const castStats = [
 		{
-			icon: <ClockEmptySVG className="w-5 h-5 text-neutral-300" />,
+			icon: <ClockEmptySVG className='w-5 h-5 text-neutral-300' />,
 			label: 'Last synced',
 			value: dayjs(new Date()).fromNow(),
 			valueClassName: 'text-xs normal-case text-neutral-600',
 		},
 		{
-			icon: <ClockSVG className="w-5 h-5 text-neutral-300" />,
+			icon: <ClockSVG className='w-5 h-5 text-neutral-300' />,
 			label: 'Posted on',
 			value: dayjs(timestamp).format('MMM D, YYYY'),
 			valueClassName: 'text-xs normal-case text-neutral-600',
 		},
 		{
-			icon: <Clock24SVG className="w-5 h-5 text-neutral-300" />,
+			icon: <Clock24SVG className='w-5 h-5 text-neutral-300' />,
 			label: 'Age',
 			value: dayjs(timestamp).fromNow(),
 			valueClassName: 'text-xs normal-case text-neutral-600',
 		},
 		{
-			icon: <LikeSVG className="w-5 h-5 text-neutral-300" />,
+			icon: <LikeSVG className='w-5 h-5 text-neutral-300' />,
 			label: 'Likes',
 			value: likes_count,
 			valueClassName: 'text-xs text-neutral-600',
 		},
 		{
-			icon: <ReplySVG className="w-5 h-5 text-neutral-300" />,
+			icon: <ReplySVG className='w-5 h-5 text-neutral-300' />,
 			label: 'Replies',
 			value: replies_count,
 			valueClassName: 'text-xs text-neutral-600',
 		},
 		{
-			icon: <RecastSVG className="w-5 h-5 text-neutral-300" />,
+			icon: <RecastSVG className='w-5 h-5 text-neutral-300' />,
 			label: 'Recasts',
 			value: recasts_count,
 			valueClassName: 'text-xs text-neutral-600',
@@ -168,14 +170,14 @@ export default function CastAnalyze() {
 	];
 
 	return (
-		<div className="bg-neutral-100 min-h-screen pb-[100px]">
-			<div className="max-w-5xl m-auto px-4 md:px-0">
-				<div className="pt-4">
+		<div className='bg-neutral-100 min-h-screen pb-[100px]'>
+			<div className='max-w-5xl m-auto px-4 md:px-0'>
+				<div className='pt-4'>
 					<SearchBar setIsLoading={setIsLoading} isLoaded={isLoaded} castUrl={castUrl} setCastUrl={setCastUrl} beginFetchCast={beginFetchCast} />
 				</div>
 				{isLoaded && (
-					<div className="w-full flex flex-col md:flex-row items-start md:space-x-4">
-						<div id="priority2" className="mt-4 w-full md:w-2/6 space-y-4 order-2 md:order-1">
+					<div className='w-full flex flex-col md:flex-row items-start md:space-x-4'>
+						<div id='priority2' className='mt-4 w-full md:w-2/6 space-y-4 order-2 md:order-1'>
 							<CastStatsTab castStats={castStats} />
 							<CastActions
 								useDegenTipsFiltering={useDegenTipsFiltering}
@@ -183,7 +185,7 @@ export default function CastAnalyze() {
 								useAlfaFrensFiltering={useAlfaFrensFiltering}
 								setUseAlfaFrensFiltering={setUseAlfaFrensFiltering}
 							/>
-							<div className="mt-4 md:hidden block">
+							<div className='mt-4 md:hidden block'>
 								<RepliesTab
 									replies={useAlfaFrensFiltering || useDegenTipsFiltering ? filteredReplies : replies}
 									copyAllAddresses={copyAllAddresses}
@@ -192,9 +194,9 @@ export default function CastAnalyze() {
 							<RecastsTab recasts={useAlfaFrensFiltering ? filteredRecasts : recasts} copyAllAddresses={copyAllAddresses} />
 							<LikesTab likes={useAlfaFrensFiltering ? filteredLikes : likes} copyAllAddresses={copyAllAddresses} />
 						</div>
-						<div id="priority1" className="w-full md:w-4/6 order-1 md:order-2">
+						<div id='priority1' className='w-full md:w-4/6 order-1 md:order-2'>
 							<CastPreview pfp={pfp} display_name={display_name} username={username} text={text} embeds={embeds} />
-							<div className="mt-4 md:block hidden">
+							<div className='mt-4 md:block hidden'>
 								<RepliesTab
 									replies={useAlfaFrensFiltering || useDegenTipsFiltering ? filteredReplies : replies}
 									copyAllAddresses={copyAllAddresses}

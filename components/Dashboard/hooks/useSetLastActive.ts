@@ -2,15 +2,17 @@ import axios from 'axios';
 import useSWR from 'swr';
 import { endpoints } from '@/lib/backend/endpoints';
 import { usePrivy } from '@privy-io/react-auth';
+import useGetFid from './useGetFid';
 
 const useSetLastActive = () => {
 	const { user, getAccessToken } = usePrivy();
+	const { fid } = useGetFid({});
 
 	const fetcher = async (url: string) => {
 		try {
 			const accessToken = await getAccessToken();
 
-			if (!user?.farcaster?.fid || !accessToken) {
+			if (!fid || !accessToken) {
 				console.error('Invalid user data');
 				return;
 			}
@@ -18,7 +20,7 @@ const useSetLastActive = () => {
 			// set the authorization header
 			axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
-			const response = await axios.get(`${url}?fid=${user?.farcaster?.fid}`);
+			const response = await axios.get(`${url}?fid=${fid}`);
 			return response.data;
 		} catch (error: any) {
 			console.error('Failed to sync data, please try again later', error);

@@ -2,6 +2,7 @@ import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import ReactLinkify from 'react-linkify';
+import { v4 as uuidv4 } from 'uuid';
 
 const TextWithMention = ({
 	text,
@@ -17,6 +18,7 @@ const TextWithMention = ({
 			</ReactLinkify>
 		);
 
+	const uuid = uuidv4();
 	const sortedMentions = mentions.sort((a, b) => a.position - b.position);
 	const parts: Array<React.ReactNode> = [];
 	let lastIndex = 0;
@@ -25,7 +27,7 @@ const TextWithMention = ({
 		parts.push(text.slice(lastIndex, position));
 		lastIndex = position;
 		parts.push(
-			<span key={profileHandle}>
+			<span key={profileHandle + lastIndex}>
 				<MiniMention profileHandle={profileHandle} profileImage={profileImage} />
 			</span>
 		);
@@ -33,13 +35,14 @@ const TextWithMention = ({
 
 	parts.push(text.slice(lastIndex));
 
-	return <span className="possible-link">{parts}</span>;
+	return <span className='possible-link'>{parts}</span>;
 };
 
 export default TextWithMention;
 
 const MiniMention = ({ profileHandle, profileImage }: { profileHandle: string; profileImage: string }) => {
 	const [hovered, setHovered] = useState(false);
+
 	return (
 		<ExplainUI text={'View @' + profileHandle + ' on Warpcast'}>
 			<motion.span
@@ -50,12 +53,12 @@ const MiniMention = ({ profileHandle, profileImage }: { profileHandle: string; p
 				onHoverStart={() => setHovered(true)}
 				onHoverEnd={() => setHovered(false)}
 				transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-				className="inline-flex items-center space-x-1 px-1 mx-1 py-1 my-1 cursor-pointer shadow rounded-md"
+				className='inline-flex items-center space-x-1 px-1 mx-1 py-1 my-1 cursor-pointer shadow rounded-md'
 			>
-				<span className="rounded-md">
-					<motion.img src={profileImage} alt={profileHandle} className="w-4 h-4 rounded-full" />
+				<span className='rounded-md'>
+					<motion.img src={profileImage} alt={profileHandle} className='w-4 h-4 rounded-full' />
 				</span>
-				<span onClick={() => window.open(`https://warpcast.com/${profileHandle}`, '_blank', 'noopener,noreferrer')} className="text-yellow-950">
+				<span onClick={() => window.open(`https://warpcast.com/${profileHandle}`, '_blank', 'noopener,noreferrer')} className='text-yellow-950'>
 					{profileHandle}
 				</span>
 			</motion.span>
