@@ -18,7 +18,7 @@ export default function NotFound() {
 					whileHover={{ lineHeight: isMobile ? '' : '85px' }}
 					transition={{ type: 'spring', stiffness: 250 }}
 				>
-					Oops! Looks like you&apos;re lost. <br /> Try heading back to{' '}
+					Oops! Looks like you are lost. <br /> Try heading back to{' '}
 					<Link href='/'>
 						<motion.span
 							className='bg-yellow-400 inline-block rounded-md'
