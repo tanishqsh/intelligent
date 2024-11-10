@@ -7,11 +7,12 @@ import useImpactFollowers from '../hooks/useImpactFollowers';
 import colors from '@/utils/colors';
 import ExplainUI from '@/components/ui/ExplainUI/ExplainUI';
 import useImpactUnfollowers from '../hooks/useImpactUnfollowers';
+import useGetFid from '../hooks/useGetFid';
 
 export default function ImpactUnfollowers() {
 	const { user } = usePrivy();
 
-	const fid = user?.farcaster?.fid?.toString() || '';
+	const { fid } = useGetFid({});
 	const { impactUnfollowers } = useImpactUnfollowers(fid);
 
 	// remove duplicates from impactFollowers
@@ -31,32 +32,32 @@ export default function ImpactUnfollowers() {
 			initial={{ opacity: 0, y: 30 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ type: 'spring', stiffness: 100 }}
-			className="rounded-xl shadow-xs"
+			className='rounded-xl shadow-xs'
 		>
-			<div className="text-xs py-4 border-b border-neutral-100 flex items-center justify-between">
-				<ExplainUI text="People with over 10,000 followers who unfollowed you in last 6 months">
-					<div className="flex space-x-1">
-						<span className="px-1 text-neutral-400 hover:text-neutral-500 text-sm font-inter">
+			<div className='text-xs py-4 border-b border-neutral-100 flex items-center justify-between'>
+				<ExplainUI text='People with over 10,000 followers who unfollowed you in last 6 months'>
+					<div className='flex space-x-1'>
+						<span className='px-1 text-neutral-400 hover:text-neutral-500 text-sm font-inter'>
 							{uniqueImpactUnfollowers?.length > 9 && <span>Top</span>} {uniqueImpactUnfollowers?.length} Impact unfollower
 							{uniqueImpactUnfollowers?.length === 1 ? '' : 's'} over 180 days
 						</span>
-						<svg className="size-5 text-neutral-400 hover:text-neutral-500" fill="none" viewBox="0 0 24 24">
-							<path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13V15"></path>
-							<circle cx="12" cy="9" r="1" fill="currentColor"></circle>
-							<circle cx="12" cy="12" r="7.25" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"></circle>
+						<svg className='size-5 text-neutral-400 hover:text-neutral-500' fill='none' viewBox='0 0 24 24'>
+							<path stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M12 13V15'></path>
+							<circle cx='12' cy='9' r='1' fill='currentColor'></circle>
+							<circle cx='12' cy='12' r='7.25' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='1.5'></circle>
 						</svg>
 					</div>
 				</ExplainUI>
 			</div>
-			<div className="space-y-1 flex flex-col max-h-[600px] no-scrollbar overflow-scroll rounded-xl">
+			<div className='space-y-1 flex flex-col max-h-[600px] no-scrollbar overflow-scroll rounded-xl'>
 				{uniqueImpactUnfollowers.length == 0 && (
 					<motion.div
 						initial={{ opacity: 0, y: 4, paddingTop: 32, paddingBottom: 32 }}
 						animate={{ opacity: 1, y: 0, paddingTop: 32, paddingBottom: 32 }}
 						transition={{ duration: 0.3 }}
-						className="px-4 py-4 bg-neutral-200/50 border-2 border-dotted border-black/10 rounded-xl"
+						className='px-4 py-4 bg-neutral-200/50 border-2 border-dotted border-black/10 rounded-xl'
 					>
-						<span className="text-sm text-neutral-500/50 m-auto"> No new impact unfollowers </span>
+						<span className='text-sm text-neutral-500/50 m-auto'> No new impact unfollowers </span>
 					</motion.div>
 				)}
 				{uniqueImpactUnfollowers &&
@@ -81,7 +82,7 @@ export default function ImpactUnfollowers() {
 
 						return (
 							<div key={'impact_unfollower_' + i}>
-								<AnimatePresence mode="wait">
+								<AnimatePresence mode='wait'>
 									<motion.div
 										onClick={() => window.open(warpcast_URL, '_blank')}
 										initial={{ opacity: 0, y: 30, paddingTop: 16, paddingBottom: 16, backgroundColor: '#ffffff' }}
@@ -94,27 +95,27 @@ export default function ImpactUnfollowers() {
 										}}
 										layoutId={'impact_unfollower_' + unfollower_fid}
 										transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-										className="px-4 cursor-pointer rounded-xl shadow-sm"
+										className='px-4 cursor-pointer rounded-xl shadow-sm'
 										key={unfollower_fid}
 									>
-										<div className="flex space-x-4 items-start">
-											<img src={pfp} className="w-10 h-10 rounded-full ring-2 ring-black/10" />
+										<div className='flex space-x-4 items-start'>
+											<img src={pfp} className='w-10 h-10 rounded-full ring-2 ring-black/10' />
 											<div>
-												<div className="text-neutral-600 text-[14px] font-sans whitespace-pre-wrap possible-link break-words">
+												<div className='text-neutral-600 text-[14px] font-sans whitespace-pre-wrap possible-link break-words'>
 													{display_name}
 												</div>
-												<div className="text-neutral-400 text-[12px] font-sans whitespace-pre-wrap possible-link break-words">
+												<div className='text-neutral-400 text-[12px] font-sans whitespace-pre-wrap possible-link break-words'>
 													{follower_count} followers
 												</div>
-												<div className="text-neutral-400 text-[12px] font-sans whitespace-pre-wrap possible-link break-words">
+												<div className='text-neutral-400 text-[12px] font-sans whitespace-pre-wrap possible-link break-words'>
 													unfollowed you {relativeTime}
 												</div>
 												{followedMoreThanOnce && (
 													<ExplainUI
-														text="
-												This usually happens when a user unfollows you, follows you, and then unfollows you again."
+														text='
+												This usually happens when a user unfollows you, follows you, and then unfollows you again.'
 													>
-														<div className="mt-2 text-amber-700 text-[12px] font-sans whitespace-pre-wrap possible-link break-words">
+														<div className='mt-2 text-amber-700 text-[12px] font-sans whitespace-pre-wrap possible-link break-words'>
 															@{username} unfollowed you {followedTimes} times.
 														</div>
 													</ExplainUI>

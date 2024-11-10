@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import useUserStatisticsData from './useUserStatisticsData';
 import { usePrivy } from '@privy-io/react-auth';
+import useGetFid from './useGetFid';
 
 const calculatePercentageChange = (current: number, previous: number): string => {
 	if (previous === 0) return 'N/A';
@@ -156,8 +157,9 @@ const extractCastsStats = (casts_stat: any) => {
 
 export const useDashboardStats = () => {
 	const { ready, user } = usePrivy();
+	const { fid } = useGetFid({});
 
-	const { userStatistics, error } = useUserStatisticsData(user?.farcaster?.fid?.toString() || '', ready);
+	const { userStatistics, error } = useUserStatisticsData(fid, ready);
 
 	const stats = useMemo(() => {
 		if (!userStatistics) return null;

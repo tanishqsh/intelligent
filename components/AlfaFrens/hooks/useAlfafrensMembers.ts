@@ -2,11 +2,11 @@ import { useEffect, useState, useMemo } from 'react';
 import firestore from '@/lib/firebase/firestore';
 import { collection, onSnapshot } from '@firebase/firestore';
 import { usePrivy } from '@privy-io/react-auth';
+import useGetFid from '@/components/Dashboard/hooks/useGetFid';
 
 const useAlfafrensMembers = () => {
 	const { ready, user } = usePrivy();
-
-	const fid = user?.farcaster?.fid;
+	const { fid } = useGetFid({});
 
 	const [alfafrensMembers, setAlfafrensMembers] = useState<any[]>([]);
 
