@@ -20,7 +20,7 @@ const AllowanceDisplay = () => {
 
 	if (!data?.success) return null;
 
-	const allowance = data[0].tip_allowance;
+	const allowance = data[0]?.tip_allowance ?? 0;
 
 	if (error) return <div>Failed to load</div>;
 	if (!data) return <div className='text-sm'>Loading</div>;
@@ -48,7 +48,7 @@ const AllowanceDisplay = () => {
 					stiffness: 200,
 				},
 			}}
-			className='pl-2 py-1 rounded-full bg-neutral-400/10 text-neutral-500 text-xs font-medium flex items-center space-x-1 cursor-default'
+			className='flex items-center py-1 pl-2 space-x-1 text-xs font-medium rounded-full cursor-default bg-neutral-400/10 text-neutral-500'
 		>
 			<span>
 				<img className='w-[12px] opacity-50 ' src='/degen.svg' />
@@ -65,10 +65,10 @@ const AllowanceDisplay = () => {
 							stiffness: 200,
 						},
 					}}
-					className='text-neutral-500 cursor-pointer'
+					className='cursor-pointer text-neutral-500'
 				>
 					<div className='flex items-center justify-center space-x-[2px]'>
-						<motion.div className='px-1'>{tipAllowance}</motion.div>
+						<motion.div className='px-1'>{tipAllowance ?? 0}</motion.div>
 						<motion.div
 							initial={{ opacity: 0, width: 0 }}
 							animate={{
@@ -78,12 +78,12 @@ const AllowanceDisplay = () => {
 									duration: 0.1,
 								},
 							}}
-							className='px-1 bg-neutral-300 rounded-full'
+							className='px-1 rounded-full bg-neutral-300'
 						>
 							{new Intl.NumberFormat('en-US', {
 								style: 'currency',
 								currency: 'USD',
-							}).format(tipAllowanceUSD)}
+							}).format(tipAllowanceUSD ?? 0)}
 						</motion.div>
 					</div>
 				</motion.div>
